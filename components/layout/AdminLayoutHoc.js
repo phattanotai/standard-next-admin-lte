@@ -17,7 +17,7 @@ class AdminLayoutHoc extends React.Component {
             </AdminContent>
             <AdminControlSidebar/>
             {/*<AdminFooter rightContent={'Some text for the footer'} leftContent={<div>I must be an element</div>}/>*/}
-        </div>
+        </div>        
     }
 }
 
