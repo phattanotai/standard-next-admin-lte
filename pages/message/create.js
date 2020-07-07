@@ -1,6 +1,6 @@
-import AdminLayoutHoc from "../../components/Layout/AdminLayoutHoc";
-import Link from 'next/link';
-import React, { useState, useEffect } from "react";
+import AdminLayoutHoc from "../../components/layout/AdminLayoutHoc";
+//import Link from 'next/link';
+import React from "react";
 import Router from "next/router";
 import Cookies from "js-cookie";
 
