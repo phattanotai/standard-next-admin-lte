@@ -2,7 +2,7 @@ const withSass = require("@zeit/next-sass")
 
 module.exports = withSass() 
 
-const path = require('path')
+/* const path = require('path')
 
 module.exports = {
   sassOptions: {
@@ -29,4 +29,4 @@ module.exports = {
       }
     ]
   },
-} 
+}  */
