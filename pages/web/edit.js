@@ -14,6 +14,7 @@ export default class EditWeb extends React.Component {
             name: "",
             URL: "",
             API: "",
+            web_id: "",
             status: "",
             errorMessage: "",
             datas: [],
@@ -92,33 +93,39 @@ export default class EditWeb extends React.Component {
     } */
 
     async handleSubmit() {
-        try {
-            //console.log('auth : ' + this.state.role);
-            const a = { name: this.state.name, url: this.state.URL, api: this.state.API };
-            //console.log('auth : ' + a.rolename);
-            const res = await ServiceWeb.editWeb(a, this.state.mobileId);
-            console.log('res : ' + JSON.stringify(res.data));
-            if (res.data.status === 2000) {
-                console.log('Edit web Success!!!');
-                this.dialog.show({
-                    title: 'Spiderbot information',
-                    body: 'Update web is successfully.',
-                    actions: [
-                        Dialog.OKAction(() => {
-                            //action('ok button was clicked!')()
-                            Router.push("/web");
-                        })
-                    ]
-                })
-            } else {
-                this.dialog.showAlert(res.data.message);
-                this.setErrorMsg(res.data.message);
+        if (this.state.name !== "" && this.state.URL !== "" && this.state.API !== "" && this.state.web_id !== "") {
+            try {
+                //console.log('auth : ' + this.state.role);
+                const a = { name: this.state.name, url: this.state.URL, api: this.state.API, web_id: this.state.web_id };
+                //console.log('auth : ' + a.rolename);
+                const res = await ServiceWeb.editWeb(a, this.state.mobileId);
+                console.log('res : ' + JSON.stringify(res.data));
+                if (res.data.status === 2000) {
+                    console.log('Edit web Success!!!');
+                    this.dialog.show({
+                        title: 'Spiderbot information',
+                        body: 'Update web is successfully.',
+                        actions: [
+                            Dialog.OKAction(() => {
+                                //action('ok button was clicked!')()
+                                Router.push("/web");
+                            })
+                        ]
+                    })
+                } else {
+                    this.dialog.showAlert(res.data.message);
+                    this.setErrorMsg(res.data.message);
+                }
+            } catch (error) {
+                this.dialog.showAlert(error);
+                console.error("An unexpected error happened occurred:", error);
+                this.setErrorMsg(error.message);
             }
-        } catch (error) {
-            this.dialog.showAlert(error);
-            console.error("An unexpected error happened occurred:", error);
-            this.setErrorMsg(error.message);
         }
+        else {
+            his.dialog.showAlert('กรุณาใส่ webname , url , api, web_id ก่อนกดปุ่ม Save!');
+        }
+
         //e.preventDefault();
     }
 
@@ -146,9 +153,9 @@ export default class EditWeb extends React.Component {
                 //setUsers(data);
                 //this.setState({ datas: data });
                 //console.log("data : " + this.state.datas);
-                const { postName, postURL, postAPI } = data;
+                const { postName, postURL, postAPI, postWebid } = data;
                 //console.log("postName : " + postName);
-                this.setState({ name: postName, URL: postURL, API: postAPI });
+                this.setState({ name: postName, URL: postURL, API: postAPI, web_id: postWebid });
             } else {
                 //this.setErrorMsg(res.data.msg);
                 this.dialog.showAlert(res.data.message);
@@ -190,7 +197,7 @@ export default class EditWeb extends React.Component {
                                 </div>
                             </div>
                             <div className="form-group">
-                                 <label htmlFor="validation-ex" className="col-sm-3">API</label>
+                                <label htmlFor="validation-ex" className="col-sm-3">API</label>
                                 <div className="col-sm-12">
                                     <input type="text" className="form-control " id="validation-ex2" /* is-invalid */
                                         placeholder="API"
@@ -198,14 +205,24 @@ export default class EditWeb extends React.Component {
                                         value={this.state.API}
                                     />
                                 </div>
-                            </div>                            
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="validation-ex" className="col-sm-3">WEB ID</label>
+                                <div className="col-sm-12">
+                                    <input type="text" className="form-control " id="validation-ex2" /* is-invalid */
+                                        placeholder="WEB ID"
+                                        onChange={(e) => this.setState({ web_id: e.target.value })}
+                                        value={this.state.web_id}
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </form>
 
                     <div className="card-footer">
-                        <div className="d-inline-block btn-block">                        
-                                <button className="btn btn-danger" onClick={this.handleResetSubmit}>Back</button> 
-                                <button className="btn btn-info float-right" onClick={this.handleSubmit}>Save</button>
+                        <div className="d-inline-block btn-block">
+                            <button className="btn btn-danger" onClick={this.handleResetSubmit}>Back</button>
+                            <button className="btn btn-info float-right" onClick={this.handleSubmit}>Save</button>
                         </div>
                     </div>
 

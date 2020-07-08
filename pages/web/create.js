@@ -14,6 +14,7 @@ export default class AddWeb extends React.Component {
             name: "",
             URL: "",
             API: "",
+            web_id: "",
             status: "",
             errorMessage: "",
             datas: [],
@@ -55,8 +56,8 @@ export default class AddWeb extends React.Component {
 
     async handleSubmit() {
         try {
-            if (this.state.name !== "" && this.state.URL !== "" && this.state.API !== "") {
-                const a = { name: this.state.name, url: this.state.URL, api: this.state.API };
+            if (this.state.name !== "" && this.state.URL !== "" && this.state.API !== "" && this.state.web_id !== "") {
+                const a = { name: this.state.name, url: this.state.URL, api: this.state.API,web_id: this.state.web_id };
                 const res = await ServiceWeb.createWeb(a);
                 console.log('res : ' + res.data);
                 if (res.data.status === 2000) {
@@ -77,7 +78,7 @@ export default class AddWeb extends React.Component {
                     this.setErrorMsg(res.data.msg);
                 }
             } else {
-                this.dialog.showAlert('กรุณาใส่ webname , url , api ก่อนกดปุ่ม Save!');
+                this.dialog.showAlert('กรุณาใส่ webname , url , api, web_id ก่อนกดปุ่ม Save!');
             }
 
         } catch (error) {
@@ -143,6 +144,16 @@ export default class AddWeb extends React.Component {
                                         placeholder="API"
                                         onChange={(e) => this.setState({ API: e.target.value })}
                                         value={this.state.API}
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="validation-ex" className="col-sm-3">WEB ID</label>
+                                <div className="col-sm-12">
+                                    <input type="text" className="form-control " id="validation-ex2" /* is-invalid */
+                                        placeholder="WEB ID"
+                                        onChange={(e) => this.setState({ web_id: e.target.value })}
+                                        value={this.state.web_id}
                                     />
                                 </div>
                             </div>
