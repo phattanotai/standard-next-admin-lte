@@ -22,7 +22,7 @@ export default class Web extends React.Component {
             pagetotal: 0,
             pagenumber: 0,
             recordtotal: 0,
-            rowperpage: 10,
+            rowperpage: 50,
             pagearr: [],
             startrow: 0,
             endrow: 0,
@@ -44,6 +44,15 @@ export default class Web extends React.Component {
 
     onClick() {
         //this.dialog.showAlert('Hello Dialog!')
+    }
+
+    warptext(txt,length) {
+        var result = txt;
+        //console.log( txt.length)
+        if (txt.length > length) {
+            result = txt.substring(0,length) + '...';
+        }
+        return result;
     }
 
     onConfirmClick() {
@@ -291,6 +300,7 @@ export default class Web extends React.Component {
                                             </div>
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </MDBContainer>
 
@@ -303,6 +313,8 @@ export default class Web extends React.Component {
                                         <th>Name</th>
                                         <th>URL</th>
                                         <th>API</th>
+                                        <th>WEB ID</th>
+                                        <th>USED</th>
                                         <th style={{ textAlign: "right" }}>Edit / Delete</th>
                                     </tr>
                                 </thead>
@@ -324,17 +336,19 @@ export default class Web extends React.Component {
                                                 <tr key={index}>
                                                     <td className="py-1">{data.postId}</td>
                                                     <td className="py-1">{data.postName}</td>
-                                                    <td className="py-1">{data.postURL}</td>
+                                                    <td className="py-1">{this.warptext(data.postURL,40)}</td>
                                                     <td className="py-1">{data.postAPI}</td>
+                                                    <td className="py-1">{data.postWebid}</td>
+                                                    <td className="py-1">{data.postUsedNumber}</td>
                                                     <td className="py-1" style={{ textAlign: "right" }}>
                                                         <button
                                                             type="button"
                                                             className="btn btn-warning btn-icon-text"
                                                             onClick={() => {
-                                                                    console.log("edit webid" + data.postId);
-                                                                    Cookies.set("webid", data.postId);
-                                                                    Router.push("/web/edit");
-                                                                
+                                                                console.log("edit webid" + data.postId);
+                                                                Cookies.set("webid", data.postId);
+                                                                Router.push("/web/edit");
+
                                                             }}
 
                                                         //onClick={this.onClick}
@@ -353,7 +367,7 @@ export default class Web extends React.Component {
                                                                         }),
                                                                         Dialog.OKAction(() => {
                                                                             console.log("delete web id" + data.postId);
-                                                                            this.deleteWeb( data.postId);
+                                                                            this.deleteWeb(data.postId);
                                                                         })
                                                                     ],
                                                                     bsSize: 'small',

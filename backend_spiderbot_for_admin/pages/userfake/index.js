@@ -4,13 +4,13 @@ import Link from 'next/link';
 import React, { useState, useEffect } from "react";
 import Router from "next/router";
 import Cookies from "js-cookie";
-import { ServiceMobile } from "../../service/";
+import { ServiceUserFake } from "../../service/";
 //import '../../styles/styles.scss';
 import Dialog from 'react-bootstrap-dialog';
 
 import { MDBContainer } from 'mdbreact';
 
-export default class Mobile extends React.Component {
+export default class Userfake extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,14 +22,14 @@ export default class Mobile extends React.Component {
             pagetotal: 0,
             pagenumber: 0,
             recordtotal: 0,
-            rowperpage: 10,
+            rowperpage: 50,
             pagearr: [],
             startrow: 0,
             endrow: 0,
             searchtxt: "",
 
         };
-        this.deleteMobile = this.deleteMobile.bind(this);
+        this.deleteUserFake = this.deleteUserFake.bind(this);
         this.setErrorMsg = this.setErrorMsg.bind(this);
 
         this.onClick = this.onClick.bind(this);
@@ -70,10 +70,10 @@ export default class Mobile extends React.Component {
         Router.push("/create");
     }
 
-    async deleteMobile(id) {
+    async deleteUserFake(id) {
         if (this.state.errorMessage) this.setErrorMsg("");
         try {
-            const res = await ServiceMobile.deleteMobile(id);
+            const res = await ServiceUserFake.deleteUserFake(id);
             if (res.data.status === 2000) {
                 this.setState({
                     datas: this.state.datas.filter((data) => {
@@ -135,7 +135,7 @@ export default class Mobile extends React.Component {
         if (!Cookies.get("user")) {
             Router.push("/");
         }
-        ServiceMobile.listMobile().then((res) => {
+        ServiceUserFake.listUserFake().then((res) => {
             console.log(res.data);
             const { data, status } = res.data;
             if (status === 2000) {
@@ -207,9 +207,9 @@ export default class Mobile extends React.Component {
 
     render() {
         return <AdminLayoutHoc
-            contentTitle={'Mobile'}
-            contentTitleButton={<Link href="/mobile/create">
-                <button type="button" className="btn btn-outline-success btn-sm"><i className="fa fa-phone fa-fw" /> Add a new mobile</button>
+            contentTitle={'UserFake'}
+            contentTitleButton={<Link href="/userfake/create">
+                <button type="button" className="btn btn-outline-success btn-sm"><i className="fa fa-id-badge fa-fw" /> Add a new UserFake</button>
             </Link>}
             url={this.props.url}
         >
@@ -300,54 +300,30 @@ export default class Mobile extends React.Component {
                                 <thead>
                                     <tr >
                                         <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Status</th>
-                                        <th>Android ID</th>
-                                        <th>Mobile Number</th>
-                                        <th>Save place</th>
-                                        <th>Description</th>
+                                        <th>UserFake</th>
+                                        <th>Create at</th>
+                                        <th>Update at</th>
                                         <th style={{ textAlign: "right" }}>Edit / Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.state.datas.map((data, index) => {
-                                        let classBadge = 'danger';
-                                        if (data.postStatus === 'on-line') {
-                                            classBadge = 'success';
-                                        }
-                                        let classBadge2 = 'danger';
-                                        let mused = 'used';
-                                        if (data.postUsed === 0) {
-                                            classBadge2 = 'success';
-                                            mused = 'available';
-                                        }
                                         if (index >= this.state.startrow && index < this.state.endrow)
                                             //console.log("userid" + user.id);
                                             return (
                                                 <tr key={index}>
                                                     <td className="py-1">{data.postId}</td>
-                                                    <td className="py-1">  <label className={`badge badge-${classBadge}`}>{data.postStatus}</label> {data.postName}</td>
-                                                    <td className="py-1">  <label className={`badge badge-${classBadge2}`}>{mused}</label></td>
-                                                    <td className="py-1">{data.postImei}</td>
-                                                    <td className="py-1">{data.postMobileNumber}</td>
-                                                    <td className="py-1">{data.postSaveplace}</td>
-                                                    <td className="py-1">{data.postDesc}</td>
+                                                    <td className="py-1">{data.postName}</td>
+                                                    <td className="py-1">{data.postCreated}</td>
+                                                    <td className="py-1">{data.postUpdated}</td>
                                                     <td className="py-1" style={{ textAlign: "right" }}>
                                                         <button
                                                             type="button"
                                                             className="btn btn-warning btn-icon-text"
                                                             onClick={() => {
-                                                                /* Router.push({
-                                                                    pathname: "/user/edit",
-                                                                    query: { id_query: user.id, username_query: user.username, role_query: user.role, rolename_query: user.rolename },
-                                                                }); */
-                                                                if (data.postUsed === 0) {
-                                                                    this.dialog.showAlert('Botname นี้ยังไม่ได้ถูกใช้ ยังไม่สามารถแก้ไขได้!');
-                                                                } else {
-                                                                    console.log("edit mobileid" + data.postId);
-                                                                    Cookies.set("mobileid", data.postId);
-                                                                    Router.push("/mobile/edit");
-                                                                }
+                                                                console.log("edit Userfake id" + data.postId);
+                                                                Cookies.set("userfakeid", data.postId);
+                                                                Router.push("/userfake/edit");
                                                             }}
 
                                                         //onClick={this.onClick}
@@ -365,8 +341,8 @@ export default class Mobile extends React.Component {
                                                                             this.dialog.hide();
                                                                         }),
                                                                         Dialog.OKAction(() => {
-                                                                            console.log("delete mobile id" + data.postId);
-                                                                            this.deleteMobile( data.postId);
+                                                                            console.log("delete userfake id" + data.postId);
+                                                                            this.deleteUserFake(data.postId);
                                                                         })
                                                                     ],
                                                                     bsSize: 'small',

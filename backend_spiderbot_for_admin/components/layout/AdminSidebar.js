@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
 import Cookies from "js-cookie";
 import Router from "next/router";
+import { ServiceMobile } from "../../service/";
 //import "../../styles/styles.scss"
 
 class AdminSidebar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            rawdata: [],
+            mobile_online: 0,
+            classBadge: "right badge badge-danger",
             username: Cookies.get("user"),
             showmenu_m1: Boolean(Number(Cookies.get("userrole_m1"))),
             showmenu_m2: Boolean(Number(Cookies.get("userrole_m2"))),
@@ -24,6 +28,27 @@ class AdminSidebar extends React.Component {
     }
     componentDidMount() {
         console.log("show user sidebar : " + this.state.username);
+
+        ServiceMobile.listMobile().then((res) => {
+            console.log(res.data);
+            const { data, status } = res.data;
+            if (status === 2000) {
+                console.log("data length : " + data.length);
+
+                //this.setState({ datas: data });
+                this.setState({ rawdata: data });
+                var datalength = 0;
+                datalength = this.state.rawdata.filter((data) => {
+                    return data.postStatus !== "off-line";
+                }).length;
+                console.log("datalength=>" + datalength);
+                this.setState({ mobile_online: datalength });
+                if (datalength > 0) this.setState({classBadge:"right badge badge-success"});
+
+            } else {
+                this.setErrorMsg(res.data.msg);
+            }
+        });
     }
     render() {
         const { pathname } = this.props.router;
@@ -52,7 +77,7 @@ class AdminSidebar extends React.Component {
                                     <i className="nav-icon fa fa-user-circle" />
                                     <p>
                                         Users
-                                        <span className="right badge badge-success">2</span>
+                                        {/* <span className="right badge badge-success">2</span> */}
                                     </p>
                                 </a>
                             </Link>
@@ -63,7 +88,7 @@ class AdminSidebar extends React.Component {
                                     <i className="nav-icon fa fa-phone" />
                                     <p>
                                         Mobile
-                                        <span className="right badge badge-success">5</span>
+                                        <span className={this.state.classBadge}>{this.state.mobile_online}</span>
                                     </p>
                                 </a>
                             </Link>
@@ -74,7 +99,7 @@ class AdminSidebar extends React.Component {
                                     <i className="nav-icon fa fa-globe" />
                                     <p>
                                         Webs
-                                        <span className="right badge badge-success">0</span>
+                                       {/*  <span className="right badge badge-success">0</span> */}
                                     </p>
                                 </a>
                             </Link>
@@ -85,7 +110,7 @@ class AdminSidebar extends React.Component {
                                     <i className="nav-icon fa fa-comment" />
                                     <p>
                                         Message
-                                        <span className="right badge badge-success">7</span>
+                                        {/* <span className="right badge badge-success">7</span> */}
                                     </p>
                                 </a>
                             </Link>
@@ -97,7 +122,7 @@ class AdminSidebar extends React.Component {
                                     <i className="nav-icon fa fa-id-badge" />
                                     <p>
                                         UserFake
-                                        <span className="right badge badge-success">0</span>
+                                       {/*  <span className="right badge badge-success">0</span> */}
                                     </p>
                                 </a>
                             </Link>
@@ -108,7 +133,7 @@ class AdminSidebar extends React.Component {
                                     <i className="nav-icon fa fa-server" />
                                     <p>
                                         User Agent
-                                        <span className="right badge badge-success">0</span>
+                                        {/* <span className="right badge badge-success">0</span> */}
                                     </p>
                                 </a>
                             </Link>
@@ -119,7 +144,7 @@ class AdminSidebar extends React.Component {
                                     <i className="nav-icon 	fa fa-cogs" />
                                     <p>
                                         MobileConfig
-                                        <span className="right badge badge-success">1</span>
+                                        {/* <span className="right badge badge-success">1</span> */}
                                     </p>
                                 </a>
                             </Link>

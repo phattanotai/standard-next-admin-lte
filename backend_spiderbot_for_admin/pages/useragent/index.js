@@ -22,7 +22,7 @@ export default class UserAgent extends React.Component {
             pagetotal: 0,
             pagenumber: 0,
             recordtotal: 0,
-            rowperpage: 10,
+            rowperpage: 50,
             pagearr: [],
             startrow: 0,
             endrow: 0,
@@ -129,6 +129,15 @@ export default class UserAgent extends React.Component {
         var startrow = (pagenum - 1) * this.state.rowperpage;
         var endrow = startrow + this.state.rowperpage;
         this.setState({ recordtotal: datalength, pagetotal: page_remain, pagenumber: pagenum, pagearr: arr, startrow: startrow, endrow: endrow });
+    }
+
+    warptext(txt,length) {
+        var result = txt;
+        //console.log( txt.length)
+        if (txt.length > length) {
+            result = txt.substring(0,length) + '...';
+        }
+        return result;
     }
 
     componentDidMount() {
@@ -311,7 +320,7 @@ export default class UserAgent extends React.Component {
                                             return (
                                                 <tr key={index}>
                                                     <td className="py-1">{data.postId}</td>
-                                                    <td className="py-1">{data.postUserAgent}</td>      
+                                                    <td className="py-1">{this.warptext(data.postUserAgent,150)}</td>      
                                                     <td className="py-1" style={{ textAlign: "right" }}>
                                                         <button
                                                             type="button"

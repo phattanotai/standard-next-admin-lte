@@ -4,13 +4,13 @@ import Link from 'next/link';
 import React, { useState, useEffect } from "react";
 import Router from "next/router";
 import Cookies from "js-cookie";
-import { ServiceUserFake } from "../../service/";
+import { ServiceMessage } from "../../service/";
 //import '../../styles/styles.scss';
 import Dialog from 'react-bootstrap-dialog';
 
 import { MDBContainer } from 'mdbreact';
 
-export default class Userfake extends React.Component {
+export default class Message extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,14 +22,14 @@ export default class Userfake extends React.Component {
             pagetotal: 0,
             pagenumber: 0,
             recordtotal: 0,
-            rowperpage: 10,
+            rowperpage: 50,
             pagearr: [],
             startrow: 0,
             endrow: 0,
             searchtxt: "",
 
         };
-        this.deleteUserFake = this.deleteUserFake.bind(this);
+        this.deleteMessage = this.deleteMessage.bind(this);
         this.setErrorMsg = this.setErrorMsg.bind(this);
 
         this.onClick = this.onClick.bind(this);
@@ -70,10 +70,10 @@ export default class Userfake extends React.Component {
         Router.push("/create");
     }
 
-    async deleteUserFake(id) {
+    async deleteMessage(id) {
         if (this.state.errorMessage) this.setErrorMsg("");
         try {
-            const res = await ServiceUserFake.deleteUserFake(id);
+            const res = await ServiceMessage.deleteMessage(id);
             if (res.data.status === 2000) {
                 this.setState({
                     datas: this.state.datas.filter((data) => {
@@ -135,7 +135,7 @@ export default class Userfake extends React.Component {
         if (!Cookies.get("user")) {
             Router.push("/");
         }
-        ServiceUserFake.listUserFake().then((res) => {
+        ServiceMessage.listMessage().then((res) => {
             console.log(res.data);
             const { data, status } = res.data;
             if (status === 2000) {
@@ -207,9 +207,9 @@ export default class Userfake extends React.Component {
 
     render() {
         return <AdminLayoutHoc
-            contentTitle={'UserFake'}
-            contentTitleButton={<Link href="/userfake/create">
-                <button type="button" className="btn btn-outline-success btn-sm"><i className="fa fa-id-badge fa-fw" /> Add a new UserFake</button>
+            contentTitle={'Message'}
+            contentTitleButton={<Link href="/message/create">
+                <button type="button" className="btn btn-outline-success btn-sm"><i className="fa fa-comment fa-fw" /> Add a new Message</button>
             </Link>}
             url={this.props.url}
         >
@@ -300,7 +300,7 @@ export default class Userfake extends React.Component {
                                 <thead>
                                     <tr >
                                         <th>ID</th>
-                                        <th>UserFake</th>
+                                        <th>Message</th>
                                         <th>Create at</th>
                                         <th>Update at</th>
                                         <th style={{ textAlign: "right" }}>Edit / Delete</th>
@@ -313,7 +313,7 @@ export default class Userfake extends React.Component {
                                             return (
                                                 <tr key={index}>
                                                     <td className="py-1">{data.postId}</td>
-                                                    <td className="py-1">{data.postName}</td>
+                                                    <td className="py-1">{data.postMessage}</td>
                                                     <td className="py-1">{data.postCreated}</td>
                                                     <td className="py-1">{data.postUpdated}</td>
                                                     <td className="py-1" style={{ textAlign: "right" }}>
@@ -321,9 +321,9 @@ export default class Userfake extends React.Component {
                                                             type="button"
                                                             className="btn btn-warning btn-icon-text"
                                                             onClick={() => {
-                                                                console.log("edit Userfake id" + data.postId);
-                                                                Cookies.set("userfakeid", data.postId);
-                                                                Router.push("/userfake/edit");
+                                                                console.log("edit msgid" + data.postId);
+                                                                Cookies.set("msgid", data.postId);
+                                                                Router.push("/message/edit");
                                                             }}
 
                                                         //onClick={this.onClick}
@@ -341,8 +341,8 @@ export default class Userfake extends React.Component {
                                                                             this.dialog.hide();
                                                                         }),
                                                                         Dialog.OKAction(() => {
-                                                                            console.log("delete userfake id" + data.postId);
-                                                                            this.deleteUserFake(data.postId);
+                                                                            console.log("delete mesage id" + data.postId);
+                                                                            this.deleteMessage(data.postId);
                                                                         })
                                                                     ],
                                                                     bsSize: 'small',

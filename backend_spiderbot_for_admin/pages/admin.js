@@ -15,8 +15,8 @@ export default class Index extends React.Component {
         super(props);
         this.state = {
             username: Cookies.get("user"),
-            timecount:0,
-            endtimecount:0,
+            timecount: 0,
+            endtimecount: 0,
 
             isLoading: true,
             datas: [],
@@ -26,13 +26,13 @@ export default class Index extends React.Component {
             pagetotal: 0,
             pagenumber: 0,
             recordtotal: 0,
-            rowperpage: 5,
+            rowperpage: 50,
             pagearr: [],
             startrow: 0,
             endrow: 0,
             searchtxt: "",
-            
 
+            toggle: 0,
         };
 
         this.deleteUser = this.deleteUser.bind(this);
@@ -44,11 +44,75 @@ export default class Index extends React.Component {
         this.handleSelectRowPerPageChange = this.handleSelectRowPerPageChange.bind(this);
         this.handleSelectPageNumberChange = this.handleSelectPageNumberChange.bind(this);
 
+        this.handleSubmit = this.handleSubmit.bind(this);
 
         this.onSearchClick = this.onSearchClick.bind(this);
     }
     onClick() {
         //this.dialog.showAlert('Hello Dialog!')
+    }
+
+    handleSubmit() {
+        this.setState({ toggle: 1 });
+        ServiceWeb.listHistory().then((res) => {
+            console.log(res.data);
+            const { data, status } = res.data;
+            if (status === 2000) {
+                console.log("data length : " + data.length);
+
+                this.setState({ datas: data });
+                this.setState({ rawdata: data });
+
+                var page_remain = Math.floor(data.length / this.state.rowperpage);
+                var num = data.length % this.state.rowperpage;
+                if (num > 0) {
+                    page_remain++;
+                }
+
+                var arr = [];
+                var i;
+                for (i = 0; i < page_remain; i++) {
+                    arr.push(i + 1);
+                }
+                var pagenum = 1;
+                var startrow = (pagenum - 1) * this.state.rowperpage;
+                var endrow = startrow + this.state.rowperpage;
+                this.setState({ recordtotal: data.length, pagetotal: page_remain, pagenumber: pagenum, pagearr: arr, startrow: startrow, endrow: endrow });
+                this.setState({ toggle: 0 });
+            } else {
+                this.setErrorMsg(res.data.msg);
+                ServiceWeb.listHistory().then((res) => {
+                    console.log(res.data);
+                    const { data, status } = res.data;
+                    if (status === 2000) {
+                        console.log("data length : " + data.length);
+
+                        this.setState({ datas: data });
+                        this.setState({ rawdata: data });
+
+                        var page_remain = Math.floor(data.length / this.state.rowperpage);
+                        var num = data.length % this.state.rowperpage;
+                        if (num > 0) {
+                            page_remain++;
+                        }
+
+                        var arr = [];
+                        var i;
+                        for (i = 0; i < page_remain; i++) {
+                            arr.push(i + 1);
+                        }
+                        var pagenum = 1;
+                        var startrow = (pagenum - 1) * this.state.rowperpage;
+                        var endrow = startrow + this.state.rowperpage;
+                        this.setState({ recordtotal: data.length, pagetotal: page_remain, pagenumber: pagenum, pagearr: arr, startrow: startrow, endrow: endrow });
+                        this.setState({ toggle: 0 });
+                    } else {
+                        this.setErrorMsg(res.data.msg);
+                        this.setState({ toggle: 0 });
+                    }
+                });
+            }
+        });
     }
 
     onConfirmClick() {
@@ -138,10 +202,10 @@ export default class Index extends React.Component {
 
     componentDidMount() {
         if (!Cookies.get("user")) {
-            Router.push("/");            
+            Router.push("/");
         }
 
-        this.setState({endtimecount:1000});
+        this.setState({ endtimecount: 1000 });
 
         /* setInterval( () => {
             console.log('re-render');
@@ -179,7 +243,7 @@ export default class Index extends React.Component {
             } 
           }, 1000) */
 
-          ServiceWeb.listHistory().then((res) => {
+        ServiceWeb.listHistory().then((res) => {
             console.log(res.data);
             const { data, status } = res.data;
             if (status === 2000) {
@@ -211,6 +275,15 @@ export default class Index extends React.Component {
 
     setErrorMsg(msg) {
         this.setState({ errorMessage: msg });
+    }
+
+    warptext(txt,length) {
+        var result = txt;
+        //console.log( txt.length)
+        if (txt.length > length) {
+            result = txt.substring(0,length) + '...';
+        }
+        return result;
     }
 
     handleSelectRowPerPageChange(e) {
@@ -264,6 +337,16 @@ export default class Index extends React.Component {
                         <div className="card-header">
                             <MDBContainer>
                                 <div className="wrapper">
+                                    <div className="card-tools d-inline-block ">
+                                        <div className="input-group input-group-sm ml-30" style={{ width: '100%' }}>
+                                            <button class="btn btn-primary" type="button" onClick={this.handleSubmit}>                                            {
+                                                this.state.toggle === 1 &&
+                                                < span class="spinner-border  spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            }
+                                            Refresh
+                                        </button>
+                                        </div>
+                                    </div>
                                     <div className="w-auto h-25 p-3  d-inline-block">
                                         Row per page
                                         <select id="select-1" className="form-control" value={this.state.rowperpage} onChange={this.handleSelectRowPerPageChange}>
@@ -337,6 +420,7 @@ export default class Index extends React.Component {
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </MDBContainer>
 
@@ -351,7 +435,7 @@ export default class Index extends React.Component {
                                         <th>API</th>
                                         <th>Message</th>
                                         <th>UserFake</th>
-                                        <th>Mobile</th>                                        
+                                        <th>Mobile</th>
                                         <th>CREATE AT</th>
                                         <th style={{ textAlign: "right" }}>Description</th>
                                     </tr>
@@ -364,18 +448,22 @@ export default class Index extends React.Component {
                                             classBadge = 'success'
                                             status = 'success'
                                         }
+                                        let dt = (new Date(data.created_at)).toString().split(' ');
+                                        let dt_str = dt[0] + ' ' + dt[2] + '-' + dt[1]+ '-' + dt[3] + ' ' + dt[4]
+                                        console.log("timestamp : " + dt_str);
                                         if (index >= this.state.startrow && index < this.state.endrow)
                                             //console.log("userid" + user.id);
+                                            
                                             return (
                                                 <tr key={index}>
                                                     <td className="py-1">{data.id}</td>
                                                     <td className="py-1"><label className={`badge badge-${classBadge}`}>{status}</label> {data.web_name}</td>
-                                                    <td className="py-1">{data.url}</td>
+                                                    <td className="py-1">{this.warptext(data.url,40)}</td>
                                                     <td className="py-1">{data.api}</td>
                                                     <td className="py-1">{data.message}</td>
                                                     <td className="py-1">{data.userFake}</td>
                                                     <td className="py-1">{data.ref}</td>
-                                                    <td className="py-1">{data.created_at}</td>
+                                                    <td className="py-1">{dt_str}</td>
                                                     <td className="py-1" style={{ textAlign: "right" }}>
                                                         <button
                                                             type="button"
@@ -606,6 +694,6 @@ export default class Index extends React.Component {
                     </div>
                 </div>
             </div> */}
-        </AdminLayoutHoc>
+        </AdminLayoutHoc >
     }
 }

@@ -4,13 +4,13 @@ import Link from 'next/link';
 import React, { useState, useEffect } from "react";
 import Router from "next/router";
 import Cookies from "js-cookie";
-import { ServiceMessage } from "../../service/";
+import { ServiceMobile } from "../../service/";
 //import '../../styles/styles.scss';
 import Dialog from 'react-bootstrap-dialog';
 
 import { MDBContainer } from 'mdbreact';
 
-export default class Message extends React.Component {
+export default class Mobile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,14 +22,14 @@ export default class Message extends React.Component {
             pagetotal: 0,
             pagenumber: 0,
             recordtotal: 0,
-            rowperpage: 10,
+            rowperpage: 50,
             pagearr: [],
             startrow: 0,
             endrow: 0,
             searchtxt: "",
 
         };
-        this.deleteMessage = this.deleteMessage.bind(this);
+        this.deleteMobile = this.deleteMobile.bind(this);
         this.setErrorMsg = this.setErrorMsg.bind(this);
 
         this.onClick = this.onClick.bind(this);
@@ -38,8 +38,43 @@ export default class Message extends React.Component {
         this.handleSelectRowPerPageChange = this.handleSelectRowPerPageChange.bind(this);
         this.handleSelectPageNumberChange = this.handleSelectPageNumberChange.bind(this);
 
-
         this.onSearchClick = this.onSearchClick.bind(this);
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit() {
+        this.setState({ toggle: 1 });
+        ServiceMobile.listMobile().then((res) => {
+            console.log(res.data);
+            const { data, status } = res.data;
+            if (status === 2000) {
+                console.log("data length : " + data.length);
+
+                this.setState({ datas: data });
+                this.setState({ rawdata: data });
+
+                var page_remain = Math.floor(data.length / this.state.rowperpage);
+                var num = data.length % this.state.rowperpage;
+                if (num > 0) {
+                    page_remain++;
+                }
+
+                var arr = [];
+                var i;
+                for (i = 0; i < page_remain; i++) {
+                    arr.push(i + 1);
+                }
+                var pagenum = 1;
+                var startrow = (pagenum - 1) * this.state.rowperpage;
+                var endrow = startrow + this.state.rowperpage;
+                this.setState({ recordtotal: data.length, pagetotal: page_remain, pagenumber: pagenum, pagearr: arr, startrow: startrow, endrow: endrow });
+                this.setState({ toggle: 0 });
+            } else {
+                this.setErrorMsg(res.data.message);
+                this.setState({ toggle: 0 });
+            }
+        });
     }
 
     onClick() {
@@ -70,10 +105,10 @@ export default class Message extends React.Component {
         Router.push("/create");
     }
 
-    async deleteMessage(id) {
+    async deleteMobile(id) {
         if (this.state.errorMessage) this.setErrorMsg("");
         try {
-            const res = await ServiceMessage.deleteMessage(id);
+            const res = await ServiceMobile.deleteMobile(id);
             if (res.data.status === 2000) {
                 this.setState({
                     datas: this.state.datas.filter((data) => {
@@ -105,7 +140,7 @@ export default class Message extends React.Component {
                     return data.postName.indexOf(name) !== -1;
                 })
             });
-            datalength = this.state.rawdata.filter((user) => {
+            datalength = this.state.rawdata.filter((data) => {
                 return data.postName.indexOf(name) !== -1;
             }).length;
         } else {
@@ -135,7 +170,7 @@ export default class Message extends React.Component {
         if (!Cookies.get("user")) {
             Router.push("/");
         }
-        ServiceMessage.listMessage().then((res) => {
+        ServiceMobile.listMobile().then((res) => {
             console.log(res.data);
             const { data, status } = res.data;
             if (status === 2000) {
@@ -207,9 +242,9 @@ export default class Message extends React.Component {
 
     render() {
         return <AdminLayoutHoc
-            contentTitle={'Message'}
-            contentTitleButton={<Link href="/message/create">
-                <button type="button" className="btn btn-outline-success btn-sm"><i className="fa fa-comment fa-fw" /> Add a new Message</button>
+            contentTitle={'Mobile'}
+            contentTitleButton={<Link href="/mobile/create">
+                <button type="button" className="btn btn-outline-success btn-sm"><i className="fa fa-phone fa-fw" /> Add a new mobile</button>
             </Link>}
             url={this.props.url}
         >
@@ -219,6 +254,16 @@ export default class Message extends React.Component {
                         <div className="card-header">
                             <MDBContainer>
                                 <div className="wrapper">
+                                <div className="card-tools d-inline-block ">
+                                        <div className="input-group input-group-sm ml-30" style={{ width: '100%' }}>
+                                            <button class="btn btn-primary" type="button" onClick={this.handleSubmit}>                                            {
+                                                this.state.toggle === 1 &&
+                                                < span class="spinner-border  spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            }
+                                            Refresh
+                                        </button>
+                                        </div>
+                                    </div>
                                     <div className="w-auto h-25 p-3  d-inline-block">
                                         Row per page
                                         <select id="select-1" className="form-control" value={this.state.rowperpage} onChange={this.handleSelectRowPerPageChange}>
@@ -300,30 +345,54 @@ export default class Message extends React.Component {
                                 <thead>
                                     <tr >
                                         <th>ID</th>
-                                        <th>Message</th>
-                                        <th>Create at</th>
-                                        <th>Update at</th>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Android ID</th>
+                                        <th>Mobile Number</th>
+                                        <th>Save place</th>
+                                        <th>Description</th>
                                         <th style={{ textAlign: "right" }}>Edit / Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.state.datas.map((data, index) => {
+                                        let classBadge = 'danger';
+                                        if (data.postStatus === 'on-line') {
+                                            classBadge = 'success';
+                                        }
+                                        let classBadge2 = 'danger';
+                                        let mused = 'used';
+                                        if (data.postUsed === 0) {
+                                            classBadge2 = 'success';
+                                            mused = 'available';
+                                        }
                                         if (index >= this.state.startrow && index < this.state.endrow)
                                             //console.log("userid" + user.id);
                                             return (
                                                 <tr key={index}>
                                                     <td className="py-1">{data.postId}</td>
-                                                    <td className="py-1">{data.postMessage}</td>
-                                                    <td className="py-1">{data.postCreated}</td>
-                                                    <td className="py-1">{data.postUpdated}</td>
+                                                    <td className="py-1">  <label className={`badge badge-${classBadge}`}>{data.postStatus}</label> {data.postName}</td>
+                                                    <td className="py-1">  <label className={`badge badge-${classBadge2}`}>{mused}</label></td>
+                                                    <td className="py-1">{data.postImei}</td>
+                                                    <td className="py-1">{data.postMobileNumber}</td>
+                                                    <td className="py-1">{data.postSaveplace}</td>
+                                                    <td className="py-1">{data.postDesc}</td>
                                                     <td className="py-1" style={{ textAlign: "right" }}>
                                                         <button
                                                             type="button"
                                                             className="btn btn-warning btn-icon-text"
                                                             onClick={() => {
-                                                                console.log("edit msgid" + data.postId);
-                                                                Cookies.set("msgid", data.postId);
-                                                                Router.push("/message/edit");
+                                                                /* Router.push({
+                                                                    pathname: "/user/edit",
+                                                                    query: { id_query: user.id, username_query: user.username, role_query: user.role, rolename_query: user.rolename },
+                                                                }); */
+                                                                if (data.postUsed === 0) {
+                                                                    this.dialog.showAlert('Botname นี้ยังไม่ได้ถูกใช้ ยังไม่สามารถแก้ไขได้!');
+                                                                } else {
+                                                                    console.log("edit mobileid" + data.postId);
+                                                                    Cookies.set("mobileid", data.postId);
+                                                                    Router.push("/mobile/edit");
+                                                                }
                                                             }}
 
                                                         //onClick={this.onClick}
@@ -341,8 +410,8 @@ export default class Message extends React.Component {
                                                                             this.dialog.hide();
                                                                         }),
                                                                         Dialog.OKAction(() => {
-                                                                            console.log("delete mesage id" + data.postId);
-                                                                            this.deleteMessage(data.postId);
+                                                                            console.log("delete mobile id" + data.postId);
+                                                                            this.deleteMobile( data.postId);
                                                                         })
                                                                     ],
                                                                     bsSize: 'small',
