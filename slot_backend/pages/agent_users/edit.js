@@ -323,11 +323,8 @@ export default class EditAgent extends React.Component {
 
         return <AdminLayoutHoc contentTitle={'Edit Agent Users'} contentTitleButton={<i className="fa fa-2x fa-address-card" />} url={this.props.url}>
             <div className="offset-md-0">
-                <div className="card">
-                    <div className="card-header">
-                        {/* <h3 className="card-title">New User Form</h3> */}
-                    </div>
-                    <form className="form-horizontal">
+                <div className="card mt-2">
+                <form className="form-horizontal">
                         <div className="card-body">
 
                             <div className="form-group">
@@ -349,8 +346,8 @@ export default class EditAgent extends React.Component {
                             <div className="form-group">
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">agent code</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">agent code</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex2"
                                             //placeholder="agent lineup"
@@ -365,8 +362,8 @@ export default class EditAgent extends React.Component {
                             <div className="form-group">
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">user name</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">user name</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex3"
                                             //placeholder="agent name"
@@ -380,8 +377,8 @@ export default class EditAgent extends React.Component {
                             <div className="form-group">
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">user email</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">user email</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex4"
                                             //placeholder="agent detail"
@@ -397,8 +394,8 @@ export default class EditAgent extends React.Component {
                                 {/* <label htmlFor="validation-ex" className="col-sm-3">Password</label> */}
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">Password</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">Password</span>
                                         </div>
                                         <input type="password" className="form-control " id="validation-ex3"
                                             //placeholder="Password"
@@ -413,8 +410,8 @@ export default class EditAgent extends React.Component {
                                 {/* <label htmlFor="validation-ex" className="col-sm-3">Password</label> */}
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">Confirm Password</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">Confirm Password</span>
                                         </div>
                                         <input type="password" className="form-control " id="validation-ex4"
                                             //placeholder="Confirm Password"
@@ -452,8 +449,8 @@ export default class EditAgent extends React.Component {
 
                     <div className="card-footer">
                         <div className="d-inline-block btn-block">
-                            <button className="btn btn-danger" onClick={this.handleResetSubmit}>Back</button>
-                            <button className="btn btn-info float-right" onClick={this.handleSubmit}>Save</button>
+                            <button className="btn btn-danger" onClick={this.handleResetSubmit} title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
+                            <button className="btn btn-info float-right" onClick={this.handleSubmit} title='Save' style={{ marginLeft: 5, width: 45 }}><i class="fa fa-floppy-o"></i></button>
                         </div>
                     </div>
                 </div>

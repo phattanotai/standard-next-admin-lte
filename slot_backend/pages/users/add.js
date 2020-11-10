@@ -187,17 +187,14 @@ export default class AddUser extends React.Component {
 
         return <AdminLayoutHoc contentTitle={'Add User'} contentTitleButton={<i className="fa fa-2x fa-user-plus" />} url={this.props.url}>
             <div className="offset-md-0">
-                <div className="card">
-                    <div className="card-header">
-                        {/* <h3 className="card-title">New User Form</h3> */}
-                    </div>
+                <div className="card mt-2">
                     <form className="form-horizontal">
                         <div className="card-body">
                             <div className="form-group">
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">Username</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">Username</span>
                                         </div>
                                         <input type="text" className="form-control"
                                             //placeholder="Username"
@@ -205,15 +202,15 @@ export default class AddUser extends React.Component {
                                             onChange={(e) => this.setState({ username: e.target.value })}
                                             value={this.state.username}
                                             required />
-                                    </div>                                   
+                                    </div>
 
                                 </div>
                             </div>
                             <div className="form-group">
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">Email</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">Email</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex2"
                                             //placeholder="Email"
@@ -239,8 +236,8 @@ export default class AddUser extends React.Component {
                                 {/* <label htmlFor="validation-ex" className="col-sm-3">Password</label> */}
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">Password</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">Password</span>
                                         </div>
                                         <input type="password" className="form-control " id="validation-ex3"
                                             //placeholder="Password"
@@ -255,8 +252,8 @@ export default class AddUser extends React.Component {
                                 {/* <label htmlFor="validation-ex" className="col-sm-3">Password</label> */}
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">Confirm Password</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">Confirm Password</span>
                                         </div>
                                         <input type="password" className="form-control " id="validation-ex4"
                                             //placeholder="Confirm Password"
@@ -282,8 +279,8 @@ export default class AddUser extends React.Component {
 
                     <div className="card-footer">
                         <div className="d-inline-block btn-block">
-                            <button className="btn btn-danger" onClick={this.handleResetSubmit}>Back</button>
-                            <button className="btn btn-info float-right" onClick={this.handleSubmit}>Save</button>
+                            <button className="btn btn-danger" onClick={this.handleResetSubmit} title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
+                            <button className="btn btn-info float-right" onClick={this.handleSubmit} title='Save' style={{ marginLeft: 5, width: 45 }}><i class="fa fa-floppy-o"></i></button>
                         </div>
                     </div>
                 </div>

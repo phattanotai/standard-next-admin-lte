@@ -25,10 +25,21 @@ const deleteBrands = (id) => {
   return axios.delete(`${endpoint}/brands/${id}`, configHeader());
 };
 
+const editBrandsSort = (data, id) => {
+  //console.log('data : ' + data);
+  return axios.post(`${endpoint}/brands_sort_update`, data, configHeader());
+};
+
+const getBrandsSort = () => {
+  return axios.get(`${endpoint}/brands_sort`, configHeader());
+};
+
 export default {
   listBrands,
   getBrandsFromId,
   createBrands,
   editBrands,
   deleteBrands,
+  editBrandsSort,
+  getBrandsSort
 };

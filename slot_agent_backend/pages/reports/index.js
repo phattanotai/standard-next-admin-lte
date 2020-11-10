@@ -36,6 +36,17 @@ export default class Report extends React.Component {
             agentdata: [],
             slt: "All",
 
+            fsort1: false,
+            fsort2: false,
+            fsort3: false,
+            fsort4: false,
+            fsort5: false,
+            fsort6: false,
+            fsort7: false,
+            fsort8: false,
+            fsort9: false,
+            fsort10: false,
+
         };
         this.deleteMember = this.deleteMember.bind(this);
         this.setErrorMsg = this.setErrorMsg.bind(this);
@@ -396,82 +407,11 @@ export default class Report extends React.Component {
             <div className="row">
                 <div className="col-12">
                     <div className="card">
-                        <div className="card-header">
+                        <div className="card-header bg-secondary">
                             {/* <h3 className="card-title">Current users</h3> */}
                             <MDBContainer>
                                 <div className="wrapper">
-                                   {/*  <div className="w-auto h-25 p-3  d-inline-block">
-                                        Row per page
-                                        <select id="select-1" className="form-control" value={this.state.rowperpage} onChange={this.handleSelectRowPerPageChange}>
-                                            <option value='10'>10</option>
-                                            <option value='15'>15</option>
-                                            <option value='20'>20</option>
-                                            <option value='25'>25</option>
-                                            <option value='30'>30</option>
-                                            <option value='35'>35</option>
-                                            <option value='40'>40</option>
-                                            <option value='45'>45</option>
-                                            <option value='50'>50</option>
-                                        </select>
-                                    </div>
-                                    <div className="w-auto h-25 p-3  d-inline-block">
-                                        PageNumber
-                                        <select id="select-1" className="form-control" value={this.state.pagenumber} onChange={this.handleSelectPageNumberChange}>
-                                            {
-                                                this.state.pagearr.map((p, index) => {
-                                                    return (
-                                                        <option value={p} key={index}>{p}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                    </div>
-                                    <div className="card-tools d-inline-block">
-                                        <div className="input-group input-group-sm" style={{ width: '100%' }}>
-                                            <input type="text" name="table_search"
-                                                className="form-control float-right"
-                                                placeholder="Search"
-                                                onChange={(e) => {
-                                                    this.setState({ searchtxt: e.target.value });
-                                                    var name = e.target.value;
-                                                    var datalength = this.state.rawdata.length;
-                                                    if (name != "") {
-                                                        this.setState({
-                                                            data: this.state.rawdata.filter((data) => {
-                                                                return data.user_name.indexOf(name) !== -1;
-                                                            })
-                                                        });
-                                                        datalength = this.state.rawdata.filter((data) => {
-                                                            return data.user_name.indexOf(name) !== -1;
-                                                        }).length;
-                                                    } else {
-                                                        this.setState({
-                                                            data: this.state.rawdata
-                                                        });
-                                                    }
-
-                                                    var page_remain = Math.floor(datalength / this.state.rowperpage);
-                                                    var num = datalength % this.state.rowperpage;
-                                                    if (num > 0) {
-                                                        page_remain++;
-                                                    }
-
-                                                    var arr = [];
-                                                    var i;
-                                                    for (i = 0; i < page_remain; i++) {
-                                                        arr.push(i + 1);
-                                                    }
-                                                    var pagenum = 1;
-                                                    var startrow = (pagenum - 1) * this.state.rowperpage;
-                                                    var endrow = startrow + this.state.rowperpage;
-                                                    this.setState({ recordtotal: datalength, pagetotal: page_remain, pagenumber: pagenum, pagearr: arr, startrow: startrow, endrow: endrow });
-                                                }}
-                                                value={this.state.searchtxt} />
-                                            <div className="input-group-append">
-                                                <button className="btn btn-default"><i className="fa fa-search" onClick={this.onSearchClick} /></button>
-                                            </div>
-                                        </div>
-                                    </div> */}
+                                   
                                     <div className="w-auto h-25 p-3  d-inline-block">  
                                         <button
                                             type="button"
@@ -551,25 +491,20 @@ export default class Report extends React.Component {
                         </div>
                         <div className="card-body table-responsive p-0">
                             <table className="table table-hover table-striped table-bordered">
-                                <thead>
+                                <thead  class="table-dark">
                                     <tr >
-                                        <th>username</th>
-                                        <th>game_username</th>
-                                        <th>turn_date</th>
-                                        <th>turn_hours</th>
-                                        <th>amount</th>
-                                        <th>game_code</th>
+                                        <th width={'15%'}>username</th>
+                                        <th width={'15%'}>game_username</th>
+                                        <th width={'15%'}>turn_date</th>
+                                        <th width={'15%'}>turn_hours</th>
+                                        <th width={'15%'}>amount</th>
+                                        <th width={'15%'}>game_code</th>
                                         {/*  <th style={{ textAlign: "right" }}>Edit / Delete</th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.state.data.map((report, index) => {
-                                        /* let classBadge = 'danger';
-                                        let mystatus = 'disable';
-                                        if (report.mem_status === '1') {
-                                            classBadge = 'success';
-                                            mystatus = 'enable';
-                                        } */
+
                                         if (index >= this.state.startrow && index < this.state.endrow)
                                             //console.log("userid" + user.id);
                                             return (
@@ -580,50 +515,7 @@ export default class Report extends React.Component {
                                                     <td className="py-1">{report.turn_hours}</td>
                                                     <td className="py-1">{report.amount}</td>
                                                     <td className="py-1">{report.game_code}</td>
-                                                    {/* <td className="py-1" style={{ textAlign: "right" }}>                                                        
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-warning btn-icon-text"
-                                                            onClick={() => {
-                                                                console.log("edit user agent id " + member._id);
-                                                                Cookies.set("memberid", member._id);
-                                                                //Cookies.set("uagentid", uagent.agent_code);
-                                                                Router.push("/member/edit");
-
-                                                            }}
-                                                            style={{ width: 80 }}
-                                                        //onClick={this.onClick}
-                                                        >
-                                                            Edit
-                                                        </button>
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => {
-                                                                this.dialog.show({
-                                                                    title: 'Slot Admin confirm',
-                                                                    body: 'Are you sure?',
-                                                                    actions: [
-                                                                        Dialog.CancelAction(() => {
-                                                                            this.dialog.hide();
-                                                                        }),
-                                                                        Dialog.OKAction(() => {
-                                                                            console.log("delete agent userid " + member._id);
-                                                                            this.deleteMember(member._id);
-                                                                        })
-                                                                    ],
-                                                                    bsSize: 'small',
-                                                                    onHide: (dialog) => {
-                                                                        this.dialog.hide()
-                                                                        console.log('closed by clicking background.')
-                                                                    }
-                                                                })
-                                                            }}
-                                                            style={{ marginLeft: 5,width: 80 }}
-                                                            className="btn btn-danger btn-icon-text"
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </td> */}
+                                                    
                                                 </tr>
                                             );
                                     })}
@@ -648,16 +540,43 @@ export default class Report extends React.Component {
                                         </select>
                                     </div>
                                     <div className="w-auto h-25 p-3  d-inline-block">
-                                        PageNumber
-                                        <select id="select-1" className="form-control" value={this.state.pagenumber} onChange={this.handleSelectPageNumberChange}>
-                                            {
-                                                this.state.pagearr.map((p, index) => {
-                                                    return (
-                                                        <option value={p} key={index}>{p}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
+                                    <nav aria-label="Page navigation example">
+                                            <ul class="pagination">
+                                                <li class="page-item"><a class="page-link" onClick={() => {
+                                                    if (this.state.pagenumber > 1) {
+                                                        let p = this.state.pagenumber - 1;
+                                                        this.setState({ pagenumber: p });
+                                                        var pagenum = p
+                                                        var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                        var endrow = startrow + this.state.rowperpage;
+                                                        this.setState({ startrow: startrow, endrow: endrow });
+                                                    }
+                                                }}>Previous</a></li>
+                                                {
+                                                    this.state.pagearr.map((p, index) => {
+                                                        return (
+                                                            <li class="page-item"><a class="page-link" onClick={() => {
+                                                                this.setState({ pagenumber: p });
+                                                                var pagenum = p;
+                                                                var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                                var endrow = startrow + this.state.rowperpage;
+                                                                this.setState({ startrow: startrow, endrow: endrow });
+                                                            }}>{p}</a></li>
+                                                        )
+                                                    })
+                                                }
+                                                <li class="page-item"><a class="page-link" onClick={() => {
+                                                    if (this.state.pagenumber < this.state.pagearr.length) {
+                                                        let p = this.state.pagenumber + 1;
+                                                        this.setState({ pagenumber: p });
+                                                        var pagenum = p;
+                                                        var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                        var endrow = startrow + this.state.rowperpage;
+                                                        this.setState({ startrow: startrow, endrow: endrow });
+                                                    }
+                                                }}>Next</a></li>
+                                            </ul>
+                                        </nav>
                                     </div>
                                     <div className="card-tools d-inline-block">
                                         <div className="input-group input-group-sm" style={{ width: '100%' }}>

@@ -34,7 +34,7 @@ export default class Brand extends React.Component {
             pagetotal: 0,
             pagenumber: 0,
             recordtotal: 0,
-            rowperpage: 10,
+            rowperpage: 30,
             pagearr: [],
             startrow: 0,
             endrow: 0,
@@ -43,7 +43,7 @@ export default class Brand extends React.Component {
             pagetotal2: 0,
             pagenumber2: 0,
             recordtotal2: 0,
-            rowperpage2: 10,
+            rowperpage2: 50,
             pagearr2: [],
             startrow2: 0,
             endrow2: 0,
@@ -435,8 +435,8 @@ export default class Brand extends React.Component {
                     for (j = 0; j < brandname_arr.length; j++) {
                         console.log('brandname_arr[' + j + ']=>' + brandname_arr[j]);
                         console.log('game brand : ' + this.SearchBrand(brandname_arr[j])[0]);
-                        
-                        if (this.SearchBrand(brandname_arr[j])  == data[i].game_brand) {
+
+                        if (this.SearchBrand(brandname_arr[j]) == data[i].game_brand) {
                             if (switch_arr[j]) {
                                 arr_data.push(data[i]);
                             }
@@ -482,8 +482,8 @@ export default class Brand extends React.Component {
                     for (j = 0; j < brandcode_arr.length; j++) {
                         //console.log('brandname_arr[' + j + ']=>' + brandcode_arr[j]);
                         console.log('game brand : ' + brandcode_arr[j]);
-                        
-                        if (brandcode_arr[j]  == data[i].game_brand) {
+
+                        if (brandcode_arr[j] == data[i].game_brand) {
                             if (switch_arr[j]) {
                                 arr_data.push(data[i]);
                             }
@@ -763,10 +763,11 @@ export default class Brand extends React.Component {
             <div className="row">
                 <div className="col-6">
                     <div className="card">
-                        <div className="card-header">
-                            {/* <h3 className="card-title">Current users</h3> */}
+                        <div className="card-header bg-secondary">
+
                             <MDBContainer>
                                 <div className="wrapper">
+                                    <h5>Games Brand</h5>
                                     <div className="w-auto h-25 p-3  d-inline-block">
                                         Select Agents
                                         <select id="select-3" className="form-control" value={this.state.agent} onChange={this.handleSelectAgentChange}>
@@ -795,7 +796,7 @@ export default class Brand extends React.Component {
                                             <option value='50'>50</option>
                                         </select>
                                     </div>
-                                    <div className="w-auto h-25 p-3  d-inline-block">
+                                    {/* <div className="w-auto h-25 p-3  d-inline-block">
                                         PageNumber
                                         <select id="select-1" className="form-control" value={this.state.pagenumber} onChange={this.handleSelectPageNumberChange}>
                                             {
@@ -806,7 +807,7 @@ export default class Brand extends React.Component {
                                                 })
                                             }
                                         </select>
-                                    </div>
+                                    </div> */}
                                     <div className="card-tools d-inline-block">
                                         <div className="input-group input-group-sm" style={{ width: '100%' }}>
                                             <input type="text" name="table_search"
@@ -859,13 +860,13 @@ export default class Brand extends React.Component {
                         </div>
                         <div className="card-body table-responsive p-0">
                             <table className="table table-hover table-striped table-bordered">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
-                                        <th>ON/OFF</th>
-                                        <th>Logo</th>
-                                        <th>Brand</th>
-                                        <th>Agent</th>
-                                        <th style={{ textAlign: "right" }}>{this.state.isDownLine ? 'Detail' : 'Detail / Edit / Delete'}  </th>
+                                        <th width={'10%'}>ON/OFF</th>
+                                        <th width={'15%'}>Logo</th>
+                                        <th width={'15%'}>Brand</th>
+                                        <th width={'10%'}>Agent</th>
+                                        <th width={'25%'} style={{ textAlign: "center" }}>Command</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -885,10 +886,10 @@ export default class Brand extends React.Component {
                                                     <td>
                                                         <div>
                                                             <label class="switch" >
-                                                                <input type="checkbox" onChange={this.handleSwitchChange(index)} checked={this.state.switch_arr[index]} disabled={this.state.isDownLine ? true : false}/>
+                                                                <input type="checkbox" onChange={this.handleSwitchChange(index)} checked={this.state.switch_arr[index]} disabled={this.state.isDownLine ? true : false} />
                                                                 <span class="slider round"></span>
                                                             </label>
-                                                            <label className="control-label">&nbsp;On</label>
+                                                            <label className="control-label">&nbsp;{this.state.switch_arr[index] ? 'On' : 'Off'}</label>
                                                         </div>
                                                     </td>
                                                     <td className="py-1">
@@ -904,12 +905,12 @@ export default class Brand extends React.Component {
                                                     </td>
                                                     <td className="py-1">{brand[0]}</td>
                                                     <td className="py-1">{this.SearchAgentName(ser.agent_code)}</td>
-                                                    <td className="py-1" style={{ textAlign: "right" }}>
+                                                    <td className="py-1" style={{ textAlign: "center" }}>
 
                                                         <button
                                                             type="button"
                                                             className="btn btn-success btn-icon-text"
-                                                            onClick={() => {                                                                
+                                                            onClick={() => {
                                                                 Cookies.set("serid", ser._id);
                                                                 const brand = this.SearchBrandName(ser.brand_code);
                                                                 console.log('brand name => ' + [0]);
@@ -917,14 +918,16 @@ export default class Brand extends React.Component {
                                                                 Router.push("/game_service/description");
 
                                                             }}
-                                                            style={{ marginLeft: 5, width: 80 }}                                                        
+                                                            title='Detail'
+                                                            style={{ marginLeft: 5, width: 45 }}
+
                                                         >
-                                                            Detail
+                                                            <i class="fa fa-eye"></i>
                                                         </button>
                                                         <button
                                                             type="button"
                                                             className="btn btn-warning btn-icon-text"
-                                                            onClick={() => {                                                                
+                                                            onClick={() => {
                                                                 Cookies.set("serid", ser._id);
                                                                 const brand = this.SearchBrandName(ser.brand_code);
                                                                 console.log('brand name => ' + [0]);
@@ -932,9 +935,11 @@ export default class Brand extends React.Component {
                                                                 Router.push("/game_service/edit");
 
                                                             }}
-                                                            style={{ marginLeft: 5, width: 80 , display: this.state.isDownLine ? 'none' : ''}}                                                        
+
+                                                            title='Edit'
+                                                            style={{ marginLeft: 5, width: 45, display: this.state.isDownLine ? 'none' : '' }}
                                                         >
-                                                            Edit
+                                                            <i class="fa fa-edit"></i>
                                                         </button>
                                                         <button
                                                             type="button"
@@ -958,10 +963,12 @@ export default class Brand extends React.Component {
                                                                     }
                                                                 })
                                                             }}
-                                                            style={{ marginLeft: 5, width: 80 ,display: this.state.isDownLine ? 'none' : ''}}
+
                                                             className="btn btn-danger btn-icon-text"
+                                                            title='Delete'
+                                                            style={{ marginLeft: 5, width: 45, display: this.state.isDownLine ? 'none' : '' }}
                                                         >
-                                                            Delete
+                                                            <i class="fa fa-close"></i>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -970,16 +977,60 @@ export default class Brand extends React.Component {
                                 </tbody>
                             </table>
                         </div>
+                        <div className="card-footer" style={{ textAlign: "right", width: '100%' }}>
+                            <div className="wrapper float-right">
+
+                                <div className="w-auto h-25 p-3  d-inline-block">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li class="page-item"><a class="page-link" onClick={() => {
+                                                if (this.state.pagenumber > 1) {
+                                                    let p = this.state.pagenumber - 1;
+                                                    this.setState({ pagenumber: p });
+                                                    var pagenum = p
+                                                    var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                    var endrow = startrow + this.state.rowperpage;
+                                                    this.setState({ startrow: startrow, endrow: endrow });
+                                                }
+                                            }}>Previous</a></li>
+                                            {
+                                                this.state.pagearr.map((p, index) => {
+                                                    return (
+                                                        <li class={this.state.pagenumber == p ? "page-item active" : "page-item"}><a class="page-link" onClick={() => {
+                                                            this.setState({ pagenumber: p });
+                                                            var pagenum = p;
+                                                            var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                            var endrow = startrow + this.state.rowperpage;
+                                                            this.setState({ startrow: startrow, endrow: endrow });
+                                                        }}>{p}</a></li>
+                                                    )
+                                                })
+                                            }
+                                            <li class="page-item"><a class="page-link" onClick={() => {
+                                                if (this.state.pagenumber < this.state.pagearr.length) {
+                                                    let p = this.state.pagenumber + 1;
+                                                    this.setState({ pagenumber: p });
+                                                    var pagenum = p;
+                                                    var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                    var endrow = startrow + this.state.rowperpage;
+                                                    this.setState({ startrow: startrow, endrow: endrow });
+                                                }
+                                            }}>Next</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div className="col-6">
                     <div className="card">
-                        <div className="card-header">
+                        <div className="card-header  bg-secondary">
                             {/* <h3 className="card-title">Current users</h3> */}
                             <MDBContainer>
                                 <div className="wrapper">
-                                    <h4>Games List for Agent : {this.state.agent}</h4>
+                                    <h5>Games List for Agent : {this.state.agent}</h5>
 
                                     <div className="w-auto h-25 p-3  d-inline-block">
                                         Row per page
@@ -1058,7 +1109,7 @@ export default class Brand extends React.Component {
                         </div>
                         <div className="card-body table-responsive p-0">
                             <table className="table table-hover table-striped table-bordered">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr >
                                         <th>Status</th>
                                         <th>Image</th>
@@ -1101,6 +1152,7 @@ export default class Brand extends React.Component {
                                 </tbody>
                             </table>
                         </div>
+                        
                     </div>
                 </div>
 

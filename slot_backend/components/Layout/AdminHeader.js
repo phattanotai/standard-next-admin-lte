@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Cookies from "js-cookie";
 
 const AdminHeader = (props) => {
-    return <nav className="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+    return <nav className="main-header navbar navbar-expand navbar-light border-bottom  bg-info">
         <ul className="navbar-nav">
 
         </ul>

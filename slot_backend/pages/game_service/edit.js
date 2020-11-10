@@ -609,7 +609,7 @@ export default class AddService extends React.Component {
                 <div className="row">
                     <div className="col-6">
                         <div className="card">
-                            <form className="form-horizontal">
+                        <form className="form-horizontal">
                                 <div className="form-group">
                                     <div className="col-sm-12">
                                         <label htmlFor="select-1" className="col-sm-12 control-label">Select Agent</label>
@@ -644,10 +644,11 @@ export default class AddService extends React.Component {
                                         </div>
                                     </div>
                                 </div>
+
                                 <div className="card-body">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">service api key</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">service api key</span>
                                         </div>
                                         <input type="text" className="form-control"
                                             //placeholder="service api key"
@@ -658,8 +659,8 @@ export default class AddService extends React.Component {
                                     </div>
 
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">service api secret</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">service api secret</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex2"
                                             //placeholder="service api secret"
@@ -669,8 +670,8 @@ export default class AddService extends React.Component {
                                     </div>
 
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">service api username</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">service api username</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex4"
                                             //placeholder="service api username"
@@ -680,8 +681,8 @@ export default class AddService extends React.Component {
                                     </div>
 
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">service api password</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">service api password</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex5"
                                             //placeholder="service api password"
@@ -691,8 +692,8 @@ export default class AddService extends React.Component {
                                     </div>
 
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">start user</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">start user</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex7"
                                             //placeholder="start user"
@@ -702,8 +703,8 @@ export default class AddService extends React.Component {
                                     </div>
 
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">start password</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">start password</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex6"
                                             //placeholder="start password"
@@ -713,8 +714,8 @@ export default class AddService extends React.Component {
                                     </div>
 
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">service percent</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">service percent</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex9"
                                             //placeholder="service percent"
@@ -724,8 +725,8 @@ export default class AddService extends React.Component {
                                     </div>
 
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">service commission</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">service commission</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex10"
                                             //placeholder="service commission"
@@ -735,8 +736,8 @@ export default class AddService extends React.Component {
                                     </div>
 
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">service URL</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">service URL</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex10"
                                             //placeholder="service URL"
@@ -746,8 +747,8 @@ export default class AddService extends React.Component {
                                     </div>
 
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">user process</span>
+                                        <div className="input-group-prepend col-3">
+                                            <span className="input-group-text bg-dark col-12">user process</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex8"
                                             //placeholder="user process"
@@ -773,8 +774,8 @@ export default class AddService extends React.Component {
 
                             <div className="card-footer">
                                 <div className="d-inline-block btn-block">
-                                    <button className="btn btn-danger" onClick={this.handleResetSubmit}>Back</button>
-                                    <button className="btn btn-info float-right" onClick={this.handleSubmit}>Save</button>
+                                    <button className="btn btn-danger" onClick={this.handleResetSubmit} title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
+                                    <button className="btn btn-info float-right" onClick={this.handleSubmit} title='Save' style={{ marginLeft: 5, width: 45 }}><i class="fa fa-floppy-o"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -782,11 +783,11 @@ export default class AddService extends React.Component {
 
                     <div className="col-6">
                         <div className="card">
-                            <div className="card-header">
+                            <div className="card-header  bg-secondary">
                                 {/* <h3 className="card-title">Current users</h3> */}
                                 <MDBContainer>
                                     <div className="wrapper">
-                                        <h4> Games List for brand : {this.state.brand} </h4>
+                                        <h5> Games List for brand : {this.state.brand} </h5>
                                         <div className="wrapper">
 
                                             <div className="w-auto h-25 p-3  d-inline-block">
@@ -867,13 +868,13 @@ export default class AddService extends React.Component {
                             </div>
                             <div className="card-body table-responsive p-0">
                                 <table className="table table-hover table-striped table-bordered">
-                                    <thead>
+                                <thead class="table-dark">
                                         <tr >
-                                            <th>Status</th>
-                                            <th>Image</th>
-                                            <th>Code</th>
-                                            <th>Name</th>
-                                            <th>Type</th>
+                                            <th width={'5%'}>Status</th>
+                                            <th width={'20%'}>Image</th>
+                                            <th width={'15%'}>Code</th>
+                                            <th width={'15%'}>Name</th>
+                                            <th width={'5%'}>Type</th>
                                         </tr>
                                     </thead>
                                     <tbody>

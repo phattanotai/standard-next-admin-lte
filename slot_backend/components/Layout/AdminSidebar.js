@@ -37,7 +37,7 @@ class AdminSidebar extends React.Component {
 
     render() {
         const { pathname } = this.props.router;
-        return <aside className="main-sidebar sidebar-dark-primary elevation-4" style={{ minHeight: '846px' }}>
+        return <aside className="main-sidebar sidebar-dark-primary elevation-4">
             <Link href="/admin">
                 <a className="brand-link text-center">
                     <i className="fa fa-at fa-2x brand-image ml-2" />
@@ -80,12 +80,12 @@ class AdminSidebar extends React.Component {
                                 </a>
                             </Link>
                         </li>
-                        <li className="nav-item"  style={{ display: this.state.showmenu_m7 ? 'block' : 'none' }}>
+                        <li className="nav-item" style={{ display: this.state.showmenu_m7 ? 'block' : 'none' }}>
                             <Link href="/wallets">
                                 <a className={['nav-link', pathname === '/wallets' ? 'active' : ''].join(' ')}>
-                                    <i className="nav-icon fa fa-money"/>
+                                    <i className="nav-icon fa fa-money" />
                                     <p>
-                                        Wallets                                        
+                                        Wallets
                                     </p>
                                 </a>
                             </Link>
@@ -99,22 +99,34 @@ class AdminSidebar extends React.Component {
                                 </p>
                             </a>
                             <ul className="nav nav-treeview">
-                                <li className="nav-item"  style={{ display: this.state.showmenu_m3 ? 'block' : 'none' }}>
+                                <li className="nav-item" style={{ display: this.state.showmenu_m3 ? 'block' : 'none' }}>
                                     <a href="/game_bands" className={['nav-link', pathname === '/game_bands' ? 'active' : ''].join(' ')}>
                                         <i className="fa fa-circle-o nav-icon" />
                                         <p>Games Band</p>
                                     </a>
                                 </li>
-                                <li className="nav-item"  style={{ display: this.state.showmenu_m3 ? 'block' : 'none' }}>
+                                <li className="nav-item" style={{ display: this.state.showmenu_m3 ? 'block' : 'none' }}>
+                                    <a href="/game_bands_sort" className={['nav-link', pathname === '/game_bands_sort' ? 'active' : ''].join(' ')}>
+                                        <i className="fa fa-sort nav-icon" />
+                                        <p>Games Slot Band Sort</p>
+                                    </a>
+                                </li>
+                                <li className="nav-item" style={{ display: this.state.showmenu_m3 ? 'block' : 'none' }}>
                                     <a href="/game_lists" className={['nav-link', pathname === '/game_lists' ? 'active' : ''].join(' ')}>
                                         <i className="fa fa-circle-o nav-icon" />
                                         <p>Games List</p>
                                     </a>
                                 </li>
+                                <li className="nav-item" style={{ display: this.state.showmenu_m3 ? 'block' : 'none' }}>
+                                    <a href="/game_provider" className={['nav-link', pathname === '/game_provider' ? 'active' : ''].join(' ')}>
+                                        <i className="fa fa-circle-o nav-icon" />
+                                        <p>Games Provider</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
-                        <li className="nav-item"  style={{ display: this.state.showmenu_m4 ? 'block' : 'none' }}>
+                        <li className="nav-item" style={{ display: this.state.showmenu_m4 ? 'block' : 'none' }}>
                             <Link href="/game_service">
                                 <a className={['nav-link', pathname === '/game_service' ? 'active' : ''].join(' ')}>
                                     <i className="nav-icon fa fa-exchange" />
@@ -125,7 +137,7 @@ class AdminSidebar extends React.Component {
                                 </a>
                             </Link>
                         </li>
-                        <li className="nav-item"  style={{ display: this.state.showmenu_m5 ? 'block' : 'none' }}>
+                        <li className="nav-item" style={{ display: this.state.showmenu_m5 ? 'block' : 'none' }}>
                             <Link href="/users">
                                 <a className={['nav-link', pathname === '/users' ? 'active' : ''].join(' ')}>
                                     <i className="nav-icon fa fa-user-circle" />
@@ -140,19 +152,19 @@ class AdminSidebar extends React.Component {
                             <a href="#" className='nav-link'>
                                 <i className="nav-icon fa fa-gears" />
                                 <p>
-                                 System Setting
+                                    System Setting
                                     <i className="right fa fa-angle-left" />
                                 </p>
                             </a>
                             <ul className="nav nav-treeview">
-                                {/* <li className="nav-item">
-                                    <a href="/game_bands" className={['nav-link', pathname === '/game_bands' ? 'active' : ''].join(' ')}>
-                                        <i className="fa  fa-map-signs nav-icon"/>
-                                        <p>Game Type</p>
-                                    </a>
-                                </li> */}
                                 <li className="nav-item" style={{ display: this.state.showmenu_m6 ? 'block' : 'none' }}>
-                                    <a href="/user_permission" className={['nav-link', pathname === '/game_lists' ? 'active' : ''].join(' ')}>
+                                    <a href="/game_lucky" className={['nav-link', pathname === '/game_lucky' ? 'active' : ''].join(' ')}>
+                                        <i className="fa fa-gamepad nav-icon" />
+                                        <p>Free Games Setting</p>
+                                    </a>
+                                </li>
+                                <li className="nav-item" style={{ display: this.state.showmenu_m6 ? 'block' : 'none' }}>
+                                    <a href="/user_permission" className={['nav-link', pathname === '/user_permission' ? 'active' : ''].join(' ')}>
                                         <i className="fa fa-circle-o nav-icon" />
                                         <p>User Permission</p>
                                     </a>
@@ -161,16 +173,16 @@ class AdminSidebar extends React.Component {
                         </li>
                         <li className="nav-item">
                             <Link href="/">
-                                <a className={['nav-link', pathname === '/' ? 'active' : ''].join(' ')} onClick={() => { 
-                                    Cookies.remove('user'); 
-                                    Cookies.remove('SystemSetting'); 
+                                <a className={['nav-link', pathname === '/' ? 'active' : ''].join(' ')} onClick={() => {
+                                    Cookies.remove('user');
+                                    Cookies.remove('SystemSetting');
                                     Cookies.remove('SystemUser');
                                     Cookies.remove('Home');
                                     Cookies.remove('Agents');
                                     Cookies.remove('Games');
-                                    Router.push("/"); 
-                                    
-                                    }}>
+                                    Router.push("/");
+
+                                }}>
                                     <i className="nav-icon fa fa-sign-out" />
 
                                     <p>

@@ -101,7 +101,7 @@ export default class Description extends React.Component {
     /* onClick() {
         this.dialog.showAlert('Hello Dialog!')
     } */
-    
+
 
     handleResetSubmit() {
         Router.push("/game_service");
@@ -191,7 +191,7 @@ export default class Description extends React.Component {
                 console.log('closed by clicking background.')
             }
         })
-    }    
+    }
 
     handleSelectChange(e) {
         console.log("e.target.value :" + e.target.value);
@@ -213,7 +213,7 @@ export default class Description extends React.Component {
             const { data, status } = res.data;
             if (status === 2000) {
                 const {
-                    ser_code,brand_code, agent_code, ser_api_key, ser_api_secret, ser_api_username,
+                    ser_code, brand_code, agent_code, ser_api_key, ser_api_secret, ser_api_username,
                     ser_api_password, startpass_string, startuser_string,
                     ser_date, user_process, ser_percent, ser_comm,
                     last_turn_date, last_turn_hour, ser_status
@@ -227,23 +227,23 @@ export default class Description extends React.Component {
                 }
 
                 this.setState({
-                    ser_code: ser_code,brand_code: brand_code, agent_code: agent_code,
+                    ser_code: ser_code, brand_code: brand_code, agent_code: agent_code,
                     ser_api_key: ser_api_key, ser_api_secret: ser_api_secret, ser_api_username: ser_api_username,
                     ser_api_password: ser_api_password, startpass_string: startpass_string, startuser_string: startuser_string,
                     ser_date: ser_date, user_process: user_process, ser_percent: m_ser_percent, ser_comm: m_ser_comm,
                     last_turn_date: last_turn_date, last_turn_hour: last_turn_hour, ser_status: ser_status
                 });
 
-                const brand_name  = Cookies.get('ser_brandname');
+                const brand_name = Cookies.get('ser_brandname');
                 console.log('brand name 417=> ' + brand_name);
-                this.setState({ brand: brand_name});
+                this.setState({ brand: brand_name });
                 //console.log('brand name 417=> ' + brand_name);
                 this.getGamelistFromBrand(brand_code);
 
                 if (ser_status == 'On') {
-                    this.setState({ classBadge: "success", servicestatus: "On" });                    }
-                else
-                {
+                    this.setState({ classBadge: "success", servicestatus: "On" });
+                }
+                else {
                     this.setState({ classBadge: "danger", servicestatus: "Off" });
                 }
 
@@ -262,215 +262,253 @@ export default class Description extends React.Component {
     }
     render() {
 
-        return <AdminLayoutHoc contentTitle={'Agent Description'} contentTitleButton={<i className="fa fa-2x fa-id-badge" />} url={this.props.url}>
+        return <AdminLayoutHoc contentTitle={'Agent Game Services Description'} contentTitleButton={<i className="fa fa-2x fa-id-badge" />} url={this.props.url}>
             <div className="row">
                 <div className="col-6">
                     <div className="card">
-                        <div className="card-header">
-
-                        </div>
                         <div className="col-12">
                             <div className="card-body table-responsive p-0">
                                 <table className="table table-hover ">
-                                    <thead>
+                                    <thead class="table-dark">
                                         <tr >
-                                            <th><h5>ITEMS</h5></th>
-                                            <th><h5>DESCRIPTION</h5></th>
+                                            <th><h6>ITEMS</h6></th>
+                                            <th><h6>DESCRIPTION</h6></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                         <tr>
-                                            <td className="py-1"><h5>Service Status</h5></td>
+                                        <tr>
+                                            <td className="py-1"><h6>Service Status</h6></td>
                                             <td className="py-1"><label className={`badge badge-${this.state.classBadge}`}>{this.state.ser_status}</label> </td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1 "><h5>Brand code</h5></td>
+                                            <td className="py-1 "><h6>Brand code</h6></td>
                                             <td className="py-1">{this.state.brand_code}</td>
                                         </tr>
-                                       
+
                                         <tr>
-                                            <td className="py-1"><h5>Agent Code</h5></td>
+                                            <td className="py-1"><h6>Agent Code</h6></td>
                                             <td className="py-1">{this.state.agent_code}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Service API Key</h5></td>
+                                            <td className="py-1"><h6>Service API Key</h6></td>
                                             <td className="py-1">{this.state.ser_api_key}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Service API Secret</h5></td>
+                                            <td className="py-1"><h6>Service API Secret</h6></td>
                                             <td className="py-1">{this.state.ser_api_secret}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Service API Username</h5></td>
+                                            <td className="py-1"><h6>Service API Username</h6></td>
                                             <td className="py-1">{this.state.ser_api_username}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Service API Password</h5></td>
+                                            <td className="py-1"><h6>Service API Password</h6></td>
                                             <td className="py-1">{this.state.ser_api_password}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Start User String</h5></td>
+                                            <td className="py-1"><h6>Start User String</h6></td>
                                             <td className="py-1">{this.state.startuser_string}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Start Password String</h5></td>
+                                            <td className="py-1"><h6>Start Password String</h6></td>
                                             <td className="py-1">{this.state.startpass_string}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>User Process</h5></td>
+                                            <td className="py-1"><h6>User Process</h6></td>
                                             <td className="py-1">{this.state.user_process}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Service Percent</h5></td>
+                                            <td className="py-1"><h6>Service Percent</h6></td>
                                             <td className="py-1">{this.state.ser_percent}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Service Commission</h5></td>
+                                            <td className="py-1"><h6>Service Commission</h6></td>
                                             <td className="py-1">{this.state.ser_comm}</td>
-                                        </tr>                                       
+                                        </tr>
 
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div className="card-footer">
+                        <div className="card-footer ">
                             <div className="bt-tb-page">
-                                <button className="btn btn-danger w-25" onClick={this.handleResetSubmit}>Back</button>
+                                <button className="btn btn-danger" onClick={this.handleResetSubmit} title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div className="col-6">
-                        <div className="card">
-                            <div className="card-header">
-                                {/* <h3 className="card-title">Current users</h3> */}
-                                <MDBContainer>
-                                    <div className="wrapper">
-                                        <h4> Games List for brand : {this.state.brand} </h4>
-                                        <div className="wrapper">
-
-                                            <div className="w-auto h-25 p-3  d-inline-block">
-                                                Row per page
-                                                <select id="select-1" className="form-control" value={this.state.rowperpage} onChange={this.handleSelectRowPerPageChange}>
-                                                    <option value='10'>10</option>
-                                                    <option value='15'>15</option>
-                                                    <option value='20'>20</option>
-                                                    <option value='25'>25</option>
-                                                    <option value='30'>30</option>
-                                                    <option value='35'>35</option>
-                                                    <option value='40'>40</option>
-                                                    <option value='45'>45</option>
-                                                    <option value='50'>50</option>
-                                                </select>
-                                            </div>
-                                            <div className="w-auto h-25 p-3  d-inline-block">
-                                                PageNumber
-                                                    <select id="select-1" className="form-control" value={this.state.pagenumber} onChange={this.handleSelectPageNumberChange}>
-                                                    {
-                                                        this.state.pagearr.map((p, index) => {
-                                                            return (
-                                                                <option value={p} key={index}>{p}</option>
-                                                            )
-                                                        })
+                    <div className="card">
+                        <div className="card-header bg-secondary">
+                            <h4> Games List for brand : {this.state.brand} </h4>
+                            <div className="card-tools d-inline-block">
+                                <div className="input-group input-group-sm" style={{ width: '100%' }}>
+                                    <input type="text" name="table_search"
+                                        className="form-control float-right"
+                                        placeholder="Search"
+                                        onChange={(e) => {
+                                            this.setState({ searchtxt: e.target.value });
+                                            var name = e.target.value;
+                                            var datalength = this.state.rawdata.length;
+                                            console.log("datalength : " + datalength);
+                                            if (name != "") {
+                                                this.setState({
+                                                    data: this.state.rawdata.filter((data) => {
+                                                        if (data.game_code.indexOf(name) !== -1) {
+                                                            return data.game_code.indexOf(name) !== -1;
+                                                        } else if (data.game_name.indexOf(name) !== -1) {
+                                                            return data.game_name.indexOf(name) !== -1;
+                                                        } else if (data.game_type.indexOf(name) !== -1) {
+                                                            return data.game_type.indexOf(name) !== -1;
+                                                        }
+                                                    })
+                                                });
+                                                datalength = this.state.rawdata.filter((data) => {
+                                                    if (data.game_code.indexOf(name) !== -1) {
+                                                        return data.game_code.indexOf(name) !== -1;
+                                                    } else if (data.game_name.indexOf(name) !== -1) {
+                                                        return data.game_name.indexOf(name) !== -1;
+                                                    } else if (data.game_type.indexOf(name) !== -1) {
+                                                        return data.game_type.indexOf(name) !== -1;
                                                     }
-                                                </select>
-                                            </div>
-                                            <div className="card-tools d-inline-block">
-                                                <div className="input-group input-group-sm" style={{ width: '100%' }}>
-                                                    <input type="text" name="table_search"
-                                                        className="form-control float-right"
-                                                        placeholder="Search"
-                                                        onChange={(e) => {
-                                                            this.setState({ searchtxt: e.target.value });
-                                                            var name = e.target.value;
-                                                            var datalength = this.state.rawdata.length;
-                                                            if (name != "") {
-                                                                this.setState({
-                                                                    data: this.state.rawdata.filter((data) => {
-                                                                        return data.brand_name.indexOf(name) !== -1;
-                                                                    })
-                                                                });
-                                                                datalength = this.state.rawdata.filter((data) => {
-                                                                    return data.brand_name.indexOf(name) !== -1;
-                                                                }).length;
-                                                            } else {
-                                                                this.setState({
-                                                                    data: this.state.rawdata
-                                                                });
-                                                            }
-
-                                                            var page_remain = Math.floor(datalength / this.state.rowperpage);
-                                                            var num = datalength % this.state.rowperpage;
-                                                            if (num > 0) {
-                                                                page_remain++;
-                                                            }
-
-                                                            var arr = [];
-                                                            var i;
-                                                            for (i = 0; i < page_remain; i++) {
-                                                                arr.push(i + 1);
-                                                            }
-                                                            var pagenum = 1;
-                                                            var startrow = (pagenum - 1) * this.state.rowperpage;
-                                                            var endrow = startrow + this.state.rowperpage;
-                                                            this.setState({ recordtotal: datalength, pagetotal: page_remain, pagenumber: pagenum, pagearr: arr, startrow: startrow, endrow: endrow });
-                                                        }}
-                                                        value={this.state.searchtxt} />
-                                                    <div className="input-group-append">
-                                                        <button className="btn btn-default"><i className="fa fa-search" onClick={this.onSearchClick} /></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </MDBContainer>
-                            </div>
-                            <div className="card-body table-responsive p-0">
-                                <table className="table table-hover table-striped table-bordered">
-                                    <thead>
-                                        <tr >
-                                            <th>Status</th>
-                                            <th>Image</th>
-                                            <th>Code</th>
-                                            <th>Name</th>
-                                            <th>Type</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.state.data.map((game, index) => {
-                                            let classBadge = 'danger';
-                                            let mystatus = 'disable';
-                                            if (game.game_status == 1) {
-                                                classBadge = 'success';
-                                                mystatus = 'enable';
+                                                }).length;
+                                            } else {
+                                                this.setState({
+                                                    data: this.state.rawdata
+                                                });
                                             }
-                                            if (index >= this.state.startrow && index < this.state.endrow)
-                                                //console.log("userid" + user.id);
-                                                return (
-                                                    <tr key={index}>
-                                                        <td className="py-1"><label className={`badge badge-info`} style={{ display: game.game_new === 'Yes' ? 'block' : 'none' }}>new</label> <label className={`badge badge-${classBadge}`} style={{ display: 'block' }}>{mystatus}</label></td>
-                                                        <td className="py-1">
-                                                            <img
-                                                                src={game.game_img ? ServiceImage.imageshow(game.game_img) : ServiceImage.imageshow("1594692624651-no-image-available.png")}
-                                                                style={{flex: 1,
-                                                                    width: "80px", 
-                                                                    height: null, 
-                                                                    resizeMode: 'contain' }}
-                                                            />
 
-                                                        </td>
-                                                        <td className="py-1">{game.game_code}</td>
-                                                        <td className="py-1">{game.game_name}</td>
-                                                        <td className="py-1">{game.game_type}</td>
-                                                    </tr>
-                                                );
-                                        })}
-                                    </tbody>
-                                </table>
+                                            var page_remain = Math.floor(datalength / this.state.rowperpage);
+                                            var num = datalength % this.state.rowperpage;
+                                            if (num > 0) {
+                                                page_remain++;
+                                            }
+
+                                            var arr = [];
+                                            var i;
+                                            for (i = 0; i < page_remain; i++) {
+                                                arr.push(i + 1);
+                                            }
+                                            var pagenum = 1;
+                                            var startrow = (pagenum - 1) * this.state.rowperpage;
+                                            var endrow = startrow + this.state.rowperpage;
+                                            this.setState({ recordtotal: datalength, pagetotal: page_remain, pagenumber: pagenum, pagearr: arr, startrow: startrow, endrow: endrow });
+                                        }}
+                                        value={this.state.searchtxt} />
+                                    <div className="input-group-append">
+                                        <button className="btn btn-default"><i className="fa fa-search" onClick={this.onSearchClick} /></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div className="card-body table-responsive p-0">
+                            <table className="table table-hover table-striped table-bordered">
+                                <thead class="table-dark">
+                                    <tr >
+                                        <th>Status</th>
+                                        <th>Image</th>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.data.map((game, index) => {
+                                        let classBadge = 'danger';
+                                        let mystatus = 'disable';
+                                        if (game.game_status == 1) {
+                                            classBadge = 'success';
+                                            mystatus = 'enable';
+                                        }
+                                        if (index >= this.state.startrow && index < this.state.endrow)
+                                            //console.log("userid" + user.id);
+                                            return (
+                                                <tr key={index}>
+                                                    <td className="py-1"><label className={`badge badge-info`} style={{ display: game.game_new === 'Yes' ? 'block' : 'none' }}>new</label> <label className={`badge badge-${classBadge}`} style={{ display: 'block' }}>{mystatus}</label></td>
+                                                    <td className="py-1">
+                                                        <img
+                                                            src={game.game_img ? ServiceImage.imageshow(game.game_img) : ServiceImage.imageshow("1594692624651-no-image-available.png")}
+                                                            style={{
+                                                                flex: 1,
+                                                                width: "80px",
+                                                                height: null,
+                                                                resizeMode: 'contain'
+                                                            }}
+                                                        />
+
+                                                    </td>
+                                                    <td className="py-1">{game.game_code}</td>
+                                                    <td className="py-1">{game.game_name}</td>
+                                                    <td className="py-1">{game.game_type}</td>
+                                                </tr>
+                                            );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="card-footer" style={{ textAlign: "right", width: '100%' }}>
+                            <MDBContainer>
+                                <div className="wrapper">
+                                    <div className="w-auto h-25 p-3  d-inline-block">
+                                        Row per page
+                                        <select id="select-1" className="form-control" value={this.state.rowperpage} onChange={this.handleSelectRowPerPageChange}>
+                                            <option value='10'>10</option>
+                                            <option value='15'>15</option>
+                                            <option value='20'>20</option>
+                                            <option value='25'>25</option>
+                                            <option value='30'>30</option>
+                                            <option value='35'>35</option>
+                                            <option value='40'>40</option>
+                                            <option value='45'>45</option>
+                                            <option value='50'>50</option>
+                                        </select>
+                                    </div>
+                                    <div className="w-auto h-25 p-3  d-inline-block">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination">
+                                                <li class="page-item"><a class="page-link" onClick={() => {
+                                                    if (this.state.pagenumber > 1) {
+                                                        let p = this.state.pagenumber - 1;
+                                                        this.setState({ pagenumber: p });
+                                                        var pagenum = p
+                                                        var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                        var endrow = startrow + this.state.rowperpage;
+                                                        this.setState({ startrow: startrow, endrow: endrow });
+                                                    }
+                                                }}>Previous</a></li>
+                                                {
+                                                    this.state.pagearr.map((p, index) => {
+                                                        return (
+                                                            <li class={this.state.pagenumber == p ? "page-item active" : "page-item"}><a class="page-link" onClick={() => {
+                                                                this.setState({ pagenumber: p });
+                                                                var pagenum = p;
+                                                                var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                                var endrow = startrow + this.state.rowperpage;
+                                                                this.setState({ startrow: startrow, endrow: endrow });
+                                                            }}>{p}</a></li>
+                                                        )
+                                                    })
+                                                }
+                                                <li class="page-item"><a class="page-link" onClick={() => {
+                                                    if (this.state.pagenumber < this.state.pagearr.length) {
+                                                        let p = this.state.pagenumber + 1;
+                                                        this.setState({ pagenumber: p });
+                                                        var pagenum = p;
+                                                        var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                        var endrow = startrow + this.state.rowperpage;
+                                                        this.setState({ startrow: startrow, endrow: endrow });
+                                                    }
+                                                }}>Next</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+
+                                </div>
+                            </MDBContainer>
+                        </div>
                     </div>
+                </div>
                 <Dialog ref={(el) => { this.dialog = el }} />
             </div>
         </AdminLayoutHoc>

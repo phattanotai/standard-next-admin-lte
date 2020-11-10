@@ -207,13 +207,12 @@ export default class Admin extends React.Component {
     render() {
         return <AdminLayoutHoc contentTitle={'Dashboard'} contentTitleButton={<i className="fa fa-2x fa-home" />} url={this.props.url}>
             <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-12">
                     <div className="card">
-                        <div className="card-header">
+                        <div className="card-header  bg-secondary">
                             <h3 className="card-title">
                                 <i className="fa fa-cubes" />&nbsp;Game Brand
                             </h3>
-
                             <div className="card-tools d-inline-block">
                                 <div className="input-group input-group-sm" style={{ width: '100%' }}>
                                     <input type="text" name="table_search"
@@ -249,15 +248,15 @@ export default class Admin extends React.Component {
                         </div>
                         <div className="card-body table-responsive p-0 ">
                             <table className="table table-hover table-striped table-bordered">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr >
-                                        <th>Stauts</th>
-                                        <th>Img</th>
-                                        <th>Code</th>
-                                        <th>Name</th>
+                                        <th width={'5%'}>Stauts</th>
+                                        <th width={'20%'}>Img</th>
+                                        <th width={'20%'}>Code</th>
+                                        <th width={'20%'}>Name</th>
                                         {/*  <th>Key</th>
                                         <th>Play URL</th> */}
-                                        <th>Edit</th>
+                                        <th  width={'10%'} style={{ textAlign: "center" }}>Command</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -278,7 +277,7 @@ export default class Admin extends React.Component {
                                                             src={brand.brand_img ? ServiceImage.imageshow(brand.brand_img) : ServiceImage.imageshow("1594692624651-no-image-available.png")}
                                                             style={{flex: 1,
                                                                 width: null, 
-                                                                height: "80px", 
+                                                                height: "60px", 
                                                                 resizeMode: 'contain' }} 
                                                         /> 
 
@@ -290,7 +289,7 @@ export default class Admin extends React.Component {
                                                     {/* <td className="py-1">{brand.brand_banner}</td>
                                                     <td className="py-1">{brand.brand_key}</td> style={{ width: "80px", height: "80px" }}
                                                     <td className="py-1">{brand.play_url}</td> */}
-                                                    <td className="py-1">
+                                                    <td className="py-1" style={{ textAlign: "center" }}>
                                                         <button
                                                             type="button"
                                                             className="btn btn-warning btn-icon-text"
@@ -300,8 +299,12 @@ export default class Admin extends React.Component {
                                                                 Router.push("/game_bands/edit");
 
                                                             }}
+                                                            title='Edit'
+                                                            style={{  width: 45 }}
+                                                            //style={{ width: 100 }}
+                                                            //onClick={this.onClick}
                                                         >
-                                                            Edit
+                                                            <i class="fa fa-edit"></i>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -313,9 +316,9 @@ export default class Admin extends React.Component {
                     </div>
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-12">
                     <div className="card">
-                        <div className="card-header">
+                        <div className="card-header bg-secondary">
                             <h3 className="card-title">
                                 <i className="fa fa-bars" />&nbsp;Game List
                             </h3>
@@ -360,14 +363,14 @@ export default class Admin extends React.Component {
                         </div> */}
                         <div className="card-body table-responsive p-0">
                             <table className="table table-hover  table-striped table-bordered">
-                                <thead>
+                                <thead  class="table-dark">
                                     <tr >
-                                        <th>Stauts</th>
-                                        <th>Img</th>
-                                        <th>Code</th>
-                                        <th>Name</th>
-                                        <th>Brand</th>
-                                        <th> Edit </th>
+                                        <th width={'5%'}>Stauts</th>
+                                        <th width={'20%'}>Img</th>
+                                        <th width={'20%'}>Code</th>
+                                        <th width={'20%'}>Name</th>
+                                        <th width={'20%'}>Brand</th>
+                                        <th width={'10%'} style={{ textAlign: "center" }}>Command</th>
                                         {/* <th>ID</th>
                                         <th>Type</th>
                                         <th>New</th>
@@ -401,7 +404,7 @@ export default class Admin extends React.Component {
                                                     <td className="py-1">{game.game_code}</td>
                                                     <td className="py-1">{game.game_name}</td>
                                                     <td className="py-1">{game.game_brand}</td>
-                                                    <td className="py-1">
+                                                    <td className="py-1" style={{ textAlign: "center" }}>
                                                         <button
                                                             type="button"
                                                             className="btn btn-warning btn-icon-text"
@@ -411,9 +414,10 @@ export default class Admin extends React.Component {
                                                                 Router.push("/game_lists/edit");
 
                                                             }}
-                                                        //onClick={this.onClick}
-                                                        >
-                                                            Edit
+                                                        title='Edit'
+                                                        style={{  width: 45 }}
+                                                    >
+                                                        <i class="fa fa-edit"></i>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -429,7 +433,7 @@ export default class Admin extends React.Component {
             <div className="row">
                 <div className="col-md-12">
                     <div className="card">
-                        <div className="card-header">
+                        <div className="card-header bg-secondary">
                             <h3 className="card-title">
                                 <i className="fa fa-id-badge" />&nbsp;Agents
                             </h3>
@@ -475,15 +479,14 @@ export default class Admin extends React.Component {
 
                         <div className="card-body table-responsive p-0">
                             <table className="table table-hover  table-striped table-bordered">
-                                <thead>
+                                <thead  class="table-dark">
                                     <tr >
-                                        <th>Code</th>
-                                        <th>Name</th>
-                                        <th>LineUp</th>
-                                        <th>Line@</th>
-                                        <th>WebSite</th>
-                                        <th>Type</th>
-                                        <th>Edit</th>
+                                        <th width={'5%'}>Stauts</th>
+                                        <th width={'20%'}>Code</th>
+                                        <th width={'20%'}>Name</th>
+                                        <th width={'20%'}>LineUp</th>
+                                        <th width={'10%'}>Type</th>
+                                        <th width={'10%'} style={{ textAlign: "center" }}>Command</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -497,13 +500,12 @@ export default class Admin extends React.Component {
                                         if (index >= this.state.startrow && index < this.state.endrow)
                                             return (
                                                 <tr key={index}>
-                                                    <td className="py-1"><label className={`badge badge-${classBadge}`}>{mystatus}</label>{agent.agent_code}</td>
+                                                    <td className="py-1"><label className={`badge badge-${classBadge}`}>{mystatus}</label></td>
+                                                    <td className="py-1">{agent.agent_code}</td>
                                                     <td className="py-1">{agent.agent_name}</td>
                                                     <td className="py-1">{agent.agent_lineup}</td>
-                                                    <td className="py-1">{agent.agent_line_ad}</td>
-                                                    <td className="py-1">{agent.agent_website}</td>
                                                     <td className="py-1">{agent.agent_type}</td>
-                                                    <td className="py-1">
+                                                    <td className="py-1" style={{ textAlign: "center" }}>
                                                         <button
                                                             type="button"
                                                             className="btn btn-warning btn-icon-text"
@@ -513,8 +515,10 @@ export default class Admin extends React.Component {
                                                                 Router.push("/agents/edit");
 
                                                             }}
+                                                            title='Edit'
+                                                            style={{  width: 45 }}
                                                         >
-                                                            Edit
+                                                            <i class="fa fa-edit"></i>
                                                         </button>
 
                                                     </td>

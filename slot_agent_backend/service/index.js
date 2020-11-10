@@ -14,3 +14,12 @@ export { default as ServiceMember } from './member';
 export { default as ServiceTurnover } from './turnover';
 export { default as ServiceTransaction } from './transaction';
 export { default as ServiceMoveCredit } from './movecredit';
+
+export { default as ServiceNews } from './news';
+export { default as ServiceBonus } from './bonus';
+export { default as ServiceMemberBonus } from './member_bonus';
+export { default as ServiceGameBonus } from './game_bonus';
+export { default as ServiceDashBoard } from './dashboard';
+
+export { default as ServiceShare } from './share';
+export { default as ServiceMemberShare } from './membershare';

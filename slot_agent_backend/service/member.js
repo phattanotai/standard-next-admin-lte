@@ -38,6 +38,11 @@ const deposit = (data, username) => {
   return axios.put(`${endpoint}/member/deposit/${username}`, data, configHeader());
 };
 
+const topup = (data, username) => {
+  //console.log('data : ' + data);
+  return axios.put(`${endpoint}/member/topup/${username}`, data, configHeader());
+};
+
 const withdraw = (data, username) => {
   //console.log('data : ' + data);
   return axios.put(`${endpoint}/member/withdraw/${username}`, data, configHeader());
@@ -64,4 +69,5 @@ export default {
   getMemberAgent,
   getMember,
   withdraw,
+  topup,
 };

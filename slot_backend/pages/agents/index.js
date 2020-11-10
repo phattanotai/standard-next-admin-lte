@@ -250,8 +250,8 @@ export default class Agents extends React.Component {
             <div className="row">
                 <div className="col-12">
                     <div className="card">
-                        <div className="card-header">
-                            {/* <h3 className="card-title">Current users</h3> */}
+                        {/* <div className="card-header">
+                            
                             <MDBContainer>
                                 <div className="wrapper">
                                     <div className="w-auto h-25 p-3  d-inline-block">
@@ -329,18 +329,91 @@ export default class Agents extends React.Component {
                                 </div>
                             </MDBContainer>
 
+                        </div> */}
+                        <div className="card-header bg-secondary">
+                            <div className="wrapper float-right">
+                                <div className="w-auto h-25 p-3  d-inline-block">
+                                    Row per page
+                                        <select id="select-1" className="form-control" value={this.state.rowperpage} onChange={this.handleSelectRowPerPageChange}>
+                                        <option value='10'>10</option>
+                                        <option value='15'>15</option>
+                                        <option value='20'>20</option>
+                                        <option value='25'>25</option>
+                                        <option value='30'>30</option>
+                                        <option value='35'>35</option>
+                                        <option value='40'>40</option>
+                                        <option value='45'>45</option>
+                                        <option value='50'>50</option>
+                                    </select>
+                                </div>
+                                <div className="card-tools d-inline-block">
+                                    <div className="input-group input-group-sm" style={{ width: '100%' }}>
+                                        <input type="text" name="table_search"
+                                            className="form-control float-right"
+                                            placeholder="Search"
+                                            onChange={(e) => {
+                                                this.setState({ searchtxt: e.target.value });
+                                                var name = e.target.value;
+                                                var datalength = this.state.rawdata.length;
+                                                if (name != "") {
+                                                    this.setState({
+                                                        data: this.state.rawdata.filter((data) => {
+                                                            if (data.agent_code.indexOf(name) !== -1) {
+                                                                return data.agent_code.indexOf(name) !== -1;
+                                                            } else if (data.agent_name.indexOf(name) !== -1) {
+                                                                return data.agent_name.indexOf(name) !== -1;
+                                                            } 
+                                                        })
+                                                    });
+                                                    datalength = this.state.rawdata.filter((data) => {
+                                                        if (data.agent_code.indexOf(name) !== -1) {
+                                                            return data.agent_code.indexOf(name) !== -1;
+                                                        } else if (data.agent_name.indexOf(name) !== -1) {
+                                                            return data.agent_name.indexOf(name) !== -1;
+                                                        }
+                                                    }).length;
+                                                } else {
+                                                    this.setState({
+                                                        data: this.state.rawdata
+                                                    });
+                                                }
+
+                                                var page_remain = Math.floor(datalength / this.state.rowperpage);
+                                                var num = datalength % this.state.rowperpage;
+                                                if (num > 0) {
+                                                    page_remain++;
+                                                }
+
+                                                var arr = [];
+                                                var i;
+                                                for (i = 0; i < page_remain; i++) {
+                                                    arr.push(i + 1);
+                                                }
+                                                var pagenum = 1;
+                                                var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                var endrow = startrow + this.state.rowperpage;
+                                                this.setState({ recordtotal: datalength, pagetotal: page_remain, pagenumber: pagenum, pagearr: arr, startrow: startrow, endrow: endrow });
+                                            }}
+                                            value={this.state.searchtxt} />
+                                        <div className="input-group-append">
+                                            <button className="btn btn-default"><i className="fa fa-search" onClick={this.onSearchClick} /></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <div className="card-body table-responsive p-0">
                             <table className="table table-hover table-striped table-bordered">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr >
-                                        <th>Code</th>
-                                        <th>Name</th>
-                                        <th>LineUp</th>
-                                        <th>Line@</th>
-                                        <th>WebSite</th>
-                                        <th>Type</th>
-                                        <th style={{ textAlign: "right" }}>Detail / Edit / Delete</th>
+                                        <th width={'5%'}>Stauts</th>
+                                        <th width={'10%'}>Code</th>
+                                        <th width={'20%'}>Name</th>
+                                        <th width={'10%'}>LineUp</th>
+                                        <th width={'20%'}>WebSite</th>
+                                        <th width={'5%'}>Type</th>
+                                        <th width={'15%'} style={{ textAlign: "center" }}>Command</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -355,13 +428,13 @@ export default class Agents extends React.Component {
                                             //console.log("userid" + user.id);
                                             return (
                                                 <tr key={index}>
-                                                    <td className="py-1"><label className={`badge badge-${classBadge}`}>{mystatus}</label>{agent.agent_code}</td>
+                                                    <td className="py-1"><label className={`badge badge-${classBadge}`}>{mystatus}</label></td>
+                                                    <td className="py-1">{agent.agent_code}</td>
                                                     <td className="py-1">{agent.agent_name}</td>
                                                     <td className="py-1">{agent.agent_lineup}</td>
-                                                    <td className="py-1">{agent.agent_line_ad}</td>
                                                     <td className="py-1">{agent.agent_website}</td>
                                                     <td className="py-1">{agent.agent_type}</td>
-                                                    <td className="py-1" style={{ textAlign: "right" }}>
+                                                    <td className="py-1" style={{ textAlign: "center" }}>
                                                         <button
                                                             type="button"
                                                             className="btn btn-success btn-icon-text"
@@ -371,10 +444,11 @@ export default class Agents extends React.Component {
                                                                 Router.push("/agents/description");
 
                                                             }}
-                                                            style={{ marginLeft: 5, width: 80 }}
-                                                        //onClick={this.onClick}
+                                                            title='Detail'
+                                                            style={{ marginLeft: 5, width: 45 }}
+
                                                         >
-                                                            Detail
+                                                            <i class="fa fa-eye"></i>
                                                         </button>
                                                         <button
                                                             type="button"
@@ -385,10 +459,12 @@ export default class Agents extends React.Component {
                                                                 Router.push("/agents/edit");
 
                                                             }}
-                                                            style={{ marginLeft: 5,width: 80 }}
+                                                            title='Edit'
+                                                            style={{ marginLeft: 5, width: 45 }}
+                                                        //style={{ width: 100 }}
                                                         //onClick={this.onClick}
                                                         >
-                                                            Edit
+                                                            <i class="fa fa-edit"></i>
                                                         </button>
                                                         <button
                                                             type="button"
@@ -412,10 +488,14 @@ export default class Agents extends React.Component {
                                                                     }
                                                                 })
                                                             }}
-                                                            style={{ marginLeft: 5,width: 80 }}
+
                                                             className="btn btn-danger btn-icon-text"
+                                                            title='Delete'
+                                                            style={{ marginLeft: 5, width: 45 }}
+                                                        //style={{ width: 100 }}
+                                                        //onClick={this.onClick}
                                                         >
-                                                            Delete
+                                                            <i class="fa fa-close"></i>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -423,6 +503,50 @@ export default class Agents extends React.Component {
                                     })}
                                 </tbody>
                             </table>
+                        </div>
+                        <div className="card-footer" style={{ textAlign: "right", width: '100%' }}>
+                            <div className="wrapper float-right">
+
+                                <div className="w-auto h-25 p-3  d-inline-block">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li class="page-item"><a class="page-link" onClick={() => {
+                                                if (this.state.pagenumber > 1) {
+                                                    let p = this.state.pagenumber - 1;
+                                                    this.setState({ pagenumber: p });
+                                                    var pagenum = p
+                                                    var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                    var endrow = startrow + this.state.rowperpage;
+                                                    this.setState({ startrow: startrow, endrow: endrow });
+                                                }
+                                            }}>Previous</a></li>
+                                            {
+                                                this.state.pagearr.map((p, index) => {
+                                                    return (
+                                                        <li class={this.state.pagenumber == p ? "page-item active" : "page-item"}><a class="page-link" onClick={() => {
+                                                            this.setState({ pagenumber: p });
+                                                            var pagenum = p;
+                                                            var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                            var endrow = startrow + this.state.rowperpage;
+                                                            this.setState({ startrow: startrow, endrow: endrow });
+                                                        }}>{p}</a></li>
+                                                    )
+                                                })
+                                            }
+                                            <li class="page-item"><a class="page-link" onClick={() => {
+                                                if (this.state.pagenumber < this.state.pagearr.length) {
+                                                    let p = this.state.pagenumber + 1;
+                                                    this.setState({ pagenumber: p });
+                                                    var pagenum = p;
+                                                    var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                    var endrow = startrow + this.state.rowperpage;
+                                                    this.setState({ startrow: startrow, endrow: endrow });
+                                                }
+                                            }}>Next</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -233,10 +233,7 @@ export default class EditAgent extends React.Component {
         return <AdminLayoutHoc contentTitle={'Edit Agents'} contentTitleButton={<i className="fa fa-2x fa-id-badge" />} url={this.props.url}>
             <div className="offset-md-0">
                 <div className="card">
-                    <div className="card-header">
-                        {/* <h3 className="card-title">New User Form</h3> */}
-                    </div>
-                    <form className="form-horizontal">
+                    {/* <form className="form-horizontal">
                         <div className="card-body">
 
                             <div className="input-group mb-3 input-group-sm">
@@ -479,12 +476,257 @@ export default class EditAgent extends React.Component {
                             </div>
 
                         </div>
+                    </form> */}
+
+<form className="form-horizontal">
+                        <div className="card-body">
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent code</span>
+                                </div>
+                                <input type="text" className="form-control"
+                                    //placeholder="agent code"
+                                    id="validation-ex1"
+                                    onChange={(e) => this.setState({ agent_code: e.target.value })}
+                                    value={this.state.agent_code}
+                                    required />
+                            </div>
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent lineup</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex2"
+                                    //placeholder="agent lineup"
+                                    onChange={(e) => this.setState({ agent_lineup: e.target.value })}
+                                    value={this.state.agent_lineup}
+                                    required 
+                                    disabled={true}/>
+                            </div>
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent name</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex3"
+                                    //placeholder="agent name"
+                                    onChange={(e) => this.setState({ agent_name: e.target.value })}
+                                    value={this.state.agent_name}
+                                    required />
+                            </div>
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent detail</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex4"
+                                    //placeholder="agent detail"
+                                    onChange={(e) => this.setState({ agent_detail: e.target.value })}
+                                    value={this.state.agent_detail}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent website</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex5"
+                                    //placeholder="agent website"
+                                    onChange={(e) => this.setState({ agent_website: e.target.value })}
+                                    value={this.state.agent_website}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent master</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex6"
+                                    //placeholder="agent master"
+                                    onChange={(e) => this.setState({ agent_master: e.target.value })}
+                                    value={this.state.agent_master}
+                                    required />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="select-1" className="col-sm-12 control-label">Select agent type</label>
+                                <div className="col-sm-offset-2 col-sm-12">
+                                    <select id="select-1" className="form-control" value={this.state.agent_type} onChange={this.handleSelectChange}>
+                                        {/* <option value='Master'>Master</option> */}
+                                        <option value='Agent'>Agent</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent percent</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex7"
+                                    //placeholder="agent percent"
+                                    onChange={(e) => this.setState({ agent_percent: e.target.value })}
+                                    value={this.state.agent_percent}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent percent aff</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex8"
+                                    //placeholder="agent percent aff"
+                                    onChange={(e) => this.setState({ agent_percent_aff: e.target.value })}
+                                    value={this.state.agent_percent_aff}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent percent aff2</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex9"
+                                    //placeholder="agent percent aff2"
+                                    onChange={(e) => this.setState({ agent_percent_aff2: e.target.value })}
+                                    value={this.state.agent_percent_aff2}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent percent aff3</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex10"
+                                    //placeholder="agent percent aff3"
+                                    onChange={(e) => this.setState({ agent_percent_aff3: e.target.value })}
+                                    value={this.state.agent_percent_aff3}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent percent aff4</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex11"
+                                    //placeholder="agent percent aff4"
+                                    onChange={(e) => this.setState({ agent_percent_aff4: e.target.value })}
+                                    value={this.state.agent_percent_aff4}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent percent aff5</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex12"
+                                    //placeholder="agent percent aff5"
+                                    onChange={(e) => this.setState({ agent_percent_aff5: e.target.value })}
+                                    value={this.state.agent_percent_aff5}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent comm</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex13"
+                                    //placeholder="agent comm"
+                                    onChange={(e) => this.setState({ agent_comm: e.target.value })}
+                                    value={this.state.agent_comm}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent line ad</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex14"
+                                    //placeholder="agent line ad"
+                                    onChange={(e) => this.setState({ agent_line_ad: e.target.value })}
+                                    value={this.state.agent_line_ad}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent line token1</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex15"
+                                    //placeholder="agent line token1"
+                                    onChange={(e) => this.setState({ agent_line_token1: e.target.value })}
+                                    value={this.state.agent_line_token1}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent line token2</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex16"
+                                    //placeholder="agent line token2"
+                                    onChange={(e) => this.setState({ agent_line_token2: e.target.value })}
+                                    value={this.state.agent_line_token2}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent line token3</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex16"
+                                    //placeholder="agent line token3"
+                                    onChange={(e) => this.setState({ agent_line_token3: e.target.value })}
+                                    value={this.state.agent_line_token3}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent api user</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex17"
+                                    //placeholder="agent api user"
+                                    onChange={(e) => this.setState({ agent_api_user: e.target.value })}
+                                    value={this.state.agent_api_user}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent api password</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex18"
+                                    //placeholder="agent api password"
+                                    onChange={(e) => this.setState({ agent_api_password: e.target.value })}
+                                    value={this.state.agent_api_password}
+                                    required />
+                            </div>
+
+                            <div className="input-group mb-3 input-group-sm">
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent api key</span>
+                                </div>
+                                <input type="text" className="form-control " id="validation-ex19"
+                                    //placeholder="agent api key"
+                                    onChange={(e) => this.setState({ agent_api_key: e.target.value })}
+                                    value={this.state.agent_api_key}
+                                    required />
+                            </div>
+
+                            <div className="form-group">
+                                <div className="col-sm-12">
+                                    <label className="control-label">Agent status&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                    <label class="switch">
+                                        <input type="checkbox" onChange={this.handleSwitchChange(1)} checked={this.state.switch1} />
+                                        <span class="slider round"></span>
+                                    </label>
+                                    <label className="control-label">&nbsp;&nbsp;Enabled</label>
+                                </div>
+                            </div>
+
+                        </div>
                     </form>
 
                     <div className="card-footer">
                         <div className="d-inline-block btn-block">
-                            <button className="btn btn-danger" onClick={this.handleResetSubmit}>Back</button>
-                            <button className="btn btn-info float-right" onClick={this.handleSubmit}>Save</button>
+                            <button className="btn btn-danger" onClick={this.handleResetSubmit} title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
+                            <button className="btn btn-info" onClick={this.handleSubmit} title='Save' style={{marginLeft: 5,  width: 45 }}><i class="fa fa-floppy-o"></i></button>
                         </div>
                     </div>
                 </div>

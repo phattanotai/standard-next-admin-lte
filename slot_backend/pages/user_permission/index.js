@@ -104,8 +104,8 @@ export default class UserPermission extends React.Component {
                                 if (status === 2000) {
                                     console.log("data length : " + data.length);
                                     this.setState({ data: data });
-                                    this.setState({ rawdata: data });                                  
-                    
+                                    this.setState({ rawdata: data });
+
                                 } else {
                                     this.setErrorMsg(res.data.msg);
                                 }
@@ -196,7 +196,7 @@ export default class UserPermission extends React.Component {
         //Router.push("/user_permission/add");
     }
 
-    
+
 
     async ShowPermission() {
         if (this.state.errorMessage) this.setErrorMsg("");
@@ -296,11 +296,11 @@ export default class UserPermission extends React.Component {
                 this.setState({ rawdata: data });
 
                 var i;
-                var _id  = '';
+                var _id = '';
                 for (i = 0; i < data.length; i++) {
-                    if (data[i].user_level_name == 'Admin') _id=data[i]._id;
+                    if (data[i].user_level_name == 'Admin') _id = data[i]._id;
                 }
-                                
+
                 console.log('u_id' + _id);
                 this.setState({ role: "Admin", u_id: _id });
                 this.ShowPermission();
@@ -320,60 +320,58 @@ export default class UserPermission extends React.Component {
     render() {
         return <AdminLayoutHoc
             contentTitle={'Users'}
-            contentTitleButton={<Link href="/users/add">
+            /* contentTitleButton={<Link href="/users/add">
                 <button type="button" className="btn btn-outline-success btn-sm"><i className="fa fa-user-plus fa-fw" /> Add a new user</button>
-            </Link>}
+            </Link>} */
             url={this.props.url}
         >
             <div className="row">
                 <div className="col-6">
                     <div className="card">
-                        <div className="card-header">
-                            {/* <h3 className="card-title">Current users</h3> */}
-                            <MDBContainer>
-                                <div className="wrapper">
-
-                                    <div className="card-tools d-inline-block">
-                                        <div className="input-group input-group-sm" style={{ width: '100%' }}>
-                                            <input type="text" name="table_search"
-                                                className="form-control float-right"
-                                                placeholder="Search"
-                                                onChange={(e) => {
-                                                    this.setState({ searchtxt: e.target.value });
-                                                    var name = e.target.value;
-                                                    var datalength = this.state.rawdata.length;
-                                                    if (name != "") {
-                                                        this.setState({
-                                                            data: this.state.rawdata.filter((user) => {
-                                                                return user.user_name.indexOf(name) !== -1;
-                                                            })
-                                                        });
-                                                        datalength = this.state.rawdata.filter((user) => {
+                        <div className="card-header bg-secondary">
+                            <div className="wrapper float-right">
+                                <h5>User Role</h5>
+                                <div className="card-tools d-inline-block">
+                                    <div className="input-group input-group-sm" style={{ width: '100%' }}>
+                                        <input type="text" name="table_search"
+                                            className="form-control float-right"
+                                            placeholder="Search"
+                                            onChange={(e) => {
+                                                this.setState({ searchtxt: e.target.value });
+                                                var name = e.target.value;
+                                                var datalength = this.state.rawdata.length;
+                                                if (name != "") {
+                                                    this.setState({
+                                                        data: this.state.rawdata.filter((user) => {
                                                             return user.user_name.indexOf(name) !== -1;
-                                                        }).length;
-                                                    } else {
-                                                        this.setState({
-                                                            data: this.state.rawdata
-                                                        });
-                                                    }
-                                                }}
-                                                value={this.state.searchtxt} />
-                                            <div className="input-group-append">
-                                                <button className="btn btn-default"><i className="fa fa-search" onClick={this.onSearchClick} /></button>
-                                            </div>
+                                                        })
+                                                    });
+                                                    datalength = this.state.rawdata.filter((user) => {
+                                                        return user.user_name.indexOf(name) !== -1;
+                                                    }).length;
+                                                } else {
+                                                    this.setState({
+                                                        data: this.state.rawdata
+                                                    });
+                                                }
+                                            }}
+                                            value={this.state.searchtxt} />
+                                        <div className="input-group-append">
+                                            <button className="btn btn-default"><i className="fa fa-search" onClick={this.onSearchClick} /></button>
                                         </div>
                                     </div>
                                 </div>
-                            </MDBContainer>
+                            </div>
+
 
                         </div>
                         <div className="card-body table-responsive p-0">
                             <table className="table table-hover table-striped table-bordered">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr >
-                                        <th>User role id</th>
-                                        <th>User role name</th>
-                                        <th style={{ textAlign: "right" }}>Edit Permission</th>
+                                        <th width={'5%'}>id</th>
+                                        <th>role name</th>
+                                        <th width={'10%'} style={{ textAlign: "center" }}>command</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -385,10 +383,10 @@ export default class UserPermission extends React.Component {
                                                 <tr key={index}>
                                                     <td className="py-1">{user.user_level_id}</td>
                                                     <td className="py-1">{user.user_level_name}</td>
-                                                    <td className="py-1" style={{ textAlign: "right" }}>
+                                                    <td className="py-1" style={{ textAlign: "center" }}>
                                                         <button
                                                             type="button"
-                                                            className="btn btn-info btn-icon-text"
+                                                            className="btn btn-warning btn-icon-text"
                                                             onClick={() => {
                                                                 /* console.log("edit userid" + user._id);
                                                                 Cookies.set("userid", user._id);
@@ -402,9 +400,10 @@ export default class UserPermission extends React.Component {
                                                                 //Cookies.set("userpermission", user.user_level_permission);
                                                                 this.ShowPermission();
                                                             }}
-
+                                                            title='Edit Permission'
+                                                            style={{ marginLeft: 5, width: 45 }}
                                                         >
-                                                            Edit Permission
+                                                            <i class="fa fa-edit"></i>
                                                         </button>
 
                                                     </td>
@@ -419,49 +418,46 @@ export default class UserPermission extends React.Component {
 
                 <div className="col-6">
                     <div className="card">
-                        <div className="card-header">
-                            {/* <h3 className="card-title">Current users</h3> */}
-                            <MDBContainer>
-                                <div className="wrapper">
-                                    <h4>User Permission : {this.state.role}</h4>
-                                    <div className="card-tools d-inline-block">
-                                        <div className="input-group input-group-sm" style={{ width: '100%' }}>
-                                            <input type="text" name="table_search"
-                                                className="form-control float-right"
-                                                placeholder="Search menu name"
-                                                onChange={(e) => {
-                                                    this.setState({ searchtxt2: e.target.value });
-                                                    var name = e.target.value;
-                                                    var datalength = this.state.rawdata2.length;
-                                                    if (name != "") {
-                                                        this.setState({
-                                                            data2: this.state.rawdata2.filter((data) => {
-                                                                return data.menu_name.indexOf(name) !== -1 || data.game_code.indexOf(name) !== -1;
-                                                            })
-                                                        });
-                                                        datalength = this.state.rawdata2.filter((data) => {
+                        <div className="card-header bg-secondary">
+                            <div className="wrapper float-right">
+                                <h5>Permission : {this.state.role}</h5>
+                                <div className="card-tools d-inline-block">
+                                    <div className="input-group input-group-sm" style={{ width: '100%' }}>
+                                        <input type="text" name="table_search"
+                                            className="form-control float-right"
+                                            placeholder="Search menu name"
+                                            onChange={(e) => {
+                                                this.setState({ searchtxt2: e.target.value });
+                                                var name = e.target.value;
+                                                var datalength = this.state.rawdata2.length;
+                                                if (name != "") {
+                                                    this.setState({
+                                                        data2: this.state.rawdata2.filter((data) => {
                                                             return data.menu_name.indexOf(name) !== -1 || data.game_code.indexOf(name) !== -1;
-                                                        }).length;
-                                                    } else {
-                                                        this.setState({
-                                                            data2: this.state.rawdata2
-                                                        });
-                                                    }
-                                                }}
-                                                value={this.state.searchtxt2} />
-                                            <div className="input-group-append">
-                                                <button className="btn btn-default"><i className="fa fa-search" onClick={this.onSearchClick2} /></button>
-                                            </div>
+                                                        })
+                                                    });
+                                                    datalength = this.state.rawdata2.filter((data) => {
+                                                        return data.menu_name.indexOf(name) !== -1 || data.game_code.indexOf(name) !== -1;
+                                                    }).length;
+                                                } else {
+                                                    this.setState({
+                                                        data2: this.state.rawdata2
+                                                    });
+                                                }
+                                            }}
+                                            value={this.state.searchtxt2} />
+                                        <div className="input-group-append">
+                                            <button className="btn btn-default"><i className="fa fa-search" onClick={this.onSearchClick2} /></button>
                                         </div>
                                     </div>
                                 </div>
-                            </MDBContainer>
+                            </div>
                         </div>
                         <div className="card-body table-responsive p-0">
                             <table className="table table-hover  table-striped table-bordered">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr >
-                                        <th>Menu</th>
+                                        <th width={'50%'}>Menu</th>
                                         <th>Permission</th>
                                     </tr>
                                 </thead>
@@ -489,7 +485,7 @@ export default class UserPermission extends React.Component {
                         </div>
                         <div className="card-footer" style={{ display: this.state.data2 ? 'block' : 'none' }}>
                             <div className="d-inline-block btn-block">
-                                <button className="btn btn-info float-right" onClick={this.handleSubmit}>Save</button>
+                                <button className="btn btn-info float-right" onClick={this.handleSubmit} title='Save' style={{ marginLeft: 5, width: 45 }}><i class="fa fa-floppy-o"></i></button>
                             </div>
                         </div>
                     </div>

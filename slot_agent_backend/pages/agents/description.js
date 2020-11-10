@@ -158,99 +158,96 @@ export default class Description extends React.Component {
             <div className="row">
                 <div className="col-12">
                     <div className="card">
-                        <div className="card-header">
-
-                        </div>
-                        <div className="col-12">
+                          <div className="col-12">
                             <div className="card-body table-responsive p-0">
                                 <table className="table table-hover ">
-                                    <thead>
+                                    <thead  class="table-dark">
                                         <tr >
-                                            <th><h5>ITEMS</h5></th>
-                                            <th><h5>DESCRIPTION</h5></th>
+                                            <th><h6>ITEMS</h6></th>
+                                            <th><h6>DESCRIPTION</h6></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td className="py-1 "><h5>Agent code</h5></td>
+                                            <td className="py-1 "><h6>Agent code</h6></td>
                                             <td className="py-1">{this.state.agent_code}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Status</h5></td>
+                                            <td className="py-1"><h6>Agent Status</h6></td>
                                             <td className="py-1"><label className={`badge badge-${this.state.classBadge}`}>{this.state.agentstatus}</label> </td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Name</h5></td>
+                                            <td className="py-1"><h6>Agent Name</h6></td>
                                             <td className="py-1">{this.state.agent_name}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Detail</h5></td>
+                                            <td className="py-1"><h6>Agent Detail</h6></td>
                                             <td className="py-1">{this.state.agent_detail}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Website</h5></td>
+                                            <td className="py-1"><h6>Agent Website</h6></td>
                                             <td className="py-1">{this.state.agent_website}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Master</h5></td>
+                                            <td className="py-1"><h6>Agent Master</h6></td>
                                             <td className="py-1">{this.state.agent_master}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Type</h5></td>
+                                            <td className="py-1"><h6>Agent Type</h6></td>
                                             <td className="py-1">{this.state.agent_type}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Percent</h5></td>
+                                            <td className="py-1"><h6>Agent Percent</h6></td>
                                             <td className="py-1">{this.state.agent_percent}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Percent Aff</h5></td>
+                                            <td className="py-1"><h6>Agent Percent Aff</h6></td>
                                             <td className="py-1">{this.state.agent_percent_aff}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Percent Aff2</h5></td>
+                                            <td className="py-1"><h6>Agent Percent Aff2</h6></td>
                                             <td className="py-1">{this.state.agent_percent_aff2}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Percent Aff3</h5></td>
+                                            <td className="py-1"><h6>Agent Percent Aff3</h6></td>
                                             <td className="py-1">{this.state.agent_percent_aff3}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Percent Aff4</h5></td>
+                                            <td className="py-1"><h6>Agent Percent Aff4</h6></td>
                                             <td className="py-1">{this.state.agent_percent_aff4}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Percent Aff5</h5></td>
+                                            <td className="py-1"><h6>Agent Percent Aff5</h6></td>
                                             <td className="py-1">{this.state.agent_percent_aff5}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Comm</h5></td>
+                                            <td className="py-1"><h6>Agent Comm</h6></td>
                                             <td className="py-1">{this.state.agent_comm}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent line@</h5></td>
+                                            <td className="py-1"><h6>Agent line@</h6></td>
                                             <td className="py-1">{this.state.agent_line_ad}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Line Token1</h5></td>
+                                            <td className="py-1"><h6>Agent Line Token1</h6></td>
                                             <td className="py-1">{this.state.agent_line_token1}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent Line Token2</h5></td>
+                                            <td className="py-1"><h6>Agent Line Token2</h6></td>
                                             <td className="py-1">{this.state.agent_line_token2}</td>
                                         </tr><tr>
-                                            <td className="py-1"><h5>Agent Line Token3</h5></td>
+                                            <td className="py-1"><h6>Agent Line Token3</h6></td>
                                             <td className="py-1">{this.state.agent_line_token3}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent API User</h5></td>
+                                            <td className="py-1"><h6>Agent API User</h6></td>
                                             <td className="py-1">{this.state.agent_api_user}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Agent API Password</h5></td>
+                                            <td className="py-1"><h6>Agent API Password</h6></td>
                                             <td className="py-1">{this.state.agent_api_password}</td>
                                         </tr><tr>
-                                            <td className="py-1"><h5>Agent API Key</h5></td>
+                                            <td className="py-1"><h6>Agent API Key</h6></td>
                                             <td className="py-1">{this.state.agent_api_key}</td>
                                         </tr>
 
@@ -260,7 +257,7 @@ export default class Description extends React.Component {
                         </div>
                         <div className="card-footer">
                             <div className="bt-tb-page">
-                                <button className="btn btn-danger w-25" onClick={this.handleResetSubmit}>Back</button>
+                                <button className="btn btn-danger" onClick={this.handleResetSubmit} title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
                             </div>
                         </div>
                     </div>

@@ -281,12 +281,12 @@ export default class Wallets extends React.Component {
                             console.log('credit : ' + credit);
                             const mem_status = mems.map((mem, index) => {
                                 return mem.mem_status;
-                            })                            
+                            })
                             console.log('status : ' + mem_status);
                             mydata.push({
                                 _id: data[i]._id, mem_username: data[i].mem_username, brand_code: data[i].brand_code
                                 , game_username: data[i].game_username, game_password: data[i].game_password, agent_code: data[i].agent_code
-                                , credit: credit,mem_status: mem_status
+                                , credit: credit, mem_status: mem_status
                             });
                         }
 
@@ -371,10 +371,10 @@ export default class Wallets extends React.Component {
             <div className="row">
                 <div className="col-12">
                     <div className="card">
-                        <div className="card-header">
-                            {/* <h3 className="card-title">Current users</h3> */}
+                        {/* <div className="card-header">
+                           
                             <MDBContainer>
-                                <div className="wrapper">                                    
+                                <div className="wrapper">
                                     <div className="w-auto h-25 p-3  d-inline-block">
                                         Row per page
                                         <select id="select-1" className="form-control" value={this.state.rowperpage} onChange={this.handleSelectRowPerPageChange}>
@@ -450,18 +450,92 @@ export default class Wallets extends React.Component {
                                 </div>
                             </MDBContainer>
 
+                        </div> */}
+                        <div className="card-header bg-secondary">
+                            <div className="wrapper float-right">
+                                <div className="w-auto h-25 p-3  d-inline-block">
+                                    Row per page
+                                        <select id="select-1" className="form-control" value={this.state.rowperpage} onChange={this.handleSelectRowPerPageChange}>
+                                        <option value='10'>10</option>
+                                        <option value='15'>15</option>
+                                        <option value='20'>20</option>
+                                        <option value='25'>25</option>
+                                        <option value='30'>30</option>
+                                        <option value='35'>35</option>
+                                        <option value='40'>40</option>
+                                        <option value='45'>45</option>
+                                        <option value='50'>50</option>
+                                    </select>
+                                </div>
+                                <div className="card-tools d-inline-block">
+                                    <div className="input-group input-group-sm" style={{ width: '100%' }}>
+                                        <input type="text" name="table_search"
+                                            className="form-control float-right"
+                                            placeholder="Search"
+                                            onChange={(e) => {
+                                                this.setState({ searchtxt: e.target.value });
+                                                var name = e.target.value;
+                                                var datalength = this.state.rawdata.length;
+                                                if (name != "") {
+                                                    this.setState({
+                                                        data: this.state.rawdata.filter((data) => {
+                                                            if (data.agent_code.indexOf(name) !== -1) {
+                                                                return data.agent_code.indexOf(name) !== -1;
+                                                            } else if (data.agent_name.indexOf(name) !== -1) {
+                                                                return data.agent_name.indexOf(name) !== -1;
+                                                            } 
+                                                        })
+                                                    });
+                                                    datalength = this.state.rawdata.filter((data) => {
+                                                        if (data.agent_code.indexOf(name) !== -1) {
+                                                            return data.agent_code.indexOf(name) !== -1;
+                                                        } else if (data.agent_name.indexOf(name) !== -1) {
+                                                            return data.agent_name.indexOf(name) !== -1;
+                                                        }
+                                                    }).length;
+                                                } else {
+                                                    this.setState({
+                                                        data: this.state.rawdata
+                                                    });
+                                                }
+
+                                                var page_remain = Math.floor(datalength / this.state.rowperpage);
+                                                var num = datalength % this.state.rowperpage;
+                                                if (num > 0) {
+                                                    page_remain++;
+                                                }
+
+                                                var arr = [];
+                                                var i;
+                                                for (i = 0; i < page_remain; i++) {
+                                                    arr.push(i + 1);
+                                                }
+                                                var pagenum = 1;
+                                                var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                var endrow = startrow + this.state.rowperpage;
+                                                this.setState({ recordtotal: datalength, pagetotal: page_remain, pagenumber: pagenum, pagearr: arr, startrow: startrow, endrow: endrow });
+                                            }}
+                                            value={this.state.searchtxt} />
+                                        <div className="input-group-append">
+                                            <button className="btn btn-default"><i className="fa fa-search" onClick={this.onSearchClick} /></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <div className="card-body table-responsive p-0">
                             <table className="table table-hover table-striped table-bordered">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr >
-                                        <th>mem username</th>
-                                        <th>brand code</th>
-                                        <th>game username</th>
-                                        <th>game password</th>
-                                        <th>agent code</th>
-                                        <th>credit</th>
-                                        <th style={{ textAlign: "right" }}>Edit / Delete</th>
+                                        <th width={'5%'}>Stauts</th>
+                                        <th width={'15%'}>username</th>
+                                        <th width={'10%'}>brand</th>
+                                        <th width={'15%'}>game username</th>
+                                        <th width={'15%'}>game password</th>
+                                        <th width={'10%'}>agent</th>
+                                        <th width={'10%'}>credit</th>
+                                        <th width={'10%'} style={{ textAlign: "center" }}>Command</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -476,13 +550,14 @@ export default class Wallets extends React.Component {
                                             //console.log("userid" + user.id);
                                             return (
                                                 <tr key={index}>
-                                                    <td className="py-1"><label className={`badge badge-${classBadge}`}>{mystatus}</label>{wallet.mem_username}</td>
+                                                    <td className="py-1"><label className={`badge badge-${classBadge}`}>{mystatus}</label></td>
+                                                    <td className="py-1">{wallet.mem_username}</td>
                                                     <td className="py-1">{wallet.brand_code}</td>
                                                     <td className="py-1">{wallet.game_username}</td>
                                                     <td className="py-1">{wallet.game_password}</td>
                                                     <td className="py-1">{wallet.agent_code}</td>
-                                                     <td className="py-1">{wallet.credit}</td>
-                                                    <td className="py-1" style={{ textAlign: "right" }}>
+                                                    <td className="py-1">{wallet.credit}</td>
+                                                    <td className="py-1" style={{ textAlign: "center" }}>
                                                         <button
                                                             type="button"
                                                             className="btn btn-warning btn-icon-text"
@@ -493,10 +568,10 @@ export default class Wallets extends React.Component {
                                                                 Router.push("/wallets/edit");
 
                                                             }}
-                                                            style={{ width: 80 }}
-                                                        //onClick={this.onClick}
+                                                            title='Edit'
+                                                            style={{ marginLeft: 5, width: 45 }}
                                                         >
-                                                            Edit
+                                                            <i class="fa fa-edit"></i>
                                                         </button>
                                                         <button
                                                             type="button"
@@ -520,10 +595,11 @@ export default class Wallets extends React.Component {
                                                                     }
                                                                 })
                                                             }}
-                                                            style={{ marginLeft: 5, width: 80 }}
                                                             className="btn btn-danger btn-icon-text"
+                                                            title='Delete'
+                                                            style={{ marginLeft: 5, width: 45 }}
                                                         >
-                                                            Delete
+                                                            <i class="fa fa-close"></i>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -531,6 +607,50 @@ export default class Wallets extends React.Component {
                                     })}
                                 </tbody>
                             </table>
+                        </div>
+                        <div className="card-footer" style={{ textAlign: "right", width: '100%' }}>
+                            <div className="wrapper float-right">
+
+                                <div className="w-auto h-25 p-3  d-inline-block">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li class="page-item"><a class="page-link" onClick={() => {
+                                                if (this.state.pagenumber > 1) {
+                                                    let p = this.state.pagenumber - 1;
+                                                    this.setState({ pagenumber: p });
+                                                    var pagenum = p
+                                                    var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                    var endrow = startrow + this.state.rowperpage;
+                                                    this.setState({ startrow: startrow, endrow: endrow });
+                                                }
+                                            }}>Previous</a></li>
+                                            {
+                                                this.state.pagearr.map((p, index) => {
+                                                    return (
+                                                        <li class={this.state.pagenumber == p ? "page-item active" : "page-item"}><a class="page-link" onClick={() => {
+                                                            this.setState({ pagenumber: p });
+                                                            var pagenum = p;
+                                                            var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                            var endrow = startrow + this.state.rowperpage;
+                                                            this.setState({ startrow: startrow, endrow: endrow });
+                                                        }}>{p}</a></li>
+                                                    )
+                                                })
+                                            }
+                                            <li class="page-item"><a class="page-link" onClick={() => {
+                                                if (this.state.pagenumber < this.state.pagearr.length) {
+                                                    let p = this.state.pagenumber + 1;
+                                                    this.setState({ pagenumber: p });
+                                                    var pagenum = p;
+                                                    var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                    var endrow = startrow + this.state.rowperpage;
+                                                    this.setState({ startrow: startrow, endrow: endrow });
+                                                }
+                                            }}>Next</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

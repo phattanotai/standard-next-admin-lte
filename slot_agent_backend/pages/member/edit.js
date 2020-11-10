@@ -238,33 +238,14 @@ export default class EditMember extends React.Component {
         return <AdminLayoutHoc contentTitle={'Edit Member'} contentTitleButton={<i className="fa fa-2x fa-group" />} url={this.props.url}>
             <div className="offset-md-0">
                 <div className="card">
-                    <div className="card-header">
-                        {/* <h3 className="card-title">New User Form</h3> */}
-                    </div>
+                    
                     <form className="form-horizontal">
-                        <div className="card-body">
-
-                            {/* <div className="form-group">
-                                <div className="col-sm-12">
-                                    <label htmlFor="select-1" className="col-sm-12 control-label">Select Agent</label>
-                                    <div className="col-sm-offset-2 col-sm-12">
-                                        <select id="select-3" className="form-control" value={this.state.agent} onChange={this.handleSelectAgentChange}>
-                                            {
-                                                this.state.data_agent.map((agent, index) => {
-                                                    return (
-                                                        <option value={agent.agent_name} key={index}>{agent.agent_name}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                            </div> */}
+                        <div className="card-body mt-3">
                             <div className="form-group">
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">member username</span>
+                                        <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-dark ">member username</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex2"
                                             //placeholder="agent lineup"
@@ -279,8 +260,8 @@ export default class EditMember extends React.Component {
                             <div className="form-group">
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">member password</span>
+                                        <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-dark ">member password</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex2"
                                             //placeholder="agent lineup"
@@ -295,8 +276,8 @@ export default class EditMember extends React.Component {
                             <div className="form-group">
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">member name</span>
+                                        <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-dark ">member name</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex2"
                                             //placeholder="agent lineup"
@@ -311,8 +292,8 @@ export default class EditMember extends React.Component {
                             <div className="form-group">
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">tel</span>
+                                        <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-dark ">tel</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex3"
                                             //placeholder="agent name"
@@ -326,8 +307,8 @@ export default class EditMember extends React.Component {
                             <div className="form-group">
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">line</span>
+                                        <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-dark ">line</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex4"
                                             //placeholder="agent detail"
@@ -343,8 +324,8 @@ export default class EditMember extends React.Component {
                                 {/* <label htmlFor="validation-ex" className="col-sm-3">Password</label> */}
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">balance</span>
+                                        <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-dark ">balance</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex3"
                                             //placeholder="Password"
@@ -370,8 +351,8 @@ export default class EditMember extends React.Component {
 
                     <div className="card-footer">
                         <div className="d-inline-block btn-block">
-                            <button className="btn btn-danger" onClick={this.handleResetSubmit}>Back</button>
-                            <button className="btn btn-info float-right" onClick={this.handleSubmit}>Save</button>
+                            <button className="btn btn-danger" onClick={this.handleResetSubmit} title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
+                            <button className="btn btn-info" onClick={this.handleSubmit} title='Save' style={{marginLeft: 5,  width: 45 }}><i class="fa fa-floppy-o"></i></button>
                         </div>
                     </div>
                 </div>

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
 const AdminContent = (props) => {
-    return <div className="content-wrapper" style={{minHeight: '93vh'}}>
-        <div className="content-header">
+    return <div className="content-wrapper " style={{minHeight: '93vh'}}>
+        <div className="content-header ">
             {props.title && <div className="container-fluid">
                 <div className="row mb-2">
                     <div className="col-sm-10">

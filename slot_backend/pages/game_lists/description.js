@@ -116,7 +116,7 @@ export default class Description extends React.Component {
                 this.setState({
                     game_code: game_code, game_id: game_id, game_id2: game_id2, game_id3: game_id3, game_id4: game_id4,
                     game_name: game_name, game_brand: game_brand, game_type: game_type, original_game_img: game_img, game_line: game_line,
-                    game_new:game_new, game_jackpot: game_jackpot, game_free: game_free,
+                    game_new: game_new, game_jackpot: game_jackpot, game_free: game_free,
                     game_provider: game_provider, brand: game_brand, game_img: game_img
                 });
             } else {
@@ -131,22 +131,19 @@ export default class Description extends React.Component {
         return <AdminLayoutHoc contentTitle={'Game Description'} contentTitleButton={<i className="fa fa-2x fa-cubes" />} url={this.props.url}>
             <div className="row">
                 <div className="col-12">
-                    <div className="card">
-                        <div className="card-header">
-
-                        </div>
+                    <div className="card mt-2">
                         <div className="col-12">
                             <div className="card-body table-responsive p-0">
                                 <table className="table table-hover ">
-                                    <thead>
+                                    <thead class="table-dark">
                                         <tr >
-                                            <th><h5>ITEMS</h5></th>
-                                            <th><h5>DESCRIPTION</h5></th>
+                                            <th><h6>ITEMS</h6></th>
+                                            <th><h6>DESCRIPTION</h6></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td className="py-1 "><h5>Game Logo</h5></td>
+                                            <td className="py-1 "><h6>Game Logo</h6></td>
                                             <td className="py-1">
                                                 <img
                                                     src={this.state.game_img ? ServiceImage.imageshow(this.state.game_img) : ServiceImage.imageshow("1594692624651-no-image-available.png")}
@@ -155,43 +152,43 @@ export default class Description extends React.Component {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1 "><h5>Game code</h5></td>
+                                            <td className="py-1 "><h6>Game code</h6></td>
                                             <td className="py-1">{this.state.game_code}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Game Status</h5></td>
+                                            <td className="py-1"><h6>Game Status</h6></td>
                                             <td className="py-1"><label className={`badge badge-${this.state.classBadge}`}>{this.state.gamestatus}</label> </td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Game Name</h5></td>
+                                            <td className="py-1"><h6>Game Name</h6></td>
                                             <td className="py-1">{this.state.game_name}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Game Brand</h5></td>
+                                            <td className="py-1"><h6>Game Brand</h6></td>
                                             <td className="py-1">{this.state.game_brand}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Game Type</h5></td>
+                                            <td className="py-1"><h6>Game Type</h6></td>
                                             <td className="py-1">{this.state.game_type}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Game Line</h5></td>
+                                            <td className="py-1"><h6>Game Line</h6></td>
                                             <td className="py-1">{this.state.game_line}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Game New</h5></td>
+                                            <td className="py-1"><h6>Game New</h6></td>
                                             <td className="py-1">{this.state.game_new}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Game Jackpot</h5></td>
+                                            <td className="py-1"><h6>Game Jackpot</h6></td>
                                             <td className="py-1">{this.state.game_jackpot}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Game Free</h5></td>
+                                            <td className="py-1"><h6>Game Free</h6></td>
                                             <td className="py-1">{this.state.game_free}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Game Provider</h5></td>
+                                            <td className="py-1"><h6>Game Provider</h6></td>
                                             <td className="py-1">{this.state.game_provider}</td>
                                         </tr>
 
@@ -201,7 +198,7 @@ export default class Description extends React.Component {
                         </div>
                         <div className="card-footer">
                             <div className="bt-tb-page">
-                                <button className="btn btn-danger w-25" onClick={this.handleResetSubmit}>Back</button>
+                            <button className="btn btn-danger" onClick={this.handleResetSubmit}  title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
                             </div>
                         </div>
                     </div>

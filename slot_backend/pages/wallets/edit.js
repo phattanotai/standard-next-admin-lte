@@ -294,35 +294,30 @@ export default class EditWallets extends React.Component {
 
         return <AdminLayoutHoc contentTitle={'Edit Wallets'} contentTitleButton={<i className="fa fa-2x fa-money" />} url={this.props.url}>
             <div className="offset-md-0">
-                <div className="card">
-                    <div className="card-header">
-                        {/* <h3 className="card-title">New User Form</h3> */}
-                    </div>
-                    <form className="form-horizontal">
+                <div className="card mt-2">
+
+                <form className="form-horizontal">
                         <div className="card-body">
-
                             <div className="form-group">
-                                <div className="col-sm-10">
-                                    <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">Member</span>
-                                        </div>
-                                        <input type="text" className="form-control " id="validation-ex2"
-                                            //placeholder="agent lineup"
-                                            onChange={(e) => this.setState({ mem: e.target.value })}
-                                            value={this.state.mem}
-                                            required
-                                            disabled={true} />
+                                {/* <div className="col-sm-5">
+                                    <label htmlFor="select-1" className="col-sm-12 control-label">Select Member</label>
+                                    <div className="col-sm-offset-2 col-sm-12">
+                                        <select id="select-3" className="form-control" value={this.state.mem} onChange={this.handleSelectMemberChange}>
+                                            {
+                                                this.state.data_member.map((member, index) => {
+                                                    return (
+                                                        <option value={member.mem_username} key={index}>{member.mem_username}</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
                                     </div>
-
-                                </div>
-                            </div>
-
-                            <div className="form-group">
+                                </div> */}
                                 <div className="col-sm-10">
+                                    
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">agent code</span>
+                                    <div className="input-group-prepend col-3">
+                                    <span className="input-group-text bg-dark col-12">agent code</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex2"
                                             //placeholder="agent lineup"
@@ -331,15 +326,29 @@ export default class EditWallets extends React.Component {
                                             required
                                             disabled={true} />
                                     </div>
-
                                 </div>
                             </div>
 
                             <div className="form-group">
+                                {/* <div className="col-sm-5">
+                                    <label htmlFor="select-1" className="col-sm-12 control-label">Select Brand</label>
+                                    <div className="col-sm-offset-2 col-sm-12">
+                                        <select id="select-3" className="form-control" value={this.state.brand} onChange={this.handleSelectBrandChange}>
+                                            {
+                                                this.state.data_brand.map((brand, index) => {
+                                                    return (
+                                                        <option value={brand.brand_name} key={index}>{brand.brand_name}</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                </div> */}
                                 <div className="col-sm-10">
+                                    
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">brand code</span>
+                                    <div className="input-group-prepend col-3">
+                                    <span className="input-group-text bg-dark col-12">brand code</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex2"
                                             //placeholder="agent lineup"
@@ -348,15 +357,14 @@ export default class EditWallets extends React.Component {
                                             required
                                             disabled={true} />
                                     </div>
-
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <div className="col-sm-10">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">game username</span>
+                                    <div className="input-group-prepend col-3">
+                                    <span className="input-group-text bg-dark col-12">game username</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex3"
                                             //placeholder="agent name"
@@ -370,8 +378,8 @@ export default class EditWallets extends React.Component {
                             <div className="form-group">
                                 <div className="col-sm-10">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">game password</span>
+                                    <div className="input-group-prepend col-3">
+                                    <span className="input-group-text bg-dark col-12">game password</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex4"
                                             //placeholder="agent detail"
@@ -387,8 +395,8 @@ export default class EditWallets extends React.Component {
                                 {/* <label htmlFor="validation-ex" className="col-sm-3">Password</label> */}
                                 <div className="col-sm-10">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">credit</span>
+                                    <div className="input-group-prepend col-3">
+                                    <span className="input-group-text bg-dark col-12">credit</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex3"
                                             //placeholder="Password"
@@ -414,9 +422,9 @@ export default class EditWallets extends React.Component {
                     </form>
 
                     <div className="card-footer">
-                        <div className="d-inline-block btn-block">
-                            <button className="btn btn-danger" onClick={this.handleResetSubmit}>Back</button>
-                            <button className="btn btn-info float-right" onClick={this.handleSubmit}>Save</button>
+                    <div className="d-inline-block btn-block">
+                            <button className="btn btn-danger" onClick={this.handleResetSubmit}  title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
+                            <button className="btn btn-info float-right" onClick={this.handleSubmit} title='Save' style={{marginLeft: 5,  width: 45 }}><i class="fa fa-floppy-o"></i></button>
                         </div>
                     </div>
                 </div>

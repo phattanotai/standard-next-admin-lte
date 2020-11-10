@@ -64,7 +64,8 @@ export default class AddWallets extends React.Component {
     handleSelectBrandChange(e) {
         e.preventDefault();
         console.log('e.target.value =>' + e.target.value);
-        this.setState({ brand: e.target.value });
+        this.setState({ brand: e.target.value,brand_code: this.SearchBrandCode(e.target.value)});
+
     }
 
     handleSelectMemberChange(e) {
@@ -165,6 +166,17 @@ export default class AddWallets extends React.Component {
         })
         //console.log('myrole:' + myrole);
         return agent_lineup;
+    }
+
+    SearchBrandCode(brand_name) {
+        console.log('get brand_code');
+        const brands = this.state.data_brand.filter((brand) => {
+            return brand.brand_name == brand_name;
+        })
+        const brand_code = brands.map((brand, index) => {
+            return brand.brand_code;
+        })
+        return brand_code;
     }
 
     SearchAgent_LineUp2(data_agent, agent_code) {
@@ -383,13 +395,10 @@ export default class AddWallets extends React.Component {
         return <AdminLayoutHoc contentTitle={'Add Wallets'} contentTitleButton={<i className="fa fa-2x fa-money" />} url={this.props.url}>
             <div className="offset-md-0">
                 <div className="card">
-                    <div className="card-header">
-                        {/* <h3 className="card-title">New User Form</h3> */}
-                    </div>
                     <form className="form-horizontal">
                         <div className="card-body">
-                            <div className="form-group row">
-                                <div className="col-sm-5">
+                            <div className="form-group">
+                                <div className="col-sm-10">
                                     <label htmlFor="select-1" className="col-sm-12 control-label">Select Member</label>
                                     <div className="col-sm-offset-2 col-sm-12">
                                         <select id="select-3" className="form-control" value={this.state.mem} onChange={this.handleSelectMemberChange}>
@@ -403,24 +412,11 @@ export default class AddWallets extends React.Component {
                                         </select>
                                     </div>
                                 </div>
-                                <div className="col-sm-5">
-                                    <label htmlFor="select-1" className="col-sm-12 control-label">&nbsp;</label>
-                                    <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">agent code</span>
-                                        </div>
-                                        <input type="text" className="form-control " id="validation-ex2"
-                                            //placeholder="agent lineup"
-                                            onChange={(e) => this.setState({ agent_code: e.target.value })}
-                                            value={this.state.agent_code}
-                                            required
-                                            disabled={true} />
-                                    </div>
-                                </div>
                             </div>
 
-                            <div className="form-group row">
-                                <div className="col-sm-5">
+
+                            <div className="form-group">
+                                <div className="col-sm-10">
                                     <label htmlFor="select-1" className="col-sm-12 control-label">Select Brand</label>
                                     <div className="col-sm-offset-2 col-sm-12">
                                         <select id="select-3" className="form-control" value={this.state.brand} onChange={this.handleSelectBrandChange}>
@@ -434,11 +430,30 @@ export default class AddWallets extends React.Component {
                                         </select>
                                     </div>
                                 </div>
-                                <div className="col-sm-5">
-                                    <label htmlFor="select-1" className="col-sm-12 control-label">&nbsp;</label>
+
+                            </div>
+
+                            <div className="form-group">
+                                <div className="col-sm-10">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">brand code</span>
+                                        <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-secondary ">agent code</span>
+                                        </div>
+                                        <input type="text" className="form-control " id="validation-ex2"
+                                            //placeholder="agent lineup"
+                                            onChange={(e) => this.setState({ agent_code: e.target.value })}
+                                            value={this.state.agent_code}
+                                            required
+                                            disabled={true} />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="form-group">
+                                <div className="col-sm-10">
+                                    <div className="input-group mb-3 input-group-sm">
+                                        <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-secondary ">brand code</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex2"
                                             //placeholder="agent lineup"
@@ -453,8 +468,8 @@ export default class AddWallets extends React.Component {
                             <div className="form-group">
                                 <div className="col-sm-10">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">game username</span>
+                                        <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-secondary ">game username</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex3"
                                             //placeholder="agent name"
@@ -468,8 +483,8 @@ export default class AddWallets extends React.Component {
                             <div className="form-group">
                                 <div className="col-sm-10">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">game password</span>
+                                        <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-secondary ">game password</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex4"
                                             //placeholder="agent detail"
@@ -485,8 +500,8 @@ export default class AddWallets extends React.Component {
                                 {/* <label htmlFor="validation-ex" className="col-sm-3">Password</label> */}
                                 <div className="col-sm-10">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">credit</span>
+                                        <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-secondary ">credit</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex3"
                                             //placeholder="Password"
@@ -494,27 +509,16 @@ export default class AddWallets extends React.Component {
                                             value={this.state.credit}
                                             required />
                                     </div>
-
                                 </div>
                             </div>
-
-                            {/* <div className="form-group">
-                                <div className="col-sm-12">
-                                    <label class="switch">
-                                        <input type="checkbox" onChange={this.handleSwitchChange(1)} checked={this.state.switch1} />
-                                        <span class="slider round"></span>
-                                    </label>
-                                    <label className="control-label">&nbsp;&nbsp;Enabled</label>
-                                </div>
-                            </div> */}
 
                         </div>
                     </form>
 
                     <div className="card-footer">
                         <div className="d-inline-block btn-block">
-                            <button className="btn btn-danger" onClick={this.handleResetSubmit}>Back</button>
-                            <button className="btn btn-info float-right" onClick={this.handleSubmit}>Save</button>
+                            <button className="btn btn-danger" onClick={this.handleResetSubmit} title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
+                            <button className="btn btn-info" onClick={this.handleSubmit} title='Save' style={{marginLeft: 5,  width: 45 }}><i class="fa fa-floppy-o"></i></button>
                         </div>
                     </div>
                 </div>

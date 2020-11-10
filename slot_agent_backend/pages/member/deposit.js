@@ -157,8 +157,10 @@ export default class DepositMember extends React.Component {
                     note: this.state.note,
                     user_admin: Cookies.get("userid")
                 };
+                console.log('data : ' + JSON.stringify(a));
+                console.log('mem name : ' + this.state.mem_username);
                 const res = await ServiceMember.deposit(a,this.state.mem_username);
-                console.log('res : ' + res.data);
+                console.log('res : ' + JSON.stringify(res.data));
                 if (res.data.status === 2000) {
                     console.log('deposit Member Success!!!');
                     this.dialog.show({
@@ -244,33 +246,14 @@ export default class DepositMember extends React.Component {
         return <AdminLayoutHoc contentTitle={'Deposit Member'} contentTitleButton={<i className="fa fa-2x fa-money" />} url={this.props.url}>
             <div className="offset-md-0">
                 <div className="card">
-                    <div className="card-header">
-                        {/* <h3 className="card-title">New User Form</h3> */}
-                    </div>
+                   
                     <form className="form-horizontal">
-                        <div className="card-body">
-
-                            {/* <div className="form-group">
-                                <div className="col-sm-12">
-                                    <label htmlFor="select-1" className="col-sm-12 control-label">Select Agent</label>
-                                    <div className="col-sm-offset-2 col-sm-12">
-                                        <select id="select-3" className="form-control" value={this.state.agent} onChange={this.handleSelectAgentChange}>
-                                            {
-                                                this.state.data_agent.map((agent, index) => {
-                                                    return (
-                                                        <option value={agent.agent_name} key={index}>{agent.agent_name}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                            </div> */}
+                        <div className="card-body mt-3">
                             <div className="form-group">
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">member username</span>
+                                    <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-dark ">member username</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex2"
                                             //placeholder="agent lineup"
@@ -282,27 +265,11 @@ export default class DepositMember extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="form-group">
-                                <div className="col-sm-12">
-                                    <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">member password</span>
-                                        </div>
-                                        <input type="text" className="form-control " id="validation-ex2"
-                                            //placeholder="agent lineup"
-                                            onChange={(e) => this.setState({ mem_password: e.target.value })}
-                                            value={this.state.mem_password}
-                                            required
-                                            disabled={true}
-                                        />
-                                    </div>
-                                </div>
-                            </div> */}
                             <div className="form-group">
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">member name</span>
+                                    <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-dark ">member name</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex2"
                                             //placeholder="agent lineup"
@@ -315,43 +282,12 @@ export default class DepositMember extends React.Component {
                                 </div>
                             </div>
 
-                            {/* <div className="form-group">
-                                <div className="col-sm-12">
-                                    <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">tel</span>
-                                        </div>
-                                        <input type="text" className="form-control " id="validation-ex3"
-                                            //placeholder="agent name"
-                                            onChange={(e) => this.setState({ mem_tel: e.target.value })}
-                                            value={this.state.mem_tel}
-                                            required />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="form-group">
-                                <div className="col-sm-12">
-                                    <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">line</span>
-                                        </div>
-                                        <input type="text" className="form-control " id="validation-ex4"
-                                            //placeholder="agent detail"
-                                            onChange={(e) => this.setState({ mem_line: e.target.value })}
-                                            value={this.state.mem_line}
-                                            required />
-                                    </div>
-
-                                </div>
-                            </div> */}
-
                             <div className="form-group">
                                 {/* <label htmlFor="validation-ex" className="col-sm-3">Password</label> */}
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">balance</span>
+                                    <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-dark ">balance</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex3"
                                             //placeholder="Password"
@@ -368,8 +304,8 @@ export default class DepositMember extends React.Component {
                                 {/* <label htmlFor="validation-ex" className="col-sm-3">Password</label> */}
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">deposit</span>
+                                    <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-dark ">deposit</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex3"
                                             //placeholder="Password"
@@ -384,8 +320,8 @@ export default class DepositMember extends React.Component {
                                 {/* <label htmlFor="validation-ex" className="col-sm-3">Password</label> */}
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">note</span>
+                                    <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-dark ">note</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex3"
                                             //placeholder="Password"
@@ -399,8 +335,8 @@ export default class DepositMember extends React.Component {
                                 {/* <label htmlFor="validation-ex" className="col-sm-3">Password</label> */}
                                 <div className="col-sm-12">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">admin</span>
+                                    <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-dark ">admin</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex3"
                                             //placeholder="Password"
@@ -411,23 +347,14 @@ export default class DepositMember extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="form-group">
-                                <div className="col-sm-12">
-                                    <label class="switch">
-                                        <input type="checkbox" onChange={this.handleSwitchChange(1)} checked={this.state.switch1} />
-                                        <span class="slider round"></span>
-                                    </label>
-                                    <label className="control-label">&nbsp;&nbsp;Enabled</label>
-                                </div>
-                            </div> */}
 
                         </div>
                     </form>
 
                     <div className="card-footer">
                         <div className="d-inline-block btn-block">
-                            <button className="btn btn-danger" onClick={this.handleResetSubmit}>Back</button>
-                            <button className="btn btn-info float-right" onClick={this.handleSubmit}>Save</button>
+                            <button className="btn btn-danger" onClick={this.handleResetSubmit} title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
+                            <button className="btn btn-info" onClick={this.handleSubmit} title='Save' style={{marginLeft: 5,  width: 45 }}><i class="fa fa-floppy-o"></i></button>
                         </div>
                     </div>
                 </div>

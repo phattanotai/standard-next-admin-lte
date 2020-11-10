@@ -13,7 +13,8 @@ import { ServiceTransaction } from "../../service/";
 import Dialog from 'react-bootstrap-dialog';
 
 import { MDBContainer } from 'mdbreact';
-import { ToastBody } from "reactstrap";
+import { Label, ToastBody } from "reactstrap";
+import moment  from 'moment-timezone';
 
 export default class Report extends React.Component {
     constructor(props) {
@@ -37,6 +38,21 @@ export default class Report extends React.Component {
             agent: "",
             agentdata: [],
             slt: "All",
+            txt_date: 'Report for Every times',
+
+
+            page_start: 1,
+            page_end: 10,
+            fsort1: false,
+            fsort2: false,
+            fsort3: false,
+            fsort4: false,
+            fsort5: false,
+            fsort6: false,
+            fsort7: false,
+            fsort8: false,
+            fsort9: false,
+            fsort10: false,
 
         };
         this.deleteMember = this.deleteMember.bind(this);
@@ -258,7 +274,74 @@ export default class Report extends React.Component {
 
     RenderTable(param) {
         this.setState({ slt: param });
+        var dateFormat = require('dateformat');
         const a = { "selecttime": param };
+        if (param === 'All') {
+            this.setState({txt_date: 'Report for Every times'});
+        } else if (param === 'Today') {
+            var enddate = moment.tz('Asia/Bangkok').format('DD-MM-YYYY');
+            this.setState({txt_date: 'Report for Date ' + enddate});
+        }
+        else if (param === 'Yesterday') {
+            const nDate = new Date().toLocaleString('en-US', {
+                timeZone: 'Asia/Bangkok'
+            });
+            var date = new Date(nDate);
+            var enddate = new Date(nDate);
+            //var enddate_stp = moment.tz('Asia/Bangkok').format('DD-MM-YYYY 00:00:00');
+            date.setDate(date.getDate() - 1);
+            this.setState({txt_date: 'Report form Date ' + dateFormat(date, 'dd-mm-yyyy') + ' to ' + dateFormat(enddate, 'dd-mm-yyyy')});
+        }
+        else if (param === 'ThisWeek') {
+            var dateFormat = require('dateformat');
+            const nDate = new Date().toLocaleString('en-US', {
+                timeZone: 'Asia/Bangkok'
+            });
+            var date = new Date(this.getMonday(nDate));
+            console.log('get monday:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+            var startdate_stp = new Date(nDate);
+            console.log('start date:' + startdate_stp);
+            this.setState({txt_date: 'Report form Date ' + dateFormat(date, 'dd-mm-yyyy') + ' to ' + dateFormat(startdate_stp, 'dd-mm-yyyy')});
+        }
+        else if (param === 'LastWeek') {
+            var dateFormat = require('dateformat');
+            const nDate = new Date().toLocaleString('en-US', {
+                timeZone: 'Asia/Bangkok'
+            });
+            var enddate = new Date(this.getMonday(nDate));
+            var date = new Date();
+            console.log('get monday:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
+            //console.log('start date:' + startdate_stp);
+            date.setDate(enddate.getDate() - 7);
+            console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+            console.log('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
+            //var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
+            //var enddate_stp = Number(new Date(dateFormat(enddate, 'yyyy-mm-dd 00:00:00')));
+            this.setState({txt_date: 'Report form Date ' + dateFormat(date, 'dd-mm-yyyy') + ' to ' + dateFormat(enddate, 'dd-mm-yyyy')});
+        }
+        else if (param === 'LastMonth') {
+            var dateFormat = require('dateformat');
+            const nDate = new Date().toLocaleString('en-US', {
+                timeZone: 'Asia/Bangkok'
+            });
+            var d = new Date(nDate);
+            var enddate = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-01');
+            enddate.setDate(enddate.getDate() - 1);
+            console.log('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
+            var date = new Date(d.getFullYear() + '-' + d.getMonth() + '-01');
+            console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+            this.setState({txt_date: 'Report form Date ' + dateFormat(date, 'dd-mm-yyyy') + ' to ' + dateFormat(enddate, 'dd-mm-yyyy')});
+        }
+        else if (param === 'ThisMonth') {
+            var dateFormat = require('dateformat');
+            const nDate = new Date().toLocaleString('en-US', {
+                timeZone: 'Asia/Bangkok'
+            });
+            var d = new Date(nDate);
+            var date = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-01');
+            console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+            this.setState({txt_date: 'Report form Date ' + dateFormat(date, 'dd-mm-yyyy') + ' to ' + dateFormat(d, 'dd-mm-yyyy')});
+        }
         ServiceTransaction.getTransactionFromAgentCode(a, Cookies.get("agentcode")).then((res) => {
             console.log(res.data);
             const { data, status } = res.data;
@@ -288,33 +371,17 @@ export default class Report extends React.Component {
         });
     }
 
+    getMonday(d) {
+        d = new Date(d);
+        var day = d.getDay(),
+            diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        return new Date(d.setDate(diff));
+    }
+
     componentDidMount() {
         if (!Cookies.get("user")) {
             Router.push("/");
         }
-        /*  ServiceAgent.listAgent().then((res) => {
-             console.log(res.data);
-             const { data, status } = res.data;
-             if (status === 2000) {
-                 console.log("data length : " + data.length);
-                 this.setState({ agentdata: data });
-             } else {
-                 this.setErrorMsg(res.data.msg);
-             }
-         });
- 
-         ServiceUser.listSystemRole().then((res) => {
-             console.log("res data=>" + res.data);
-             const { data, status } = res.data;
-             console.log("status=>" + status);
-             if (status === 2000) {
-                 console.log("data :=>" + data);
-                 this.setState({ role_data: data });
-             } else {
-                 //this.setErrorMsg(res.data.msg);
-                 this.dialog.showAlert(res.data.message);
-             }
-         }); */
 
         console.log('agent code : ' + Cookies.get("agentcode"));
         const a = { "selecttime": this.state.slt };
@@ -336,6 +403,9 @@ export default class Report extends React.Component {
                 var i;
                 for (i = 0; i < page_remain; i++) {
                     arr.push(i + 1);
+                }
+                if (page_remain <= 10) {
+                    this.setState({ page_end: page_remain });
                 }
                 var pagenum = 1;
                 var startrow = (pagenum - 1) * this.state.rowperpage;
@@ -398,19 +468,19 @@ export default class Report extends React.Component {
             <div className="row">
                 <div className="col-12">
                     <div className="card">
-                        <div className="card-header">
+                        <div className="card-header bg-secondary">
                             {/* <h3 className="card-title">Current users</h3> */}
                             <MDBContainer>
                                 <div className="wrapper">
-
                                     <div className="w-auto h-25 p-3  d-inline-block">
+                                        
                                         <button
                                             type="button"
                                             className="btn btn-info btn-icon-text btn-sm"
                                             onClick={() => {
                                                 this.RenderTable('All');
                                             }}
-                                            style={{ width: 100 }}
+                                            style={{ marginLeft: 5,width: 100 }}
                                         >
                                             All
                                         </button>
@@ -474,36 +544,116 @@ export default class Report extends React.Component {
                                         >
                                             Last Month
                                         </button>
+                                        
                                     </div>
 
                                 </div>
+                                <label style={{ marginLeft: 20}}><h5>{this.state.txt_date}</h5></label>
                             </MDBContainer>
 
                         </div>
                         <div className="card-body table-responsive p-0">
                             <table className="table table-hover table-striped table-bordered">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr >
-                                        <th>username</th>
-                                        <th>agent code</th>
-                                        <th>type</th>
-                                        <th>before balance</th>
-                                        <th>amount</th>
-                                        <th>after balance</th>
-                                        <th>transaction datetime</th>
+                                        <th class="sortable" onClick={() => {
+                                            this.setState({
+                                                data: this.state.rawdata.sort((x, y) => {
+                                                    let a = x.username.toUpperCase(),
+                                                        b = y.username.toUpperCase();
+                                                    if (this.state.fsort1) {
+                                                        return a == b ? 0 : a > b ? 1 : -1;
+                                                    } else {
+                                                        return a == b ? 0 : a < b ? 1 : -1;
+                                                    }
+
+                                                }), fsort1: !this.state.fsort1
+                                            });
+                                        }} style={{ width: '10%' }}>username</th>
+                                        <th style={{ width: '8%' }}>agent code</th>
+                                        <th style={{ width: '8%' }} class="sortable" onClick={() => {
+                                            this.setState({
+                                                data: this.state.rawdata.sort((x, y) => {
+                                                    let a = x.type.toUpperCase(),
+                                                        b = y.type.toUpperCase();
+                                                    if (this.state.fsort2) {
+                                                        return a == b ? 0 : a > b ? 1 : -1;
+                                                    } else {
+                                                        return a == b ? 0 : a < b ? 1 : -1;
+                                                    }
+
+                                                }), fsort2: !this.state.fsort2
+                                            });
+                                        }}>type</th>
+                                        <th class="sortable" onClick={() => {
+                                            this.setState({
+                                                data: this.state.rawdata.sort((x, y) => {
+                                                    if (this.state.fsort3) {
+                                                        return x.before_balance - y.before_balance;
+                                                    } else {
+                                                        return y.before_balance - x.before_balance;
+                                                    }
+
+                                                }), fsort3: !this.state.fsort3
+                                            });
+                                        }} style={{ width: '10%' }}>before balance</th>
+                                        <th class="sortable" onClick={() => {
+                                            this.setState({
+                                                data: this.state.rawdata.sort((x, y) => {
+                                                    if (this.state.fsort4) {
+                                                        return x.amount - y.amount;
+                                                    } else {
+                                                        return y.amount - x.amount;
+                                                    }
+
+                                                }), fsort4: !this.state.fsort4
+                                            });
+                                        }} style={{ width: '10%' }}>amount</th>
+                                        <th class="sortable" onClick={() => {
+                                            this.setState({
+                                                data: this.state.rawdata.sort((x, y) => {
+                                                    if (this.state.fsort5) {
+                                                        return x.after_balance - y.after_balance;
+                                                    } else {
+                                                        return y.after_balance - x.after_balance;
+                                                    }
+
+                                                }), fsort5: !this.state.fsort5
+                                            });
+                                        }} style={{ width: '10%' }}>after balance</th>
+                                        <th class="sortable" onClick={() => {
+                                            this.setState({
+                                                data: this.state.rawdata.sort((x, y) => {
+                                                    let a = new Date(x.tran_date_time),
+                                                        b = new Date(y.tran_date_time);
+                                                    if (this.state.fsort6) {
+                                                        return a - b;
+                                                    } else {
+                                                        return b - a;
+                                                    }
+
+                                                }), fsort6: !this.state.fsort6
+                                            });
+                                        }} style={{ width: '13%' }}>trans datetime</th>
                                         <th>note</th>
-                                        <th>transaction type</th>
+                                        <th class="sortable" onClick={() => {
+                                            this.setState({
+                                                data: this.state.rawdata.sort((x, y) => {
+                                                    if (this.state.fsort7) {
+                                                        return x.tran_type - y.tran_type;
+                                                    } else {
+                                                        return y.tran_type - x.tran_type;
+                                                    }
+
+                                                }), fsort7: !this.state.fsort7
+                                            });
+                                        }} style={{ width: '10%' }}>trans type</th>
                                         {/*  <th style={{ textAlign: "right" }}>Edit / Delete</th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.state.data.map((report, index) => {
-                                        /* let classBadge = 'danger';
-                                        let mystatus = 'disable';
-                                        if (report.mem_status === '1') {
-                                            classBadge = 'success';
-                                            mystatus = 'enable';
-                                        } */
+                                        var dateFormat = require('dateformat');
                                         if (index >= this.state.startrow && index < this.state.endrow)
                                             //console.log("userid" + user.id);
                                             return (
@@ -514,60 +664,17 @@ export default class Report extends React.Component {
                                                     <td className="py-1">{report.before_balance}</td>
                                                     <td className="py-1">{report.amount}</td>
                                                     <td className="py-1">{report.after_balance}</td>
-                                                    <td className="py-1">{report.tran_date_time}</td>
+                                                    <td className="py-1">{dateFormat( report.tran_date_time, 'dd-mm-yyyy HH:MM:ss')}</td>
                                                     <td className="py-1">{report.note}</td>
                                                     <td className="py-1">{report.tran_type}</td>
-                                                    {/* <td className="py-1" style={{ textAlign: "right" }}>                                                        
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-warning btn-icon-text"
-                                                            onClick={() => {
-                                                                console.log("edit user agent id " + member._id);
-                                                                Cookies.set("memberid", member._id);
-                                                                //Cookies.set("uagentid", uagent.agent_code);
-                                                                Router.push("/member/edit");
 
-                                                            }}
-                                                            style={{ width: 80 }}
-                                                        //onClick={this.onClick}
-                                                        >
-                                                            Edit
-                                                        </button>
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => {
-                                                                this.dialog.show({
-                                                                    title: 'Slot Admin confirm',
-                                                                    body: 'Are you sure?',
-                                                                    actions: [
-                                                                        Dialog.CancelAction(() => {
-                                                                            this.dialog.hide();
-                                                                        }),
-                                                                        Dialog.OKAction(() => {
-                                                                            console.log("delete agent userid " + member._id);
-                                                                            this.deleteMember(member._id);
-                                                                        })
-                                                                    ],
-                                                                    bsSize: 'small',
-                                                                    onHide: (dialog) => {
-                                                                        this.dialog.hide()
-                                                                        console.log('closed by clicking background.')
-                                                                    }
-                                                                })
-                                                            }}
-                                                            style={{ marginLeft: 5,width: 80 }}
-                                                            className="btn btn-danger btn-icon-text"
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </td> */}
                                                 </tr>
                                             );
                                     })}
                                 </tbody>
                             </table>
                         </div>
-                        <div className="card-footer">
+                        <div className="card-footer" style={{ textAlign: "right", width: '100%' }}>
                             <MDBContainer>
                                 <div className="wrapper">
                                     <div className="w-auto h-25 p-3  d-inline-block">
@@ -585,16 +692,43 @@ export default class Report extends React.Component {
                                         </select>
                                     </div>
                                     <div className="w-auto h-25 p-3  d-inline-block">
-                                        PageNumber
-                                        <select id="select-1" className="form-control" value={this.state.pagenumber} onChange={this.handleSelectPageNumberChange}>
-                                            {
-                                                this.state.pagearr.map((p, index) => {
-                                                    return (
-                                                        <option value={p} key={index}>{p}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination">
+                                                <li class="page-item"><a class="page-link" onClick={() => {
+                                                    if (this.state.pagenumber > 1) {
+                                                        let p = this.state.pagenumber - 1;
+                                                        this.setState({ pagenumber: p });
+                                                        var pagenum = p
+                                                        var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                        var endrow = startrow + this.state.rowperpage;
+                                                        this.setState({ startrow: startrow, endrow: endrow });
+                                                    }
+                                                }}>Previous</a></li>
+                                                {
+                                                    this.state.pagearr.map((p, index) => {
+                                                        return (
+                                                            <li class={this.state.pagenumber == p ? "page-item active" : "page-item"}><a class="page-link" onClick={() => {
+                                                                this.setState({ pagenumber: p });
+                                                                var pagenum = p;
+                                                                var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                                var endrow = startrow + this.state.rowperpage;
+                                                                this.setState({ startrow: startrow, endrow: endrow });
+                                                            }}>{p}</a></li>
+                                                        )
+                                                    })
+                                                }
+                                                <li class="page-item"><a class="page-link" onClick={() => {
+                                                    if (this.state.pagenumber < this.state.pagearr.length) {
+                                                        let p = this.state.pagenumber + 1;
+                                                        this.setState({ pagenumber: p });
+                                                        var pagenum = p;
+                                                        var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                        var endrow = startrow + this.state.rowperpage;
+                                                        this.setState({ startrow: startrow, endrow: endrow });
+                                                    }
+                                                }}>Next</a></li>
+                                            </ul>
+                                        </nav>
                                     </div>
                                     <div className="card-tools d-inline-block">
                                         <div className="input-group input-group-sm" style={{ width: '100%' }}>
@@ -608,11 +742,38 @@ export default class Report extends React.Component {
                                                     if (name != "") {
                                                         this.setState({
                                                             data: this.state.rawdata.filter((data) => {
-                                                                return data.user_name.indexOf(name) !== -1;
+                                                                console.log('data : ' + JSON.stringify(data));
+                                                                if (data.username.indexOf(name) !== -1) {
+                                                                    return data.username.indexOf(name) !== -1;
+                                                                } else if (data.type.indexOf(name) !== -1) {
+                                                                    return data.type.indexOf(name) !== -1;
+                                                                } else if (data.tran_type.indexOf(name) !== -1) {
+                                                                    return data.tran_type.indexOf(name) !== -1;
+                                                                }
+                                                                /* else if (data.type.indexOf(name) !== -1) {
+                                                                    return data.type.indexOf(name) !== -1;
+                                                                } else if (data.note.indexOf(name) !== -1) {
+                                                                    return data.note.indexOf(name) !== -1;
+                                                                } else if (data.tran_type.indexOf(name) !== -1) {
+                                                                    return data.tran_type.indexOf(name) !== -1;
+                                                                } */
                                                             })
                                                         });
                                                         datalength = this.state.rawdata.filter((data) => {
-                                                            return data.user_name.indexOf(name) !== -1;
+                                                            if (data.username.indexOf(name) !== -1) {
+                                                                return data.username.indexOf(name) !== -1;
+                                                            } else if (data.type.indexOf(name) !== -1) {
+                                                                return data.type.indexOf(name) !== -1;
+                                                            } else if (data.tran_type.indexOf(name) !== -1) {
+                                                                return data.tran_type.indexOf(name) !== -1;
+                                                            }
+                                                            /*  else if (data.type.indexOf(name) !== -1) {
+                                                                 return data.type.indexOf(name) !== -1;
+                                                             } else if (data.note.indexOf(name) !== -1) {
+                                                                 return data.note.indexOf(name) !== -1;
+                                                             } else if (data.tran_type.indexOf(name) !== -1) {
+                                                                 return data.tran_type.indexOf(name) !== -1;
+                                                             } */
                                                         }).length;
                                                     } else {
                                                         this.setState({

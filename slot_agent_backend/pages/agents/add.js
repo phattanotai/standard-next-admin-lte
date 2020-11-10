@@ -216,15 +216,11 @@ export default class AddAgent extends React.Component {
         return <AdminLayoutHoc contentTitle={'Add Agents'} contentTitleButton={<i className="fa fa-2x fa-id-badge" />} url={this.props.url}>
             <div className="offset-md-0">
                 <div className="card">
-                    <div className="card-header">
-                        {/* <h3 className="card-title">New User Form</h3> */}
-                    </div>
                     <form className="form-horizontal">
                         <div className="card-body">
-
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent code</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent code</span>
                                 </div>
                                 <input type="text" className="form-control"
                                     //placeholder="agent code"
@@ -234,8 +230,8 @@ export default class AddAgent extends React.Component {
                                     required />
                             </div>
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent lineup</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent lineup</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex2"
                                     //placeholder="agent lineup"
@@ -245,8 +241,8 @@ export default class AddAgent extends React.Component {
                                     disabled={true}/>
                             </div>
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent name</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent name</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex3"
                                     //placeholder="agent name"
@@ -255,8 +251,8 @@ export default class AddAgent extends React.Component {
                                     required />
                             </div>
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent detail</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent detail</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex4"
                                     //placeholder="agent detail"
@@ -266,8 +262,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent website</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent website</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex5"
                                     //placeholder="agent website"
@@ -277,8 +273,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent master</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent master</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex6"
                                     //placeholder="agent master"
@@ -298,8 +294,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent percent</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent percent</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex7"
                                     //placeholder="agent percent"
@@ -309,8 +305,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent percent aff</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent percent aff</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex8"
                                     //placeholder="agent percent aff"
@@ -320,8 +316,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent percent aff2</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent percent aff2</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex9"
                                     //placeholder="agent percent aff2"
@@ -331,8 +327,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent percent aff3</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent percent aff3</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex10"
                                     //placeholder="agent percent aff3"
@@ -342,8 +338,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent percent aff4</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent percent aff4</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex11"
                                     //placeholder="agent percent aff4"
@@ -353,8 +349,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent percent aff5</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent percent aff5</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex12"
                                     //placeholder="agent percent aff5"
@@ -364,8 +360,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent comm</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent comm</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex13"
                                     //placeholder="agent comm"
@@ -375,8 +371,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent line ad</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent line ad</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex14"
                                     //placeholder="agent line ad"
@@ -386,8 +382,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent line token1</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent line token1</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex15"
                                     //placeholder="agent line token1"
@@ -397,8 +393,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent line token2</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent line token2</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex16"
                                     //placeholder="agent line token2"
@@ -408,8 +404,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent line token3</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent line token3</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex16"
                                     //placeholder="agent line token3"
@@ -419,8 +415,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent api user</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent api user</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex17"
                                     //placeholder="agent api user"
@@ -430,8 +426,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent api password</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent api password</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex18"
                                     //placeholder="agent api password"
@@ -441,8 +437,8 @@ export default class AddAgent extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">agent api key</span>
+                                <div className="input-group-prepend col-2">
+                                    <span className="input-group-text bg-dark col-12">agent api key</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex19"
                                     //placeholder="agent api key"
@@ -467,8 +463,8 @@ export default class AddAgent extends React.Component {
 
                     <div className="card-footer">
                         <div className="d-inline-block btn-block">
-                            <button className="btn btn-danger" onClick={this.handleResetSubmit}>Back</button>
-                            <button className="btn btn-info float-right" onClick={this.handleSubmit}>Save</button>
+                            <button className="btn btn-danger" onClick={this.handleResetSubmit} title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
+                            <button className="btn btn-info" onClick={this.handleSubmit} title='Save' style={{marginLeft: 5,  width: 45 }}><i class="fa fa-floppy-o"></i></button>
                         </div>
                     </div>
                 </div>

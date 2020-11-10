@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 class AdminSidebar extends React.Component {
     render() {
         const { pathname } = this.props.router;
-        return <aside className="main-sidebar sidebar-dark-primary elevation-4" style={{minHeight: '846px'}}>
+        return <aside className="main-sidebar sidebar-dark-primary elevation-4" >
             <Link href="/">
                 <a className="brand-link text-center">
                     <i className="fa fa-home fa-2x brand-image ml-2"/>
@@ -107,7 +107,70 @@ class AdminSidebar extends React.Component {
                                     </p>
                                 </a>
                             </Link>
-                        </li>                 
+                        </li>          
+                        <li className="nav-item">
+                            <Link href="/news">
+                                <a className={['nav-link', pathname === '/news' ? 'active' : ''].join(' ')}>
+                                    <i className="nav-icon fa fa-newspaper-o"/>
+                                    <p>
+                                        News                                        
+                                    </p>
+                                </a>
+                            </Link>
+                        </li>    
+                        <li className="nav-item">
+                            <Link href="/bonus">
+                                <a className={['nav-link', pathname === '/bonus' ? 'active' : ''].join(' ')}>
+                                    <i className="nav-icon fa fa-tachometer"/>
+                                    <p>
+                                        Bonus                                        
+                                    </p>
+                                </a>
+                            </Link>
+                        </li>  
+                        <li className="nav-item">
+                            <Link href="/game_random_bonus">
+                                <a className={['nav-link', pathname === '/game_random_bonus' ? 'active' : ''].join(' ')}>
+                                    <i className="nav-icon fa fa-gamepad"/>
+                                    <p>
+                                        Game Bonus Topup                                       
+                                    </p>
+                                </a>
+                            </Link>
+                        </li>  
+                         
+                        <li className="nav-item">
+                            <Link href="/member_bonus">
+                                <a className={['nav-link', pathname === '/member_bonus' ? 'active' : ''].join(' ')}>
+                                    <i className="nav-icon fa fa-street-view"/>
+                                    <p>
+                                        Member bonus                                        
+                                    </p>
+                                </a>
+                            </Link>
+                        </li>   
+
+                        <li className="nav-item">
+                            <Link href="/member_share">
+                                <a className={['nav-link', pathname === '/member_share' ? 'active' : ''].join(' ')}>
+                                    <i className="nav-icon fa fa-male"/>
+                                    <p>
+                                        Member Share                                        
+                                    </p>
+                                </a>
+                            </Link>
+                        </li>   
+
+                        <li className="nav-item">
+                            <Link href="/share">
+                                <a className={['nav-link', pathname === '/share' ? 'active' : ''].join(' ')}>
+                                    <i className="nav-icon fa fa-share-alt"/>
+                                    <p>
+                                        Share setting                                        
+                                    </p>
+                                </a>
+                            </Link>
+                        </li>      
                         <li className="nav-item">
                             <Link href="/">
                                 <a className={['nav-link', pathname === '/' ? 'active' : ''].join(' ')} onClick={() => { 

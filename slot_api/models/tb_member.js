@@ -13,7 +13,10 @@ const tb_member_Schema = new Schema({
     last_login: String,
     register_type: String,
     mem_status: String,
-    external_id: String
+    external_id: String,
+    token: String,
+    mem_point: Number,
+    mem_line_up: String,
 })
 
 const Tb_MemberModel = mongoose.model('tb_member', tb_member_Schema)

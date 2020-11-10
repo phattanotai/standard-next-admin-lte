@@ -134,7 +134,7 @@ export default class AddGame extends React.Component {
         return user_level_id[0];
     }
 
-    
+
 
     handleSwitchChange = nr => () => {
         let switchNumber = `switch${nr}`;
@@ -338,10 +338,7 @@ export default class AddGame extends React.Component {
 
         return <AdminLayoutHoc contentTitle={'Add Game'} contentTitleButton={<i className="fa fa-2x fa-cubes" />} url={this.props.url}>
             <div className="offset-md-0">
-                <div className="card">
-                    <div className="card-header">
-                        {/* <h3 className="card-title">New User Form</h3> */}
-                    </div>
+                <div className="card mt-2">
                     <form className="form-horizontal">
                         <div className="card-body">
                             <div className="form-group">
@@ -369,7 +366,7 @@ export default class AddGame extends React.Component {
                                             <option value="Fish" >Fish</option>
                                             <option value="Livecasino" >Livecasino</option>
                                             <option value="Card" >Card</option>
-                                            <option value="Accord" >Accord</option>
+                                            <option value="Arcade" >Arcade</option>
                                             <option value="Sportbook" >Sportbook</option>
                                             <option value="SCRATCH" >SCRATCH</option>
                                             <option value="N/A" >N/A</option>
@@ -379,8 +376,8 @@ export default class AddGame extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">game code</span>
+                                <div className="input-group-prepend col-3">
+                                    <span className="input-group-text bg-dark col-12">game code</span>
                                 </div>
                                 <input type="text" className="form-control"
                                     //placeholder="game code"
@@ -391,8 +388,8 @@ export default class AddGame extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">game name</span>
+                                <div className="input-group-prepend col-3">
+                                    <span className="input-group-text bg-dark col-12">game name</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex2"
                                     //placeholder="game name"
@@ -402,8 +399,8 @@ export default class AddGame extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">game id 1</span>
+                                <div className="input-group-prepend col-3">
+                                    <span className="input-group-text bg-dark col-12">game id 1</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex4"
                                     //placeholder="game id 1"
@@ -413,8 +410,8 @@ export default class AddGame extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">game id 2</span>
+                                <div className="input-group-prepend col-3">
+                                    <span className="input-group-text bg-dark col-12">game id 2</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex5"
                                     //placeholder="game id 2"
@@ -424,8 +421,8 @@ export default class AddGame extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">game id 3</span>
+                                <div className="input-group-prepend col-3">
+                                    <span className="input-group-text bg-dark col-12">game id 3</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex5"
                                     //placeholder="game id 3"
@@ -435,8 +432,8 @@ export default class AddGame extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">game id 4</span>
+                                <div className="input-group-prepend col-3">
+                                    <span className="input-group-text bg-dark col-12">game id 4</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex5"
                                     //placeholder="game id 4"
@@ -446,8 +443,8 @@ export default class AddGame extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">game line</span>
+                                <div className="input-group-prepend col-3">
+                                    <span className="input-group-text bg-dark col-12">game line</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex5"
                                     //placeholder="game line"
@@ -479,8 +476,8 @@ export default class AddGame extends React.Component {
                             </div>
 
                             <div className="input-group mb-3 input-group-sm">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text">game provider</span>
+                                <div className="input-group-prepend col-3">
+                                    <span className="input-group-text bg-dark col-12">game provider</span>
                                 </div>
                                 <input type="text" className="form-control " id="validation-ex5"
                                     //placeholder="game provider"
@@ -567,8 +564,8 @@ export default class AddGame extends React.Component {
 
                     <div className="card-footer">
                         <div className="d-inline-block btn-block">
-                            <button className="btn btn-danger" onClick={this.handleResetSubmit}>Back</button>
-                            <button className="btn btn-info float-right" onClick={this.handleSubmit}>Save</button>
+                            <button className="btn btn-danger" onClick={this.handleResetSubmit} title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
+                            <button className="btn btn-info float-right" onClick={this.handleSubmit} title='Save' style={{ marginLeft: 5, width: 45 }}><i class="fa fa-floppy-o"></i></button>
                         </div>
                     </div>
                 </div>

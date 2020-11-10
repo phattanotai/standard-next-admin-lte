@@ -263,67 +263,64 @@ export default class Description extends React.Component {
         return <AdminLayoutHoc contentTitle={'Agent Description'} contentTitleButton={<i className="fa fa-2x fa-id-badge" />} url={this.props.url}>
             <div className="row">
                 <div className="col-6">
-                    <div className="card">
-                        <div className="card-header">
-
-                        </div>
+                    <div className="card mt-2">
                         <div className="col-12">
                             <div className="card-body table-responsive p-0">
                                 <table className="table table-hover ">
-                                    <thead>
+                                <thead class="table-dark">
                                         <tr >
-                                            <th><h5>ITEMS</h5></th>
-                                            <th><h5>DESCRIPTION</h5></th>
+                                            <th><h6>ITEMS</h6></th>
+                                            <th><h6>DESCRIPTION</h6></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                          <tr>
-                                            <td className="py-1"><h5>Service Status</h5></td>
+                                            <td className="py-1"><h6>Service Status</h6></td>
                                             <td className="py-1"><label className={`badge badge-${this.state.classBadge}`}>{this.state.ser_status}</label> </td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1 "><h5>Brand code</h5></td>
+                                            <td className="py-1 "><h6>Brand code</h6></td>
                                             <td className="py-1">{this.state.brand_code}</td>
                                         </tr>
                                        
                                         <tr>
-                                            <td className="py-1"><h5>Agent Code</h5></td>
+                                            <td className="py-1"><h6>Agent Code</h6></td>
                                             <td className="py-1">{this.state.agent_code}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Service API Key</h5></td>
+                                            <td className="py-1"><h6>Service API Key</h6></td>
                                             <td className="py-1">{this.state.ser_api_key}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Service API Secret</h5></td>
+                                            <td className="py-1"><h6>Service API Secret</h6></td>
                                             <td className="py-1">{this.state.ser_api_secret}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Service API Username</h5></td>
+                                            <td className="py-1"><h6>Service API Username</h6></td>
                                             <td className="py-1">{this.state.ser_api_username}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Service API Password</h5></td>
+                                            <td className="py-1"><h6>Service API Password</h6></td>
                                             <td className="py-1">{this.state.ser_api_password}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Start User String</h5></td>
+                                            <td className="py-1"><h6>Start User String</h6></td>
                                             <td className="py-1">{this.state.startuser_string}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Start Password String</h5></td>
+                                            <td className="py-1"><h6>Start Password String</h6></td>
                                             <td className="py-1">{this.state.startpass_string}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>User Process</h5></td>
+                                            <td className="py-1"><h6>User Process</h6></td>
                                             <td className="py-1">{this.state.user_process}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Service Percent</h5></td>
+                                            <td className="py-1"><h6>Service Percent</h6></td>
                                             <td className="py-1">{this.state.ser_percent}</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1"><h5>Service Commission</h5></td>
+                                            <td className="py-1"><h6>Service Commission</h6></td>
                                             <td className="py-1">{this.state.ser_comm}</td>
                                         </tr>                                       
 
@@ -333,7 +330,7 @@ export default class Description extends React.Component {
                         </div>
                         <div className="card-footer">
                             <div className="bt-tb-page">
-                                <button className="btn btn-danger w-25" onClick={this.handleResetSubmit}>Back</button>
+                            <button className="btn btn-danger" onClick={this.handleResetSubmit}  title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
                             </div>
                         </div>
                     </div>
@@ -341,11 +338,11 @@ export default class Description extends React.Component {
 
                 <div className="col-6">
                         <div className="card">
-                            <div className="card-header">
+                            <div className="card-header bg-secondary">
                                 {/* <h3 className="card-title">Current users</h3> */}
                                 <MDBContainer>
                                     <div className="wrapper">
-                                        <h4> Games List for brand : {this.state.brand} </h4>
+                                        <h5> Games List for brand : {this.state.brand} </h5>
                                         <div className="wrapper">
 
                                             <div className="w-auto h-25 p-3  d-inline-block">
@@ -426,13 +423,13 @@ export default class Description extends React.Component {
                             </div>
                             <div className="card-body table-responsive p-0">
                                 <table className="table table-hover table-striped table-bordered">
-                                    <thead>
+                                <thead class="table-dark">
                                         <tr >
-                                            <th>Status</th>
-                                            <th>Image</th>
-                                            <th>Code</th>
-                                            <th>Name</th>
-                                            <th>Type</th>
+                                        <th width={'5%'}>Status</th>
+                                            <th width={'20%'}>Image</th>
+                                            <th width={'15%'}>Code</th>
+                                            <th width={'15%'}>Name</th>
+                                            <th width={'5%'}>Type</th>
                                         </tr>
                                     </thead>
                                     <tbody>

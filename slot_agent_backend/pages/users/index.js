@@ -358,50 +358,23 @@ export default class Agents extends React.Component {
             <div className="row">
                 <div className="col-12">
                     <div className="card">
-                        <div className="card-header">
-                            {/* <h3 className="card-title">Current users</h3> */}
-                            <MDBContainer>
-                                <div className="wrapper">
-                                    {/* <div className="w-auto h-25 p-3  d-inline-block">
-                                        Agents
-                                        <select id="select-3" className="form-control" value={this.state.agent} onChange={this.handleSelectAgentChange}>
-                                            <option value='All'>All</option>
-                                            {
-                                                this.state.agentdata.map((agentrow, index) => {
-                                                    return (
-                                                        <option value={agentrow.agent_name} key={index}>{agentrow.agent_name}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                    </div> */}
-                                    <div className="w-auto h-25 p-3  d-inline-block">
-                                        Row per page
+                    <div className="card-header bg-secondary">
+                            <div className="wrapper float-right">
+                                <div className="w-auto h-25 p-3  d-inline-block">
+                                    Row per page
                                         <select id="select-1" className="form-control" value={this.state.rowperpage} onChange={this.handleSelectRowPerPageChange}>
-                                            <option value='10'>10</option>
-                                            <option value='15'>15</option>
-                                            <option value='20'>20</option>
-                                            <option value='25'>25</option>
-                                            <option value='30'>30</option>
-                                            <option value='35'>35</option>
-                                            <option value='40'>40</option>
-                                            <option value='45'>45</option>
-                                            <option value='50'>50</option>
-                                        </select>
-                                    </div>
-                                    <div className="w-auto h-25 p-3  d-inline-block">
-                                        PageNumber
-                                        <select id="select-1" className="form-control" value={this.state.pagenumber} onChange={this.handleSelectPageNumberChange}>
-                                            {
-                                                this.state.pagearr.map((p, index) => {
-                                                    return (
-                                                        <option value={p} key={index}>{p}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                    </div>
-                                    <div className="card-tools d-inline-block">
+                                        <option value='10'>10</option>
+                                        <option value='15'>15</option>
+                                        <option value='20'>20</option>
+                                        <option value='25'>25</option>
+                                        <option value='30'>30</option>
+                                        <option value='35'>35</option>
+                                        <option value='40'>40</option>
+                                        <option value='45'>45</option>
+                                        <option value='50'>50</option>
+                                    </select>
+                                </div>
+                                <div className="card-tools d-inline-block">
                                         <div className="input-group input-group-sm" style={{ width: '100%' }}>
                                             <input type="text" name="table_search"
                                                 className="form-control float-right"
@@ -413,11 +386,19 @@ export default class Agents extends React.Component {
                                                     if (name != "") {
                                                         this.setState({
                                                             data: this.state.rawdata.filter((data) => {
-                                                                return data.user_name.indexOf(name) !== -1;
+                                                                if (data.user_name.indexOf(name) !== -1) {
+                                                                    return data.user_name.indexOf(name) !== -1;
+                                                                } else if (data.user_email.indexOf(name) !== -1) {
+                                                                    return data.user_email.indexOf(name) !== -1;
+                                                                } 
                                                             })
                                                         });
                                                         datalength = this.state.rawdata.filter((data) => {
-                                                            return data.user_name.indexOf(name) !== -1;
+                                                            if (data.user_name.indexOf(name) !== -1) {
+                                                                return data.user_name.indexOf(name) !== -1;
+                                                            } else if (data.user_email.indexOf(name) !== -1) {
+                                                                return data.user_email.indexOf(name) !== -1;
+                                                            } 
                                                         }).length;
                                                     } else {
                                                         this.setState({
@@ -447,19 +428,18 @@ export default class Agents extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </MDBContainer>
+                            </div>
 
                         </div>
                         <div className="card-body table-responsive p-0">
                             <table className="table table-hover table-striped table-bordered">
-                                <thead>
+                                <thead  class="table-dark">
                                     <tr >
-                                        <th>Agent Code</th>
-                                        <th>User Name</th>
-                                        <th>User Email</th>
-                                        <th>User Level</th>
-                                        <th style={{ textAlign: "center" }}>Edit</th>
+                                        <th width={'10%'}>Status</th>
+                                        <th >User Name</th>
+                                        <th width={'25%'}>User Email</th>
+                                        <th width={'25%'}>User Level</th>
+                                        <th style={{ textAlign: "center" }} width={'10%'}>Command</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -474,14 +454,14 @@ export default class Agents extends React.Component {
                                             //console.log("userid" + user.id);
                                             return (
                                                 <tr key={index}>
-                                                    <td className="py-1"><label className={`badge badge-${classBadge}`}>{mystatus}</label>{uagent.agent_code}</td>
+                                                    <td className="py-1"><label className={`badge badge-${classBadge}`}>{mystatus}</label></td>
                                                     <td className="py-1">{uagent.user_name}</td>
                                                     <td className="py-1">{uagent.user_email}</td>
                                                     <td className="py-1">{this.onSearchLevel(uagent.user_level)}</td>
-                                                    <td className="py-1" style={{ textAlign: "right" }}>                                                        
+                                                    <td className="py-1" style={{ textAlign: "center" }}>                                                        
                                                         <button
                                                             type="button"
-                                                            className="btn btn-warning btn-icon-text btn-sm"
+                                                            className="btn btn-warning"
                                                             onClick={() => {
                                                                 console.log("edit user agent id " + uagent._id);
                                                                 Cookies.set("uagentid", uagent._id);
@@ -489,10 +469,12 @@ export default class Agents extends React.Component {
                                                                 Router.push("/users/edit");
 
                                                             }}
-                                                            style={{ width: 80 }}
+                                                            title='Edit'
+                                                            style={{  width: 45 }}
                                                         //onClick={this.onClick}
                                                         >
-                                                            Edit
+                                                            {/* Edit */}
+                                                            <i class="fa fa-edit"></i>
                                                         </button>
                                                         {/* <button
                                                             type="button"
@@ -527,6 +509,49 @@ export default class Agents extends React.Component {
                                     })}
                                 </tbody>
                             </table>
+                        </div>
+                        <div className="card-footer" style={{ textAlign: "right", width: '100%' }}>
+                            <div className="wrapper float-right">                                
+                                <div className="w-auto h-25 p-3  d-inline-block">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li class="page-item"><a class="page-link" onClick={() => {
+                                                if (this.state.pagenumber > 1) {
+                                                    let p = this.state.pagenumber - 1;
+                                                    this.setState({ pagenumber: p });
+                                                    var pagenum = p
+                                                    var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                    var endrow = startrow + this.state.rowperpage;
+                                                    this.setState({ startrow: startrow, endrow: endrow });
+                                                }
+                                            }}>Previous</a></li>
+                                            {
+                                                this.state.pagearr.map((p, index) => {
+                                                    return (
+                                                        <li class={this.state.pagenumber == p ? "page-item active" : "page-item"}><a class="page-link" onClick={() => {
+                                                            this.setState({ pagenumber: p });
+                                                            var pagenum = p;
+                                                            var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                            var endrow = startrow + this.state.rowperpage;
+                                                            this.setState({ startrow: startrow, endrow: endrow });
+                                                        }}>{p}</a></li>
+                                                    )
+                                                })
+                                            }
+                                            <li class="page-item"><a class="page-link" onClick={() => {
+                                                if (this.state.pagenumber < this.state.pagearr.length) {
+                                                    let p = this.state.pagenumber + 1;
+                                                    this.setState({ pagenumber: p });
+                                                    var pagenum = p;
+                                                    var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                    var endrow = startrow + this.state.rowperpage;
+                                                    this.setState({ startrow: startrow, endrow: endrow });
+                                                }
+                                            }}>Next</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

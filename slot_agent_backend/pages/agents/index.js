@@ -249,8 +249,79 @@ export default class Agents extends React.Component {
             <div className="row">
                 <div className="col-12">
                     <div className="card">
-                        <div className="card-header">
-                            {/* <h3 className="card-title">Current users</h3> */}
+
+                        <div className="card-body table-responsive p-0">
+                            <table className="table table-hover table-striped table-bordered">
+                                <thead class="table-dark">
+                                    <tr >
+                                        <th width={'10%'}>status</th>
+                                        <th width={'10%'}>Code</th>
+                                        <th width={'15%'}>Name</th>
+                                        <th width={'10%'}>LineUp</th>
+                                        <th width={'10%'}>Line@</th>
+                                        <th width={'15%'}>WebSite</th>
+                                        <th width={'10%'}>Type</th>
+                                        <th style={{ textAlign: "center" }}>Command</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.data.map((agent, index) => {
+                                        let classBadge = 'danger';
+                                        let mystatus = 'disable';
+                                        if (agent.agent_status === '1') {
+                                            classBadge = 'success';
+                                            mystatus = 'enable';
+                                        }
+                                        if (index >= this.state.startrow && index < this.state.endrow)
+                                            //console.log("userid" + user.id);
+                                            return (
+                                                <tr key={index}>
+                                                    <td className="py-1"><label className={`badge badge-${classBadge}`}>{mystatus}</label></td>
+                                                    <td className="py-1">{agent.agent_code}</td>
+                                                    <td className="py-1">{agent.agent_name}</td>
+                                                    <td className="py-1">{agent.agent_lineup}</td>
+                                                    <td className="py-1">{agent.agent_line_ad}</td>
+                                                    <td className="py-1">{agent.agent_website}</td>
+                                                    <td className="py-1">{agent.agent_type}</td>
+                                                    <td className="py-1" style={{ textAlign: "center" }}>
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-success"
+                                                            onClick={() => {
+                                                                console.log("Description agid" + agent._id);
+                                                                Cookies.set("agentid", agent._id);
+                                                                Router.push("/agents/description");
+                                                            }}
+                                                            title='Detail'
+                                                            style={{ width: 45 }}
+                                                        
+                                                        >
+                                                            <i class="fa fa-eye"></i>
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-warning"
+                                                            onClick={() => {
+                                                                console.log("edit agent id" + agent._id);
+                                                                Cookies.set("agentid", agent._id);
+                                                                Router.push("/agents/edit");
+
+                                                            }}
+                                                            title='Edit'
+                                                            style={{ marginLeft: 5, width: 45 }}
+                                                        //onClick={this.onClick}
+                                                        >
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                        
+                                                    </td>
+                                                </tr>
+                                            );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="card-footer" style={{ textAlign: "right", width: '100%' }}>
                             <MDBContainer>
                                 <div className="wrapper">
                                     <div className="w-auto h-25 p-3  d-inline-block">
@@ -268,16 +339,43 @@ export default class Agents extends React.Component {
                                         </select>
                                     </div>
                                     <div className="w-auto h-25 p-3  d-inline-block">
-                                        PageNumber
-                                        <select id="select-1" className="form-control" value={this.state.pagenumber} onChange={this.handleSelectPageNumberChange}>
-                                            {
-                                                this.state.pagearr.map((p, index) => {
-                                                    return (
-                                                        <option value={p} key={index}>{p}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination">
+                                                <li class="page-item"><a class="page-link" onClick={() => {
+                                                    if (this.state.pagenumber > 1) {
+                                                        let p = this.state.pagenumber - 1;
+                                                        this.setState({ pagenumber: p });
+                                                        var pagenum = p
+                                                        var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                        var endrow = startrow + this.state.rowperpage;
+                                                        this.setState({ startrow: startrow, endrow: endrow });
+                                                    }
+                                                }}>Previous</a></li>
+                                                {
+                                                    this.state.pagearr.map((p, index) => {
+                                                        return (
+                                                            <li class={this.state.pagenumber == p ? "page-item active" : "page-item"}><a class="page-link" onClick={() => {
+                                                                this.setState({ pagenumber: p });
+                                                                var pagenum = p;
+                                                                var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                                var endrow = startrow + this.state.rowperpage;
+                                                                this.setState({ startrow: startrow, endrow: endrow });
+                                                            }}>{p}</a></li>
+                                                        )
+                                                    })
+                                                }
+                                                <li class="page-item"><a class="page-link" onClick={() => {
+                                                    if (this.state.pagenumber < this.state.pagearr.length) {
+                                                        let p = this.state.pagenumber + 1;
+                                                        this.setState({ pagenumber: p });
+                                                        var pagenum = p;
+                                                        var startrow = (pagenum - 1) * this.state.rowperpage;
+                                                        var endrow = startrow + this.state.rowperpage;
+                                                        this.setState({ startrow: startrow, endrow: endrow });
+                                                    }
+                                                }}>Next</a></li>
+                                            </ul>
+                                        </nav>
                                     </div>
                                     <div className="card-tools d-inline-block">
                                         <div className="input-group input-group-sm" style={{ width: '100%' }}>
@@ -288,14 +386,37 @@ export default class Agents extends React.Component {
                                                     this.setState({ searchtxt: e.target.value });
                                                     var name = e.target.value;
                                                     var datalength = this.state.rawdata.length;
+                                                    console.log("datalength : " + datalength);
                                                     if (name != "") {
                                                         this.setState({
                                                             data: this.state.rawdata.filter((data) => {
-                                                                return data.agent_name.indexOf(name) !== -1;
+                                                                if (data.agent_code.indexOf(name) !== -1) {
+                                                                    return data.agent_code.indexOf(name) !== -1;
+                                                                } else if (data.agent_name.indexOf(name) !== -1) {
+                                                                    return data.agent_name.indexOf(name) !== -1;
+                                                                } else if (data.agent_lineup.indexOf(name) !== -1) {
+                                                                    return data.agent_lineup.indexOf(name) !== -1;
+                                                                } else if (data.agent_line_ad.indexOf(name) !== -1) {
+                                                                    return data.agent_line_ad.indexOf(name) !== -1;
+                                                                } else if (data.agent_website.indexOf(name) !== -1) {
+                                                                    return data.agent_website.indexOf(name) !== -1;
+                                                                }
+
                                                             })
                                                         });
                                                         datalength = this.state.rawdata.filter((data) => {
-                                                            return data.agent_name.indexOf(name) !== -1;
+                                                            if (data.agent_code.indexOf(name) !== -1) {
+                                                                return data.agent_code.indexOf(name) !== -1;
+                                                            } else if (data.agent_name.indexOf(name) !== -1) {
+                                                                return data.agent_name.indexOf(name) !== -1;
+                                                            } else if (data.agent_lineup.indexOf(name) !== -1) {
+                                                                return data.agent_lineup.indexOf(name) !== -1;
+                                                            } else if (data.agent_line_ad.indexOf(name) !== -1) {
+                                                                return data.agent_line_ad.indexOf(name) !== -1;
+                                                            } else if (data.agent_website.indexOf(name) !== -1) {
+                                                                return data.agent_website.indexOf(name) !== -1;
+                                                            }
+
                                                         }).length;
                                                     } else {
                                                         this.setState({
@@ -327,101 +448,6 @@ export default class Agents extends React.Component {
                                     </div>
                                 </div>
                             </MDBContainer>
-
-                        </div>
-                        <div className="card-body table-responsive p-0">
-                            <table className="table table-hover table-striped table-bordered">
-                                <thead>
-                                    <tr >
-                                        <th>Code</th>
-                                        <th>Name</th>
-                                        <th>LineUp</th>
-                                        <th>Line@</th>
-                                        <th>WebSite</th>
-                                        <th>Type</th>
-                                        <th style={{ textAlign: "right" }}>Detail / Edit</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.state.data.map((agent, index) => {
-                                        let classBadge = 'danger';
-                                        let mystatus = 'disable';
-                                        if (agent.agent_status === '1') {
-                                            classBadge = 'success';
-                                            mystatus = 'enable';
-                                        }
-                                        if (index >= this.state.startrow && index < this.state.endrow)
-                                            //console.log("userid" + user.id);
-                                            return (
-                                                <tr key={index}>
-                                                    <td className="py-1"><label className={`badge badge-${classBadge}`}>{mystatus}</label>{agent.agent_code}</td>
-                                                    <td className="py-1">{agent.agent_name}</td>
-                                                    <td className="py-1">{agent.agent_lineup}</td>
-                                                    <td className="py-1">{agent.agent_line_ad}</td>
-                                                    <td className="py-1">{agent.agent_website}</td>
-                                                    <td className="py-1">{agent.agent_type}</td>
-                                                    <td className="py-1" style={{ textAlign: "right" }}>
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-success btn-icon-text btn-sm"
-                                                            onClick={() => {
-                                                                console.log("Description agid" + agent._id);
-                                                                Cookies.set("agentid", agent._id);
-                                                                Router.push("/agents/description");
-
-                                                            }}
-                                                            style={{ marginLeft: 5, width: 80 }}
-                                                        //onClick={this.onClick}
-                                                        >
-                                                            Detail
-                                                        </button>
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-warning btn-icon-text  btn-sm"
-                                                            onClick={() => {
-                                                                console.log("edit agent id" + agent._id);
-                                                                Cookies.set("agentid", agent._id);
-                                                                Router.push("/agents/edit");
-
-                                                            }}
-                                                            style={{ marginLeft: 5, width: 80 }}
-                                                        //onClick={this.onClick}
-                                                        >
-                                                            Edit
-                                                        </button>
-                                                       {/*  <button
-                                                            type="button"
-                                                            onClick={() => {
-                                                                this.dialog.show({
-                                                                    title: 'Slot Admin confirm',
-                                                                    body: 'Are you sure?',
-                                                                    actions: [
-                                                                        Dialog.CancelAction(() => {
-                                                                            this.dialog.hide();
-                                                                        }),
-                                                                        Dialog.OKAction(() => {
-                                                                            console.log("delete userid" + agent._id);
-                                                                            this.deleteAgent(agent._id);
-                                                                        })
-                                                                    ],
-                                                                    bsSize: 'small',
-                                                                    onHide: (dialog) => {
-                                                                        this.dialog.hide()
-                                                                        console.log('closed by clicking background.')
-                                                                    }
-                                                                })
-                                                            }}
-                                                            style={{ marginLeft: 5, width: 80 }}
-                                                            className="btn btn-danger btn-icon-text"
-                                                        >
-                                                            Delete
-                                                        </button> */}
-                                                    </td>
-                                                </tr>
-                                            );
-                                    })}
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>

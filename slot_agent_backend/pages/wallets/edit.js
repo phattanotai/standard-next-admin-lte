@@ -295,17 +295,15 @@ export default class EditWallets extends React.Component {
         return <AdminLayoutHoc contentTitle={'Edit Wallets'} contentTitleButton={<i className="fa fa-2x fa-money" />} url={this.props.url}>
             <div className="offset-md-0">
                 <div className="card">
-                    <div className="card-header">
-                        {/* <h3 className="card-title">New User Form</h3> */}
-                    </div>
-                    <form className="form-horizontal">
+                    
+                    <form className="form-horizontal" >
                         <div className="card-body">
 
                             <div className="form-group">
                                 <div className="col-sm-10">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">Member</span>
+                                    <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-secondary ">Member</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex2"
                                             //placeholder="agent lineup"
@@ -321,8 +319,8 @@ export default class EditWallets extends React.Component {
                             <div className="form-group">
                                 <div className="col-sm-10">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">agent code</span>
+                                    <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-secondary ">agent code</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex2"
                                             //placeholder="agent lineup"
@@ -338,8 +336,8 @@ export default class EditWallets extends React.Component {
                             <div className="form-group">
                                 <div className="col-sm-10">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">brand code</span>
+                                    <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-secondary ">brand code</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex2"
                                             //placeholder="agent lineup"
@@ -355,8 +353,8 @@ export default class EditWallets extends React.Component {
                             <div className="form-group">
                                 <div className="col-sm-10">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">game username</span>
+                                    <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-secondary ">game username</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex3"
                                             //placeholder="agent name"
@@ -370,8 +368,8 @@ export default class EditWallets extends React.Component {
                             <div className="form-group">
                                 <div className="col-sm-10">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">game password</span>
+                                    <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-secondary ">game password</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex4"
                                             //placeholder="agent detail"
@@ -387,8 +385,8 @@ export default class EditWallets extends React.Component {
                                 {/* <label htmlFor="validation-ex" className="col-sm-3">Password</label> */}
                                 <div className="col-sm-10">
                                     <div className="input-group mb-3 input-group-sm">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">credit</span>
+                                    <div className="input-group-prepend col-2">
+                                            <span className="input-group-text col-12 bg-secondary ">credit</span>
                                         </div>
                                         <input type="text" className="form-control " id="validation-ex3"
                                             //placeholder="Password"
@@ -401,23 +399,15 @@ export default class EditWallets extends React.Component {
                                 </div>
                             </div>
 
-                            {/* <div className="form-group">
-                                <div className="col-sm-12">
-                                    <label class="switch">
-                                        <input type="checkbox" onChange={this.handleSwitchChange(1)} checked={this.state.switch1} />
-                                        <span class="slider round"></span>
-                                    </label>
-                                    <label className="control-label">&nbsp;&nbsp;Enabled</label>
-                                </div>
-                            </div> */}
+
 
                         </div>
                     </form>
 
                     <div className="card-footer">
                         <div className="d-inline-block btn-block">
-                            <button className="btn btn-danger" onClick={this.handleResetSubmit}>Back</button>
-                            <button className="btn btn-info float-right" onClick={this.handleSubmit}>Save</button>
+                            <button className="btn btn-danger" onClick={this.handleResetSubmit} title='Back' style={{ width: 45 }}><i class="fa fa-mail-reply"></i></button>
+                            <button className="btn btn-info" onClick={this.handleSubmit} title='Save' style={{marginLeft: 5,  width: 45 }}><i class="fa fa-floppy-o"></i></button>
                         </div>
                     </div>
                 </div>

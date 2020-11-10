@@ -11,3 +11,6 @@ export { default as ServiceGameList } from './gamelist';
 export { default as ServiceGameService } from './gameservice';
 export { default as ServiceWallets } from './wallets';
 export { default as ServiceMember } from './member';
+export { default as ServiceGameProvider } from './gameprovider';
+
+export { default as ServiceGameLucky } from './gameslucky';
