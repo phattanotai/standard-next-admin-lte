@@ -9,7 +9,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_member_runno} = require('../models');
 
 module.exports.getAllMemberRunno = async (req, res) => {
@@ -126,13 +126,11 @@ module.exports.updateMemberRunno = async (req, res) => {
     
             await tb_member_runno.findByIdAndUpdate(uId, { $set: memberRunno }).then(
                 function (result) {
-                    //console.log("agent user update result : " + result);
                     apiDebuglog("memberRunno update id " + uId + " successfully", result);
                     return res.json(ReturnSuccess(2000, { id: result._id }));
                 }
             ).catch(
                 function (err) {
-                    //console.log("agent user update error 2001 : " + err);
                     apiErrorlog("memberRunno update id " + uId + " error 2001", err);
                     //return res.json(ReturnErr(err));
                     return res.json(ReturnUnSuccess(2001, { message: "Unsuccess for update memberRunno id: " + uId }));
@@ -154,13 +152,11 @@ module.exports.daleteMemberRunno = async (req, res) => {
         if (uId) {
             await tb_member_runno.findByIdAndDelete({ _id: uId }).then(
                 function (result) {
-                    //console.log("delete agent user id result : " + result);
                     apiDebuglog("delete memberRunno id " + uId + " successfully", result);
                     return res.json(ReturnSuccess(2000, { id: result._id }));
                 }
             ).catch(
                 function (err) {
-                    //console.log("delete agent user id error 2001 : " + err);
                     apiErrorlog("delete memberRunno id " + uId + " error 2001", err);
                     //return res.json(ReturnErr(err));
                     return res.json(ReturnUnSuccess(2001, { message: "Unsuccess for delete memberRunno id: " + uId }));
@@ -174,11 +170,3 @@ module.exports.daleteMemberRunno = async (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-
-// module.exports.a = (req, res) => {
-//     try{
-
-//     }catch(err){
-//         return res.json(ReturnErr(err));
-//     }
-// }

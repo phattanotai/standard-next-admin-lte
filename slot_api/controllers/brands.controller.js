@@ -10,7 +10,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const { tb_brands,
         tb_game_provider,
         tb_game_list } = require('../models');
@@ -126,12 +126,11 @@ module.exports.updateBrand = async (req, res) => {
         const gId = req.params.id
     
         if (brands && gId) {
-    
             await tb_brands.findByIdAndUpdate(gId, { $set: brands }).then(
                 function (result) {
                     apiDebuglog("brands update id " + gId + " successfully", result);
-                    apiDebuglog("original_brand_img => " + brands.original_brand_img);
-                    apiDebuglog("brand_img => " + brands.brand_img);
+                    apilog("original_brand_img => " + brands.original_brand_img);
+                    apilog("brand_img => " + brands.brand_img);
                     if (brands.brand_img !== brands.original_brand_img) {
                         var fs = require('fs');
                         try {
@@ -140,14 +139,14 @@ module.exports.updateBrand = async (req, res) => {
                                 //file exists
                                 fs.unlink(__dirname + '/public/' + brands.original_brand_img, function (err) {
                                     if (err) throw err;
-                                    console.log('Image file deleted!');
+                                    apilog('Image file deleted!');
                                     return res.json(ReturnSuccess(2000, { id: result._id }));
                                 });
                             } else {
                                 return res.json(ReturnSuccess(2000, { id: result._id }));
                             }
                         } catch (err) {
-                            console.error(err)
+                            throw err;
                         }
     
                     } else {
@@ -186,14 +185,14 @@ module.exports.deleteBrand = async (req, res) => {
                                 //file exists
                                 fs.unlink(__dirname + '/public/' + result.brand_img, function (err) {
                                     if (err) throw err;
-                                    console.log('Image file deleted!');
+                                    apilog('Image file deleted!');
                                     return res.json(ReturnSuccess(2000, { id: result._id }));
                                 });
                             } else {
                                 return res.json(ReturnSuccess(2000, { id: result._id }));
                             }
                         } catch (err) {
-                            console.error(err);
+                            apiErrorlog("delete brands id " + gId + " error 2001", err);
                             return res.json(ReturnSuccess(2002, { id: result._id }));
                         }
     
@@ -252,7 +251,6 @@ module.exports.getBrandSort = async (req, res) => {
                         return res.json(ReturnErr(err));
                     }
                 );
-    
             }
         ).catch(
             function (err) {
@@ -272,17 +270,15 @@ module.exports.getBrandSortUpdate = async (req, res) => {
     try{
         apilog('Get brands by id');
         apilog('params::==' + req.params);
-    
         let data = [];
         let gamelist = await tb_game_list.find({ game_type: 'Slot' });
         let brands_slot = [];
         gamelist.forEach((game) => {
-            //console.log(game);
             if (!brands_slot.includes(game.game_brand)) {
                 brands_slot.push(game.game_brand);
             }
         })
-        console.log('brands_slot : ' + brands_slot);
+        apilog('brands_slot : ' + brands_slot);
         let brands = await tb_brands.find({});
         let provider = await tb_game_provider.find({});
         var i, j = 1, k;
@@ -300,13 +296,13 @@ module.exports.getBrandSortUpdate = async (req, res) => {
                 a = { 'brand_sort': 0 };
             }
             await tb_brands.update({ _id: brands[i]._id }, { $set: a });
-            console.log('brands : ' + brands[i].brand_code + ' edit success.');
+            apilog('brands : ' + brands[i].brand_code + ' edit success.');
     
         }
         for (k = 0; k < provider.length; k++) {
             var a = { 'brand_sort': j };
             await tb_game_provider.update({ _id: provider[k]._id }, { $set: a });
-            console.log('provider : ' + provider[k].game_code + ' edit success.');
+            apilog('provider : ' + provider[k].game_code + ' edit success.');
             j++;
         }
         return res.json(ReturnSuccess(2000, 'success'));
@@ -323,7 +319,7 @@ module.exports.postBrandSortUpdate = async (req, res) => {
         const body_brands = req.body;
     
         const { data } = body_brands;
-        console.log('data : ' + JSON.stringify(data));
+        apilog('data : ' + JSON.stringify(data));
     
         let gamelist = await tb_game_list.find({ game_type: 'Slot' });
         let brands_slot = [];
@@ -343,7 +339,7 @@ module.exports.postBrandSortUpdate = async (req, res) => {
                         if (data[m].brand_code == brands[i].brand_code) {
                             a = { 'brand_sort': data[m].brand_sort };
                             await tb_brands.update({ _id: data[m]._id }, { $set: a });
-                            console.log('brands : ' + data[m].brand_code + ' edit success.');
+                            apilog('brands : ' + data[m].brand_code + ' edit success.');
                             break;
                         }
                     }
@@ -355,7 +351,7 @@ module.exports.postBrandSortUpdate = async (req, res) => {
                 if (data[m].brand_code == provider[k].game_code) {
                     a = { 'brand_sort': data[m].brand_sort };
                     await tb_game_provider.update({ _id: data[m]._id }, { $set: a });
-                    console.log('provider : ' + data[m].brand_code + ' edit success.');
+                    apilog('provider : ' + data[m].brand_code + ' edit success.');
                     break;
                 }
             }

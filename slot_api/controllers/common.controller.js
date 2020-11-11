@@ -1,4 +1,5 @@
 const moment = require("moment-timezone");
+const env = require('../env');
 const {
   apilog,
   apiDebuglog,
@@ -10,13 +11,12 @@ const {
   sha256Encrypt,
   sha256Verify,
   getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_agent_user,tb_user,tb_member,tb_services,tb_game_list,tb_agent } = require('../models');
 
 module.exports.backend = async (req, res) => {
   try {
     apilog("Get register ssl");
-    //console.log('params::==', req.params);
     res.redirect(env.backendhost);
   } catch (err) {
     return res.json(ReturnErr(err));
@@ -71,8 +71,8 @@ module.exports.checkMemberToken = async (req, res) => {
 
 module.exports.login = async (req, res) => {
   try {
-    console.log("body::==", req.body);
-    console.log("params::==", req.params);
+    apilog("body::== " + req.body);
+    apilog("params::== "+ req.params);
     const { username, password } = req.body;
 
     await tb_user
@@ -85,7 +85,6 @@ module.exports.login = async (req, res) => {
             password,
             user_detail[0].user_pass
           );
-
           if (checkPassword) {
             var tz = moment().tz("Asia/Bangkok").format("YYYY-MM-DD HH:mm:ss");
             const user = { last_login: tz };
@@ -136,8 +135,8 @@ module.exports.login = async (req, res) => {
 
 module.exports.agentLogin = async (req, res) => {
   try {
-    console.log("body::==", req.body);
-    console.log("params::==", req.params);
+    apilog("body::== " + req.body);
+    apilog("params::== " + req.params);
     const { username, password } = req.body;
 
     await tb_agent_user
@@ -221,8 +220,8 @@ module.exports.agentLogin = async (req, res) => {
 };
 module.exports.memberLogin = async (req, res) => {
   try {
-    console.log("body::==", req.body);
-    console.log("params::==", req.params);
+    apilog("body::== " + req.body);
+    apilog("params::== " + req.params);
     const { username, password } = req.body;
 
     await tb_member
@@ -233,7 +232,7 @@ module.exports.memberLogin = async (req, res) => {
           const user_detail = result;
           var checkPassword = false;
           var checkstatus = true;
-          console.log("mem_password => ", user_detail[0].mem_password);
+          apilog("mem_password => " + user_detail[0].mem_password);
 
           /* if (user_detail[0].mem_status == '2') {
                         checkstatus = false;
@@ -299,8 +298,8 @@ module.exports.memberLogin = async (req, res) => {
 };
 module.exports.memberLogin1 = async (req, res) => {
   try {
-    console.log("body::==", req.body);
-    console.log("params::==", req.params);
+    apilog("body::== " + req.body);
+    apilog("params::== " + req.params);
     const { username, password } = req.body;
 
     await tb_member
@@ -311,7 +310,7 @@ module.exports.memberLogin1 = async (req, res) => {
           const user_detail = result;
           var checkPassword = false;
           var checkstatus = true;
-          console.log("mem_password => ", user_detail[0].mem_password);
+          apilog("mem_password => " + user_detail[0].mem_password);
 
           if (user_detail[0].mem_status == "2") {
             checkstatus = false;
@@ -332,12 +331,10 @@ module.exports.memberLogin1 = async (req, res) => {
               )
             );
           }
-
           if (user_detail[0].mem_password == password) {
             checkPassword = true;
           }
           //const checkPassword = sha256Verify(password, user_detail[0].user_pass);
-
           if (checkPassword) {
             var tz = moment().tz("Asia/Bangkok").format("YYYY-MM-DD HH:mm:ss");
             const token = sha256Encrypt(username + tz.toString());
@@ -389,8 +386,8 @@ module.exports.memberLogin1 = async (req, res) => {
 };
 module.exports.memberLogin2 = async (req, res) => {
   try {
-    console.log("body::==", req.body);
-    console.log("params::==", req.params);
+    apilog("body::== " + req.body);
+    apilog("params::== " + req.params);
     const { username, password } = req.body;
 
     await tb_member
@@ -538,12 +535,9 @@ module.exports.getGamelistByAgent = async (req, res) => {
                   var arr = [];
                   var arrresult = [];
                   var arrtype = [];
-                  console.log("origin length : " + result.length);
+                  apilog("origin length : " + result.length);
                   for (j = 0; j < result.length; j++) {
-                    //console.log('result[' + j + '].game_brand => ' + result[j].game_brand);
                     for (k = 0; k < brand.length; k++) {
-                      //console.log('brand[' + k + '] => ' + brand[k]);
-                      //console.log((result[j].game_brand.toLowerCase() == brand[k].toLowerCase()));
                       if (
                         result[j].game_brand.toLowerCase() ==
                         brand[k].toLowerCase()
@@ -559,10 +553,9 @@ module.exports.getGamelistByAgent = async (req, res) => {
                         break;
                       }
                     }
-                    //console.log('result : ' + arrresult);
                   }
-                  console.log("game_type : " + arrtype);
-                  console.log("result length: " + arrresult.length);
+                  apilog("game_type : " + arrtype);
+                  apilog("result length: " + arrresult.length);
                   arr.push({ gametype: arrtype });
                   arr.push({ gamelist: arrresult });
                   return res.json(ReturnSuccess(2000, arr));
@@ -577,7 +570,7 @@ module.exports.getGamelistByAgent = async (req, res) => {
             return res.json(ReturnSuccess(2009, "No Data"));
           }
           /* apiDebuglog("find game list successfully", result)
-                    return res.json(ReturnSuccess(2000, result)); */
+          return res.json(ReturnSuccess(2000, result)); */
         })
         .catch(function (err) {
           apiErrorlog("find alert error 2001", err);
@@ -604,7 +597,7 @@ module.exports.loadAllGameByAgant = async (req, res) => {
           if (result.length > 0) {
             var brandservice = result;
             //var mylength = result.length;
-            console.log("brandservice length : " + brandservice.length);
+            apilog("brandservice length : " + brandservice.length);
             tb_brands.find({}).then(function (result) {
               if (result.length > 0) {
                 var i, a;
@@ -614,7 +607,7 @@ module.exports.loadAllGameByAgant = async (req, res) => {
                 var brand_data = [];
                 var brandresult = result;
                 let data = [];
-                console.log("brand length : " + brandresult.length);
+                apilog("brand length : " + brandresult.length);
                 tb_game_provider.find({}).then(function (result) {
                   if (result.length > 0) {
                     const game_provider = result;
@@ -667,14 +660,11 @@ module.exports.loadAllGameByAgant = async (req, res) => {
                                   var arrtype = ["Hits"];
                                   arrresult.push([]);
                                   for (i = 0; i < brandservice.length; i++) {
-                                    //console.log('///////////////////////////// Start //////////////////////////');
-                                    //console.log('brandservice code ' + i + ' : ' + brandservice[i].brand_code);
                                     for (a = 0; a < brandresult.length; a++) {
                                       if (
                                         brandservice[i].brand_code ==
                                         brandresult[a].brand_code
                                       ) {
-                                        //console.log('brandresult code ' + a + ' : ' + brandresult[a].brand_code);
                                         brand.push(brandresult[a].brand_code);
                                         var my_arr = [
                                           brandresult[a].brand_code,
@@ -684,10 +674,9 @@ module.exports.loadAllGameByAgant = async (req, res) => {
                                         brand_data.push(my_arr);
                                       }
                                     }
-                                    //console.log('///////////////////////////// End /////////////////////////////');
                                   }
-                                  console.log("brand : " + brand.length);
-                                  console.log(
+                                  apilog("brand : " + brand.length);
+                                  apilog(
                                     "brand_data : " + brand_data.length
                                   );
                                   for (j = 0; j < result.length; j++) {
@@ -705,8 +694,6 @@ module.exports.loadAllGameByAgant = async (req, res) => {
                                   }
                                   for (k = 0; k < brand.length; k++) {
                                     for (j = 0; j < result.length; j++) {
-                                      //console.log('///////////////////////////// Start //////////////////////////');
-                                      //console.log('result[' + j + '].game_brand => ' + result[j].game_brand);
                                       if (
                                         result[j].game_brand.toLowerCase() ==
                                         brand[k].toLowerCase()
@@ -715,8 +702,6 @@ module.exports.loadAllGameByAgant = async (req, res) => {
                                           result[j].game_type.toLowerCase() ==
                                           "slot"
                                         ) {
-                                          //console.log('brand[' + k + '].brand_code => ' + brand[k]);
-
                                           if (brand_slot.length == 0) {
                                             brand_slot.push({
                                               brand_code: brand_data[k][0],
@@ -725,17 +710,15 @@ module.exports.loadAllGameByAgant = async (req, res) => {
                                             });
                                           } else {
                                             /* if (!brand_slot.includes(brand[k])) {
-                                                                                                brand_slot.push({ "brand_code": brand_data[k][0], "brand_name": brand_data[k][1], "brand_img": brand_data[k][2] });
-                                                                                            } */
+                                                brand_slot.push({ "brand_code": brand_data[k][0], "brand_name": brand_data[k][1], "brand_img": brand_data[k][2] });
+                                            } */
                                             var q;
                                             let ins = true;
-                                            //console.log('=========================================================');
                                             for (
                                               q = 0;
                                               q < brand_slot.length;
                                               q++
                                             ) {
-                                              //console.log('brand_slot[' + q + '].brand_code => ' + brand_slot[q].brand_code);
                                               if (
                                                 brand_slot[q] &&
                                                 brand_slot[q].brand_code ==
@@ -779,15 +762,12 @@ module.exports.loadAllGameByAgant = async (req, res) => {
                                           }
                                         }
                                       }
-                                      //console.log('///////////////////////////// End /////////////////////////////');
                                     }
-                                    //arr_tmp.push()
                                   }
                                   var z;
                                   for (z = 0; z < arrtype.length; z++) {
                                     if (arrtype[z].toLowerCase() != "slot") {
                                       var str = arrtype[z];
-                                      //console.log('arrtype[' + z + '] : ' + str);
                                       var v = {};
                                       v[str] = arrresult[z];
                                       arr_main.push(v);
@@ -827,7 +807,6 @@ module.exports.loadAllGameByAgant = async (req, res) => {
                                             tmp.push(arrresult[z][r]);
                                           }
                                         }
-
                                         //k["provider"] = false;
                                         k["img"] =
                                           brands_slot_sort[s].brand_img;
@@ -849,7 +828,6 @@ module.exports.loadAllGameByAgant = async (req, res) => {
                                                     tmp.push(arrresult[z][r]);
                                                 }
                                             }
-
                                             //k["provider"] = false;
                                             k["img"] = brand_slot[s].brand_img;
                                             k["data"] = tmp;
@@ -879,12 +857,8 @@ module.exports.loadAllGameByAgant = async (req, res) => {
                                                 x["provider"] = true;
                                                 x["img"] = brand_slot[s].brand_img;
                                                 x[game_provider[n].game_code] = b;
-
                                             }
-
-
                                             y[brand_slot[s].brand_code] = x;
-
                                             games_brand.push(y);
                                         }
                                     } */
@@ -892,8 +866,8 @@ module.exports.loadAllGameByAgant = async (req, res) => {
                                       arr_main.push(v);
                                     }
                                   }
-                                  console.log("game_type : " + arrtype);
-                                  console.log(
+                                  apilog("game_type : " + arrtype);
+                                  apilog(
                                     "result length: " + arrresult.length
                                   );
                                   arr.push({ brand_all: brand });
@@ -931,7 +905,7 @@ module.exports.loadAllGameByAgant = async (req, res) => {
             return res.json(ReturnSuccess(2009, "No Data"));
           }
           /* apiDebuglog("find game list successfully", result)
-                return res.json(ReturnSuccess(2000, result)); */
+          return res.json(ReturnSuccess(2000, result)); */
         })
         .catch(function (err) {
           apiErrorlog("find alert error 2001", err);
@@ -958,7 +932,7 @@ module.exports.loadGameByAgant = async (req, res) => {
           if (result.length > 0) {
             var brandservice = result;
             //var mylength = result.length;
-            console.log("brandservice length : " + brandservice.length);
+            apilog("brandservice length : " + brandservice.length);
             tb_brands.find({}).then(function (result) {
               if (result.length > 0) {
                 var i, a;
@@ -967,7 +941,7 @@ module.exports.loadGameByAgant = async (req, res) => {
                 var loadcomplete = false;
                 var brand_data = [];
                 var brandresult = result;
-                console.log("brand length : " + brandresult.length);
+                apilog("brand length : " + brandresult.length);
                 tb_game_provider.find({}).then(function (result) {
                   if (result.length > 0) {
                     const game_provider = result;
@@ -983,14 +957,11 @@ module.exports.loadGameByAgant = async (req, res) => {
                           var arrtype = ["Hits"];
                           arrresult.push([]);
                           for (i = 0; i < brandservice.length; i++) {
-                            //console.log('///////////////////////////// Start //////////////////////////');
-                            //console.log('brandservice code ' + i + ' : ' + brandservice[i].brand_code);
                             for (a = 0; a < brandresult.length; a++) {
                               if (
                                 brandservice[i].brand_code ==
                                 brandresult[a].brand_code
                               ) {
-                                //console.log('brandresult code ' + a + ' : ' + brandresult[a].brand_code);
                                 brand.push(brandresult[a].brand_code);
                                 var my_arr = [
                                   brandresult[a].brand_code,
@@ -1000,10 +971,9 @@ module.exports.loadGameByAgant = async (req, res) => {
                                 brand_data.push(my_arr);
                               }
                             }
-                            //console.log('///////////////////////////// End /////////////////////////////');
                           }
-                          console.log("brand : " + brand.length);
-                          console.log("brand_data : " + brand_data.length);
+                          apilog("brand : " + brand.length);
+                          apilog("brand_data : " + brand_data.length);
                           for (j = 0; j < result.length; j++) {
                             if (arrtype.length > 0) {
                               if (!arrtype.includes(result[j].game_type)) {
@@ -1017,8 +987,6 @@ module.exports.loadGameByAgant = async (req, res) => {
                           }
                           for (k = 0; k < brand.length; k++) {
                             for (j = 0; j < result.length; j++) {
-                              //console.log('///////////////////////////// Start //////////////////////////');
-                              //console.log('result[' + j + '].game_brand => ' + result[j].game_brand);
                               if (
                                 result[j].game_brand.toLowerCase() ==
                                 brand[k].toLowerCase()
@@ -1026,8 +994,6 @@ module.exports.loadGameByAgant = async (req, res) => {
                                 if (
                                   result[j].game_type.toLowerCase() == "slot"
                                 ) {
-                                  //console.log('brand[' + k + '].brand_code => ' + brand[k]);
-
                                   if (brand_slot.length == 0) {
                                     brand_slot.push({
                                       brand_code: brand_data[k][0],
@@ -1036,13 +1002,11 @@ module.exports.loadGameByAgant = async (req, res) => {
                                     });
                                   } else {
                                     /* if (!brand_slot.includes(brand[k])) {
-                                                                                    brand_slot.push({ "brand_code": brand_data[k][0], "brand_name": brand_data[k][1], "brand_img": brand_data[k][2] });
-                                                                                } */
+                                      brand_slot.push({ "brand_code": brand_data[k][0], "brand_name": brand_data[k][1], "brand_img": brand_data[k][2] });
+                                    } */
                                     var q;
                                     let ins = true;
-                                    //console.log('=========================================================');
                                     for (q = 0; q < brand_slot.length; q++) {
-                                      //console.log('brand_slot[' + q + '].brand_code => ' + brand_slot[q].brand_code);
                                       if (
                                         brand_slot[q] &&
                                         brand_slot[q].brand_code == brand[k]
@@ -1080,15 +1044,12 @@ module.exports.loadGameByAgant = async (req, res) => {
                                   }
                                 }
                               }
-                              //console.log('///////////////////////////// End /////////////////////////////');
                             }
-                            //arr_tmp.push()
                           }
                           var z;
                           for (z = 0; z < arrtype.length; z++) {
                             if (arrtype[z].toLowerCase() != "slot") {
                               var str = arrtype[z];
-                              //console.log('arrtype[' + z + '] : ' + str);
                               var v = {};
                               v[str] = arrresult[z];
                               arr_main.push(v);
@@ -1116,7 +1077,6 @@ module.exports.loadGameByAgant = async (req, res) => {
                                       tmp.push(arrresult[z][r]);
                                     }
                                   }
-
                                   k["provider"] = false;
                                   k["img"] = brand_slot[s].brand_img;
                                   k["data"] = tmp;
@@ -1161,8 +1121,8 @@ module.exports.loadGameByAgant = async (req, res) => {
                               arr_main.push(v);
                             }
                           }
-                          console.log("game_type : " + arrtype);
-                          console.log("result length: " + arrresult.length);
+                          apilog("game_type : " + arrtype);
+                          apilog("result length: " + arrresult.length);
                           arr.push({ brand_all: brand });
                           arr.push({ brand_slot: brand_slot });
                           arr.push({ gametype: arrtype });
@@ -1184,7 +1144,7 @@ module.exports.loadGameByAgant = async (req, res) => {
             return res.json(ReturnSuccess(2009, "No Data"));
           }
           /* apiDebuglog("find game list successfully", result)
-                    return res.json(ReturnSuccess(2000, result)); */
+          return res.json(ReturnSuccess(2000, result)); */
         })
         .catch(function (err) {
           apiErrorlog("find alert error 2001", err);
@@ -1259,10 +1219,10 @@ module.exports.getBrandListByAgent = async (req, res) => {
                 return res.json(ReturnErr(err));
               });
             /*  apilog("find brand list (Code:2009): No Data.");
-                         return res.json(ReturnSuccess(2009, "No Data")); */
+            return res.json(ReturnSuccess(2009, "No Data")); */
           }
           /* apiDebuglog("find game list successfully", result)
-                    return res.json(ReturnSuccess(2000, result)); */
+          return res.json(ReturnSuccess(2000, result)); */
         })
         .catch(function (err) {
           apiErrorlog("find brand list error 2001", err);

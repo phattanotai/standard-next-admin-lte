@@ -9,7 +9,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_agent} = require('../models');
 
 module.exports.getAllAgent = async (req, res) => {

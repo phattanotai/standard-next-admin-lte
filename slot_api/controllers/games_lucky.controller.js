@@ -9,7 +9,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_gameslucky} = require('../models');
 
 module.exports.getAllGamesLucky = async (req, res) => {
@@ -145,10 +145,3 @@ module.exports.deleteGamesLucky = async (req, res) => {
     }
 }
 
-// module.exports.a = (req, res) => {
-//     try{
-
-//     }catch(err){
-//         return res.json(ReturnErr(err));
-//     }
-// }

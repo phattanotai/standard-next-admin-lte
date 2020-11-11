@@ -10,7 +10,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_agent_user} = require('../models');
 
 module.exports.getAgentAllUser = async (req, res) => {
@@ -18,7 +18,7 @@ module.exports.getAgentAllUser = async (req, res) => {
         apilog('Get agent user all');
         await tb_agent_user.find({}).then(
             function (result) {
-                apiDebuglog("find agent user result successfully" + result);
+                apiDebuglog("find agent user result successfully", result);
                 return res.json(ReturnSuccess(2000, result));
             }
         ).catch(

@@ -9,7 +9,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_alert}= require('../models');
 
 module.exports.getAllAlert = async (req, res) => {

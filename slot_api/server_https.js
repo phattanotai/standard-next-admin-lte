@@ -2,11 +2,10 @@ var express = require("express");
 var https = require("https");
 var fs = require('fs');
 var cors = require("cors");
-var mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const env = require('./env');
 var fs = require('fs');
-
+const {mongoConfig,expressConfig,onError} = require('./config/config');
 var app = express();
 
 app.use(cors());
@@ -17,13 +16,7 @@ app.use(bodyParser.json());
 //var port = env.port;
 var port_https = env.port_https;
 
-//var port = env.port;
-var port_https = env.port_https;
-
-var port = env.port;
-
-
-const sl_route = require('./routes/slot_api_route');
+const sl_route = require('./routes');
 const ssl = require('./routes/registed_ssl');
 
 app.use('/public', express.static('./routes/public/'));
@@ -37,13 +30,15 @@ var options = {
   rejectUnauthorized: true
 };
 
-
 app.use((req, res, next) => {
   var err = new Error("ไม่พบ path ที่คุณต้องการ");
   err.status = 404;
   next(err);
 });
 
-https.createServer(options, app).listen(port_https, () => {
+https.createServer(options, app).listen(port_https,async () => {
   console.log("[success] task 1 : listening on port " + port_https);
-});
+  await mongoConfig().catch(err => {
+    process.exit();
+  });
+}).on('error',onError);

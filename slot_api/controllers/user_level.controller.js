@@ -9,7 +9,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_user_level} = require('../models');
 
 module.exports.getAllUserLevel = async (req, res) => {
@@ -17,7 +17,7 @@ module.exports.getAllUserLevel = async (req, res) => {
         apilog('Get user level all');
         await tb_user_level.find({}).then(
             function (result) {
-                apiDebuglog("find user level result successfully" + result);
+                apiDebuglog("find user level result successfully" , result);
                 return res.json(ReturnSuccess(2000, result));
             }
         ).catch(
@@ -97,13 +97,11 @@ module.exports.updateUserLevel = async (req, res) => {
     
             await tb_user_level.findByIdAndUpdate(uId, { $set: user_level }).then(
                 function (result) {
-                    //console.log("agent user update result : " + result);
                     apiDebuglog("user level update id " + uId + " successfully", result);
                     return res.json(ReturnSuccess(2000, { id: result._id }));
                 }
             ).catch(
                 function (err) {
-                    //console.log("agent user update error 2001 : " + err);
                     apiErrorlog("user level update id " + uId + " error 2001", err);
                     return res.json(ReturnErr(err));
                 }
@@ -124,13 +122,11 @@ module.exports.deleteUserLevel = async (req, res) => {
         if (uId) {
             await tb_user_level.findByIdAndDelete({ _id: uId }).then(
                 function (result) {
-                    //console.log("delete agent user id result : " + result);
                     apiDebuglog("delete user level id " + uId + " successfully", result);
                     return res.json(ReturnSuccess(2000, { id: result._id }));
                 }
             ).catch(
                 function (err) {
-                    //console.log("delete agent user id error 2001 : " + err);
                     apiErrorlog("delete user level id " + uId + " error 2001", err);
                     return res.json(ReturnErr(err));
                 }

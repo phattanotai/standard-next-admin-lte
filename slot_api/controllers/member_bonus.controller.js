@@ -9,7 +9,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_member_bonus} = require('../models');
 
 module.exports.getAllMemberBonus = async (req, res) => {
@@ -17,7 +17,7 @@ module.exports.getAllMemberBonus = async (req, res) => {
         apilog('Get member_bonus all');
         await tb_member_bonus.find({}).sort({ _id: -1 }).then(
             function (result) {
-                apiDebuglog("find member_bonus result successfully", result)
+                apiDebuglog("find member_bonus result successfully", result);
                 return res.json(ReturnSuccess(2000, result));
             }
         ).catch(

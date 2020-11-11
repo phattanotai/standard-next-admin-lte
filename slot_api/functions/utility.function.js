@@ -1,6 +1,7 @@
 
 const env = require('../env');
 const moment = require('moment-timezone');
+const bcrypt = require('bcryptjs');
 
 const apilog = (msg) => {
     if (env.showlog === 1) {
@@ -71,7 +72,6 @@ const getMonday = (d) => {
         diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
     return new Date(d.setDate(diff));
 }
-
 
 module.exports = {
     apilog,

@@ -9,7 +9,7 @@ const {
   sha256Encrypt,
   sha256Verify,
   getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 
 const { tb_agent_menu } = require("../models");
 
@@ -19,7 +19,7 @@ module.exports.getAgentAllMenu = async (req, res) => {
     await tb_agent_menu
       .find({})
       .then(function (result) {
-        apiDebuglog("find agent menu result successfully" + result);
+        apiDebuglog("find agent menu result successfully", result);
         return res.json(ReturnSuccess(2000, result));
       })
       .catch(function (err) {

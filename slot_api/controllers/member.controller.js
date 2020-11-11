@@ -10,7 +10,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_member,tb_agent,tb_transections,tb_member_runno} = require('../models');
 
 module.exports.getAllMember = async (req, res) => {
@@ -162,7 +162,7 @@ module.exports.createMember = async (req, res) => {
                                     apilog("have agent runner");
                                     var tz = moment().tz('Asia/Bangkok').format('YYYY-MM-DD HH:mm:ss');
                                     member.mem_date_add = tz;
-                                    apiDebuglog('result.running_number' + result[0].running_number);
+                                    apilog('result.running_number' + result[0].running_number);
                                     const num = result[0].running_number + 1;
                                     const uId = result[0]._id
                                     var num_str = num.toString();
@@ -188,7 +188,6 @@ module.exports.createMember = async (req, res) => {
                                                 }
                                             ).catch(
                                                 function (err) {
-                                                    //console.log("agent user update error 2001 : " + err);
                                                     apiErrorlog("memberRunno update id " + uId + " error 2001", err);
                                                     //return res.json(ReturnErr(err));
                                                     return res.json(ReturnUnSuccess(20014, { message: "Unsuccess for update memberRunno id: " + uId }));
@@ -213,7 +212,7 @@ module.exports.createMember = async (req, res) => {
                                             //return res.json(ReturnSuccess(2000, { id: result }));
                                             var tz = moment().tz('Asia/Bangkok').format('YYYY-MM-DD HH:mm:ss');
                                             member.mem_date_add = tz;
-                                            apiDebuglog('result.running_number' + result.running_number);
+                                            apilog('result.running_number' + result.running_number);
                                             const num = result.running_number + 1;
                                             const uId = result._id
                                             var num_str = num.toString();
@@ -239,13 +238,11 @@ module.exports.createMember = async (req, res) => {
                                                         }
                                                     ).catch(
                                                         function (err) {
-                                                            //console.log("agent user update error 2001 : " + err);
                                                             apiErrorlog("memberRunno update id " + uId + " error 2001", err);
                                                             //return res.json(ReturnErr(err));
                                                             return res.json(ReturnUnSuccess(20014, { message: "Unsuccess for update memberRunno id: " + uId }));
                                                         }
                                                     );
-    
                                                 }
                                             ).catch(
                                                 function (err) {
@@ -263,7 +260,6 @@ module.exports.createMember = async (req, res) => {
                                         }
                                     );
                                 }
-    
                             }
                         ).catch(
                             function (err) {
@@ -276,21 +272,16 @@ module.exports.createMember = async (req, res) => {
                         return res.json(ReturnUnSuccess(20011, { message: "Unsuccess for register member " }));
                     }
                 }
-    
             ).catch(
                 function (err) {
                     apiErrorlog("find agent error 2001", err);
                     return res.json(ReturnUnSuccess(2001, { message: "con not find agent code " + member.agent_code + " in system." }));
                 }
             );
-    
-    
-    
         } else {
             apilog("member save error 2002 : No request body value.");
             return res.json(ReturnSuccess(2002, "No request body value."));
         }
-    
     }catch(err){
         return res.json(ReturnErr(err));
     }
@@ -333,7 +324,6 @@ module.exports.updateMember = async (req, res) => {
                     return res.json(ReturnUnSuccess(2001, { message: "Unsuccess update member id: " + sId }));
                 }
             );
-    
         } else {
             apilog("member update error 2002 : No request body & params value.");
             return res.json(ReturnSuccess(2002, "No request body & params value."));
@@ -368,7 +358,6 @@ module.exports.updateMemberDeposit = async (req, res) => {
                             apilog('debug');
                             before_point = result[0].mem_point;
                         }
-    
                         const agent_code = result[0].agent_code;
                         apilog('member.mem_balance :' + member.mem_balance);
                         apilog('before_balance :' + before_balance);
@@ -393,7 +382,6 @@ module.exports.updateMemberDeposit = async (req, res) => {
                                     user_admin: member.user_admin,
                                     tran_type: trans_type
                                 };
-    
                                 const Transections = new tb_transections(trans);
                                 Transections.save().then(
                                     function (result) {
@@ -408,8 +396,6 @@ module.exports.updateMemberDeposit = async (req, res) => {
                                         return res.json(ReturnSuccess(2000, { id: result._id, mem_username: result.mem_username, before_balance: before_balance, deposit_balance: member.mem_balance, amount: balance }));
                                     }
                                 );
-    
-    
                             }
                         ).catch(
                             function (err) {
@@ -421,7 +407,6 @@ module.exports.updateMemberDeposit = async (req, res) => {
                     } else {
                         return res.json(ReturnUnSuccess(2001, { message: "can not find member : " + sId + "in system." }));
                     }
-    
                 }
             ).catch(
                 function (err) {
@@ -430,12 +415,10 @@ module.exports.updateMemberDeposit = async (req, res) => {
                     return res.json(ReturnUnSuccess(2001, { message: "Unsuccess for member : " + sId + " deposit" }));
                 }
             );
-    
         } else {
             apilog("member deposit error 2002 : No request body & params value.");
             return res.json(ReturnSuccess(2002, "No request body & params value."));
         }
-    
     }catch(err){
         return res.json(ReturnErr(err));
     }
@@ -510,7 +493,6 @@ module.exports.updateMemberTopupByid = async (req, res) => {
                     } else {
                         return res.json(ReturnUnSuccess(2001, { message: "can not find member : " + sId + "in system." }));
                     }
-    
                 }
             ).catch(
                 function (err) {
@@ -519,7 +501,6 @@ module.exports.updateMemberTopupByid = async (req, res) => {
                     return res.json(ReturnUnSuccess(2001, { message: "Unsuccess for member : " + sId + " deposit" }));
                 }
             );
-    
         } else {
             apilog("member deposit error 2002 : No request body & params value.");
             return res.json(ReturnSuccess(2002, "No request body & params value."));
@@ -598,7 +579,6 @@ module.exports.updateMemberWithdrawById = async (req, res) => {
                     } else {
                         return res.json(ReturnUnSuccess(2001, { message: "can not find member : " + sId + "in system." }));
                     }
-    
                 }
             ).catch(
                 function (err) {
@@ -607,7 +587,6 @@ module.exports.updateMemberWithdrawById = async (req, res) => {
                     return res.json(ReturnUnSuccess(2001, { message: "Unsuccess for member : " + sId + " withdraw" }));
                 }
             );
-    
         } else {
             apilog("member deposit error 2002 : No request body & params value.");
             return res.json(ReturnSuccess(2002, "No request body & params value."));
@@ -637,7 +616,6 @@ module.exports.updateAllMemberWithdrawById = async (req, res) => {
                                 apiDebuglog("member WithdrawAll id " + sId + " successfully", result);
                                 const before_balance = myresult[0].mem_balance;
                                 //return res.json(ReturnSuccess(2000, { id: result._id, mem_username: result.mem_username, before_balance: myresult[0].mem_balance, after_balance: "0" }));
-                                //apiDebuglog("member " + sId + " withdraw successfully", result);
                                 var tz = moment().tz('Asia/Bangkok').format('YYYY-MM-DD HH:mm:ss');
                                 const trans = {
                                     amount: member.mem_balance,
@@ -678,7 +656,6 @@ module.exports.updateAllMemberWithdrawById = async (req, res) => {
                     } else {
                         return res.json(ReturnUnSuccess(2001, { message: "can not find member : " + sId + "in system." }));
                     }
-    
                 }
             ).catch(
                 function (err) {
@@ -723,11 +700,3 @@ module.exports.deleteMember = async (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-
-// module.exports.a = (req, res) => {
-//     try{
-
-//     }catch(err){
-//         return res.json(ReturnErr(err));
-//     }
-// }

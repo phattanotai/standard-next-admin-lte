@@ -9,7 +9,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_member_share} = require('../models');
 
 module.exports.getAllGamesMemberShare = async (req, res) => {
@@ -171,11 +171,3 @@ module.exports.deleteGamesMemberShare = async (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-
-// module.exports.a = (req, res) => {
-//     try{
-
-//     }catch(err){
-//         return res.json(ReturnErr(err));
-//     }
-// }

@@ -9,7 +9,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_menu}= require('../models');
 
 module.exports.getMenu = async (req, res) => {
@@ -17,7 +17,7 @@ module.exports.getMenu = async (req, res) => {
         apilog('Get menu all');
         await tb_menu.find({}).then(
             function (result) {
-                apiDebuglog("find menu result successfully" + result);
+                apiDebuglog("find menu result successfully" , result);
                 return res.json(ReturnSuccess(2000, result));
             }
         ).catch(

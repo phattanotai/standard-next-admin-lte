@@ -9,7 +9,8 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
+
 const {tb_wallets} = require('../models');
 
 module.exports.getAllwallets = async (req, res) => {
@@ -17,7 +18,7 @@ module.exports.getAllwallets = async (req, res) => {
         apilog('Get wallets all');
         await tb_wallets.find({}).then(
             function (result) {
-                apiDebuglog("find wallets result successfully" + result);
+                apiDebuglog("find wallets result successfully", result);
                 return res.json(ReturnSuccess(2000, result));
             }
         ).catch(

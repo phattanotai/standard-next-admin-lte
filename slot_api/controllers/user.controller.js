@@ -10,7 +10,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_user} = require('../models');
 
 module.exports.getAlluser = async (req, res) => {
@@ -18,7 +18,7 @@ module.exports.getAlluser = async (req, res) => {
         apilog('Get user all');
         await tb_user.find({}).then(
             function (result) {
-                apiDebuglog("find user result successfully" + result);
+                apiDebuglog("find user result successfully", result);
                 return res.json(ReturnSuccess(2000, result));
             }
         ).catch(

@@ -10,7 +10,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_move_credit} = require('../models');
 
 module.exports.getAllMoveCredit = async (req, res) => {
@@ -102,7 +102,7 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                     Number(new Date(dateFormat(new Date(d.getFullYear() + '-11-01'), 'yyyy-mm-dd 00:00:00'))),
                                     Number(new Date(dateFormat(new Date(d.getFullYear() + '-12-01'), 'yyyy-mm-dd 00:00:00')))
                                 ];
-                                console.log('start_date_month : ' + start_date_month)
+                                apilog('start_date_month : ' + start_date_month)
                                 let end_date_month = [
                                     Number(new Date(dateFormat(new Date(d.getFullYear() + '-02-01'), 'yyyy-mm-dd 00:00:00'))),
                                     Number(new Date(dateFormat(new Date(d.getFullYear() + '-03-01'), 'yyyy-mm-dd 00:00:00'))),
@@ -117,13 +117,12 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                     Number(new Date(dateFormat(new Date(d.getFullYear() + '-12-01'), 'yyyy-mm-dd 00:00:00'))),
                                     Number(new Date(dateFormat(new Date((d.getFullYear() + 1) + '-01-01'), 'yyyy-mm-dd 00:00:00')))
                                 ];
-                                console.log('end_date_month : ' + end_date_month)
+                                apilog('end_date_month : ' + end_date_month)
                                 let deposit = result.filter((o) => {
                                     return (o.type === 'deposit')
                                 })
                                 let deposit_sum = 0;
                                 deposit.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     deposit_sum = deposit_sum + Number(o.amount);
                                     if (Number(o.ts) >= start_date_month[0] && Number(o.ts) <= end_date_month[0]) {
                                         dep[0] = dep[0] + Number(o.amount);
@@ -156,7 +155,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 })
                                 let withdraw_sum = 0;
                                 withdraw.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     withdraw_sum = withdraw_sum + Number(o.amount);
                                     if (Number(o.ts) >= start_date_month[0] && Number(o.ts) <= end_date_month[0]) {
                                         wit[0] = wit[0] + Number(o.amount);
@@ -190,7 +188,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 })
                                 let topup_sum = 0;
                                 topup.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     topup_sum = topup_sum + Number(o.amount);
                                 })
                                 let transactions = { deposit: deposit.length, deposit_sum: deposit_sum, withdraw: withdraw.length, withdraw_sum: withdraw_sum, topup: topup.length, topup_sum: topup_sum };
@@ -211,7 +208,7 @@ module.exports.getDashboardByAgent = async (req, res) => {
             else if (dashboard.selecttime === 'Today') {
                 var startdate = moment().tz('Asia/Bangkok').format('YYYY-MM-DD 00:00:00');
                 var startdate_stp = Number(new Date(startdate));
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
     
                 await tb_member.find({ agent_code: agent_code }).sort({ _id: -1 }).then(
                     function (result) {
@@ -239,8 +236,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                     dep.push(0);
                                     wit.push(0);
                                     //start_date.push(Number(new Date(dateFormat(d, 'yyyy-mm-dd '+labels[i]+':00'))));
-                                    //console.log('i : ' + i);
-                                    //console.log('date ' + i + ' : ' + new Date(dateFormat(d, 'yyyy-mm-dd ' + labels[i].toString() + ':00')));
                                     start_date.push(new Date(dateFormat(d, 'yyyy-mm-dd ' + labels[i].toString() + ':00')));
                                     if (i < labels.length - 1) {
                                         end_date.push(new Date(dateFormat(d, 'yyyy-mm-dd ' + labels[i + 1].toString() + ':00')));
@@ -250,15 +245,11 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                         //end_date.push(Number(new Date(dateFormat(new Date(d, 'yyyy-mm-dd '+labels[0]+':00')))));
                                     }
                                 }
-    
-                                //console.log('start_date : ' + start_date)
-                                //console.log('end_date : ' + end_date)
                                 let deposit = result.filter((o) => {
                                     return (o.type === 'deposit')
                                 })
                                 let deposit_sum = 0;
                                 deposit.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     deposit_sum = deposit_sum + Number(o.amount);
                                     var i = 0;
                                     for (i = 0; i < labels.length; i++) {
@@ -273,7 +264,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 })
                                 let withdraw_sum = 0;
                                 withdraw.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     withdraw_sum = withdraw_sum + Number(o.amount);
                                     var i = 0;
                                     for (i = 0; i < labels.length; i++) {
@@ -287,7 +277,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 })
                                 let topup_sum = 0;
                                 topup.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     topup_sum = topup_sum + Number(o.amount);
                                 })
                                 let transactions = { deposit: deposit.length, deposit_sum: deposit_sum, withdraw: withdraw.length, withdraw_sum: withdraw_sum, topup: topup.length, topup_sum: topup_sum };
@@ -313,11 +302,11 @@ module.exports.getDashboardByAgent = async (req, res) => {
                 var enddate = new Date(nDate);
                 var enddate_stp = Number(new Date(dateFormat(enddate, 'yyyy-mm-dd 00:00:00')));
                 date.setDate(date.getDate() - 1);
-                console.log('yesterday date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('yesterday date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 //var startdate = moment().format('YYYY-MM-DD 00:00:00');
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
     
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 /* await tb_move_credit.find({ agent_code: agent_code, ts: { $gte: startdate_stp, $lte: enddate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
                         apiDebuglog("find movecredit agent code " + agent_code + " successfully", result);
@@ -356,8 +345,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                     dep.push(0);
                                     wit.push(0);
                                     //start_date.push(Number(new Date(dateFormat(d, 'yyyy-mm-dd '+labels[i]+':00'))));
-                                    //console.log('i : ' + i);
-                                    //console.log('date ' + i + ' : ' + new Date(dateFormat(d, 'yyyy-mm-dd ' + labels[i].toString() + ':00')));
                                     start_date.push(new Date(dateFormat(d, 'yyyy-mm-dd ' + labels[i].toString() + ':00')));
                                     if (i < labels.length - 1) {
                                         end_date.push(new Date(dateFormat(d, 'yyyy-mm-dd ' + labels[i + 1].toString() + ':00')));
@@ -368,14 +355,11 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                     }
                                 }
     
-                                //console.log('start_date : ' + start_date)
-                                //console.log('end_date : ' + end_date)
                                 let deposit = result.filter((o) => {
                                     return (o.type === 'deposit')
                                 })
                                 let deposit_sum = 0;
                                 deposit.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     deposit_sum = deposit_sum + Number(o.amount);
                                     var i = 0;
                                     for (i = 0; i < labels.length; i++) {
@@ -390,7 +374,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 })
                                 let withdraw_sum = 0;
                                 withdraw.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     withdraw_sum = withdraw_sum + Number(o.amount);
                                     var i = 0;
                                     for (i = 0; i < labels.length; i++) {
@@ -404,7 +387,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 })
                                 let topup_sum = 0;
                                 topup.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     topup_sum = topup_sum + Number(o.amount);
                                 })
                                 let transactions = { deposit: deposit.length, deposit_sum: deposit_sum, withdraw: withdraw.length, withdraw_sum: withdraw_sum, topup: topup.length, topup_sum: topup_sum };
@@ -428,9 +410,9 @@ module.exports.getDashboardByAgent = async (req, res) => {
                 });
                 var date = new Date(getMonday(nDate));
     
-                console.log('get monday:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('get monday:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 /* await tb_move_credit.find({ agent_code: agent_code, ts: { $gte: startdate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
                         apiDebuglog("find movecredit agent code " + agent_code + " successfully", result);
@@ -468,7 +450,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                     dep.push(0);
                                     wit.push(0);
                                     var tmp_date = date;
-                                    //console.log('start_date : ' + start_date)
                                     //start_date.push(Number(new Date(dateFormat(date.setDate(date.getDate() + i), 'yyyy-mm-dd 00:00:00'))));
                                     //end_date.push(Number(new Date(dateFormat(tmp_date.setDate(date.getDate() + 1), 'yyyy-mm-dd 00:00:00'))));
                                     start_date.push(new Date(dateFormat(tmp_date.setDate(tmp_date.getDate()), 'yyyy-mm-dd 00:00:00')));
@@ -476,14 +457,13 @@ module.exports.getDashboardByAgent = async (req, res) => {
     
                                 }
     
-                                console.log('start_date : ' + start_date)
-                                console.log('end_date : ' + end_date)
+                                apilog('start_date : ' + start_date)
+                                apilog('end_date : ' + end_date)
                                 let deposit = result.filter((o) => {
                                     return (o.type === 'deposit')
                                 })
                                 let deposit_sum = 0;
                                 deposit.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     deposit_sum = deposit_sum + Number(o.amount);
                                     var i = 0;
                                     for (i = 0; i < labels.length; i++) {
@@ -498,7 +478,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 })
                                 let withdraw_sum = 0;
                                 withdraw.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     withdraw_sum = withdraw_sum + Number(o.amount);
                                     var i = 0;
                                     for (i = 0; i < labels.length; i++) {
@@ -512,7 +491,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 })
                                 let topup_sum = 0;
                                 topup.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     topup_sum = topup_sum + Number(o.amount);
                                 })
                                 let transactions = { deposit: deposit.length, deposit_sum: deposit_sum, withdraw: withdraw.length, withdraw_sum: withdraw_sum, topup: topup.length, topup_sum: topup_sum };
@@ -536,15 +514,14 @@ module.exports.getDashboardByAgent = async (req, res) => {
                 });
                 var enddate = new Date(getMonday(nDate));
                 var date = new Date();
-                console.log('get monday:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
-                //console.log('start date:' + startdate_stp);
+                apilog('get monday:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
                 date.setDate(enddate.getDate() - 7);
-                console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
-                console.log('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
+                apilog('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
                 var enddate_stp = Number(new Date(dateFormat(enddate, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
-                console.log('end date:' + enddate_stp);
+                apilog('start date:' + startdate_stp);
+                apilog('end date:' + enddate_stp);
                 /* await tb_move_credit.find({ agent_code: agent_code, ts: { $gte: startdate_stp, $lte: enddate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
                         apiDebuglog("find movecredit agent code " + agent_code + " successfully", result);
@@ -582,7 +559,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                     dep.push(0);
                                     wit.push(0);
                                     var tmp_date = date;
-                                    //console.log('start_date : ' + start_date)
                                     //start_date.push(Number(new Date(dateFormat(date.setDate(date.getDate() + i), 'yyyy-mm-dd 00:00:00'))));
                                     //end_date.push(Number(new Date(dateFormat(tmp_date.setDate(date.getDate() + 1), 'yyyy-mm-dd 00:00:00'))));
                                     start_date.push(new Date(dateFormat(tmp_date.setDate(tmp_date.getDate()), 'yyyy-mm-dd 00:00:00')));
@@ -590,14 +566,13 @@ module.exports.getDashboardByAgent = async (req, res) => {
     
                                 }
     
-                                console.log('start_date : ' + start_date)
-                                console.log('end_date : ' + end_date)
+                                apilog('start_date : ' + start_date)
+                                apilog('end_date : ' + end_date)
                                 let deposit = result.filter((o) => {
                                     return (o.type === 'deposit')
                                 })
                                 let deposit_sum = 0;
                                 deposit.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     deposit_sum = deposit_sum + Number(o.amount);
                                     var i = 0;
                                     for (i = 0; i < labels.length; i++) {
@@ -612,7 +587,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 })
                                 let withdraw_sum = 0;
                                 withdraw.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     withdraw_sum = withdraw_sum + Number(o.amount);
                                     var i = 0;
                                     for (i = 0; i < labels.length; i++) {
@@ -626,7 +600,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 })
                                 let topup_sum = 0;
                                 topup.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     topup_sum = topup_sum + Number(o.amount);
                                 })
                                 let transactions = { deposit: deposit.length, deposit_sum: deposit_sum, withdraw: withdraw.length, withdraw_sum: withdraw_sum, topup: topup.length, topup_sum: topup_sum };
@@ -651,16 +624,15 @@ module.exports.getDashboardByAgent = async (req, res) => {
                 var d = new Date(nDate);
                 var enddate = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-01');
                 //enddate.setDate(enddate.getDate() - 1);
-                console.log('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
+                apilog('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
                 var date = new Date(d.getFullYear() + '-' + (d.getMonth()) + '-01');
-                console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
                 var enddate_stp = Number(new Date(dateFormat(enddate, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
-                console.log('end date:' + enddate_stp);
+                apilog('start date:' + startdate_stp);
+                apilog('end date:' + enddate_stp);
                 /*  await tb_move_credit.find({ agent_code: agent_code, ts: { $gte: startdate_stp, $lte: enddate_stp } }).sort({ _id: -1 }).then(
                      function (result) {
-                         apiDebuglog("find movecredit agent code " + agent_code + " successfully", result);
                          return res.json(ReturnSuccess(2000, result));
                      }
                  ).catch(
@@ -672,7 +644,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                  ); */
                 await tb_member.find({ agent_code: agent_code }).sort({ _id: -1 }).then(
                     function (result) {
-                        //apiDebuglog("find member agent code " + agent_code + " successfully", result);
                         let member_en = result.filter((o) => {
                             return (o.mem_status !== '0')
                         })
@@ -688,19 +659,19 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 let labels = [];
                                 var j = 0;
                                 //var tmp_date = new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00'));
-                                console.log('enddate_stp : ' + enddate_stp);
+                                apilog('enddate_stp : ' + enddate_stp);
                                 for (j = 0; j < 31; j++) {
                                     var tmp_date = new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                                     var dd = new Date(dateFormat(tmp_date.setDate(tmp_date.getDate() + j), 'yyyy-mm-dd 00:00:00'));
-                                    console.log('dd ' + j + ' : ' + dd)
-                                    console.log('date ' + j + ' : ' + Number(dd))
+                                    apilog('dd ' + j + ' : ' + dd)
+                                    apilog('date ' + j + ' : ' + Number(dd))
                                     if (Number(dd) < enddate_stp) {
                                         labels.push((j + 1).toString());
                                     } else {
                                         break;
                                     }
                                 }
-                                console.log('labels : ' + labels)
+                                apilog('labels : ' + labels)
                                 let dep = [];
                                 let wit = [];
                                 let start_date = [];
@@ -710,7 +681,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                     dep.push(0);
                                     wit.push(0);
                                     var tmp_date = date;
-                                    //console.log('start_date : ' + start_date)
                                     //start_date.push(Number(new Date(dateFormat(date.setDate(date.getDate() + i), 'yyyy-mm-dd 00:00:00'))));
                                     //end_date.push(Number(new Date(dateFormat(tmp_date.setDate(date.getDate() + 1), 'yyyy-mm-dd 00:00:00'))));
                                     start_date.push(new Date(dateFormat(tmp_date.setDate(tmp_date.getDate()), 'yyyy-mm-dd 00:00:00')));
@@ -718,14 +688,13 @@ module.exports.getDashboardByAgent = async (req, res) => {
     
                                 }
     
-                                console.log('start_date : ' + start_date)
-                                console.log('end_date : ' + end_date)
+                                apilog('start_date : ' + start_date)
+                                apilog('end_date : ' + end_date)
                                 let deposit = result.filter((o) => {
                                     return (o.type === 'deposit')
                                 })
                                 let deposit_sum = 0;
                                 deposit.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     deposit_sum = deposit_sum + Number(o.amount);
                                     var i = 0;
                                     for (i = 0; i < labels.length; i++) {
@@ -733,14 +702,12 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                             dep[i] = dep[i] + Number(o.amount);
                                         }
                                     }
-    
                                 })
                                 let withdraw = result.filter((o) => {
                                     return (o.type === 'withdraw')
                                 })
                                 let withdraw_sum = 0;
                                 withdraw.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     withdraw_sum = withdraw_sum + Number(o.amount);
                                     var i = 0;
                                     for (i = 0; i < labels.length; i++) {
@@ -754,7 +721,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 })
                                 let topup_sum = 0;
                                 topup.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     topup_sum = topup_sum + Number(o.amount);
                                 })
                                 let transactions = { deposit: deposit.length, deposit_sum: deposit_sum, withdraw: withdraw.length, withdraw_sum: withdraw_sum, topup: topup.length, topup_sum: topup_sum };
@@ -778,9 +744,9 @@ module.exports.getDashboardByAgent = async (req, res) => {
                 });
                 var d = new Date(nDate);
                 var date = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-01');
-                console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 /* await tb_move_credit.find({ agent_code: agent_code, ts: { $gte: startdate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
                         apiDebuglog("find movecredit agent code " + agent_code + " successfully", result);
@@ -795,7 +761,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                 ); */
                 await tb_member.find({ agent_code: agent_code }).sort({ _id: -1 }).then(
                     function (result) {
-                        //apiDebuglog("find member agent code " + agent_code + " successfully", result);
                         let member_en = result.filter((o) => {
                             return (o.mem_status !== '0')
                         })
@@ -811,19 +776,18 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 let labels = [];
                                 var j = 0;
                                 //var tmp_date = new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00'));
-                                //console.log('enddate_stp : ' + enddate_stp);
                                 for (j = 0; j < 31; j++) {
                                     var tmp_date = new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                                     var dd = new Date(dateFormat(tmp_date.setDate(tmp_date.getDate() + j), 'yyyy-mm-dd 00:00:00'));
-                                    console.log('dd ' + j + ' : ' + dd)
-                                    console.log('date ' + j + ' : ' + Number(dd))
+                                    apilog('dd ' + j + ' : ' + dd)
+                                    apilog('date ' + j + ' : ' + Number(dd))
                                     if (Number(dd) < Number(d)) {
                                         labels.push((j + 1).toString());
                                     } else {
                                         break;
                                     }
                                 }
-                                console.log('labels : ' + labels)
+                                apilog('labels : ' + labels)
                                 let dep = [];
                                 let wit = [];
                                 let start_date = [];
@@ -833,7 +797,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                     dep.push(0);
                                     wit.push(0);
                                     var tmp_date = date;
-                                    //console.log('start_date : ' + start_date)
                                     /* start_date.push(Number(new Date(dateFormat(date.setDate(date.getDate() + i), 'yyyy-mm-dd 00:00:00'))));
                                     end_date.push(Number(new Date(dateFormat(tmp_date.setDate(date.getDate() + 1), 'yyyy-mm-dd 00:00:00')))); */
                                     start_date.push(new Date(dateFormat(tmp_date.setDate(tmp_date.getDate()), 'yyyy-mm-dd 00:00:00')));
@@ -841,14 +804,13 @@ module.exports.getDashboardByAgent = async (req, res) => {
     
                                 }
     
-                                console.log('start_date : ' + start_date)
-                                console.log('end_date : ' + end_date)
+                                apilog('start_date : ' + start_date)
+                                apilog('end_date : ' + end_date)
                                 let deposit = result.filter((o) => {
                                     return (o.type === 'deposit')
                                 })
                                 let deposit_sum = 0;
                                 deposit.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     deposit_sum = deposit_sum + Number(o.amount);
                                     var i = 0;
                                     for (i = 0; i < labels.length; i++) {
@@ -863,7 +825,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 })
                                 let withdraw_sum = 0;
                                 withdraw.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     withdraw_sum = withdraw_sum + Number(o.amount);
                                     var i = 0;
                                     for (i = 0; i < labels.length; i++) {
@@ -877,7 +838,6 @@ module.exports.getDashboardByAgent = async (req, res) => {
                                 })
                                 let topup_sum = 0;
                                 topup.map((o) => {
-                                    //console.log('amount : ' + o.amount);
                                     topup_sum = topup_sum + Number(o.amount);
                                 })
                                 let transactions = { deposit: deposit.length, deposit_sum: deposit_sum, withdraw: withdraw.length, withdraw_sum: withdraw_sum, topup: topup.length, topup_sum: topup_sum };
@@ -928,7 +888,7 @@ module.exports.getMoveCreditByAgent = async (req, res) => {
             } else if (movecredit.selecttime === 'Today') {
                 var startdate = moment().tz('Asia/Bangkok').format('YYYY-MM-DD 00:00:00');
                 var startdate_stp = Number(new Date(startdate));
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 await tb_move_credit.find({ agent_code: agent_code, ts: { $gte: startdate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
                         apiDebuglog("find movecredit agent code " + agent_code + " successfully", result);
@@ -950,11 +910,11 @@ module.exports.getMoveCreditByAgent = async (req, res) => {
                 var enddate = new Date(nDate);
                 var enddate_stp = Number(new Date(dateFormat(enddate, 'yyyy-mm-dd 00:00:00')));
                 date.setDate(date.getDate() - 1);
-                console.log('yesterday date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('yesterday date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 //var startdate = moment().format('YYYY-MM-DD 00:00:00');
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
     
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 await tb_move_credit.find({ agent_code: agent_code, ts: { $gte: startdate_stp, $lte: enddate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
                         apiDebuglog("find movecredit agent code " + agent_code + " successfully", result);
@@ -973,9 +933,9 @@ module.exports.getMoveCreditByAgent = async (req, res) => {
                     timeZone: 'Asia/Bangkok'
                 });
                 var date = new Date(getMonday(nDate));
-                console.log('get monday:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('get monday:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 await tb_move_credit.find({ agent_code: agent_code, ts: { $gte: startdate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
                         apiDebuglog("find movecredit agent code " + agent_code + " successfully", result);
@@ -995,15 +955,14 @@ module.exports.getMoveCreditByAgent = async (req, res) => {
                 });
                 var enddate = new Date(getMonday(nDate));
                 var date = new Date();
-                console.log('get monday:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
-                //console.log('start date:' + startdate_stp);
+                apilog('get monday:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
                 date.setDate(enddate.getDate() - 7);
-                console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
-                console.log('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
+                apilog('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
                 var enddate_stp = Number(new Date(dateFormat(enddate, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
-                console.log('end date:' + enddate_stp);
+                apilog('start date:' + startdate_stp);
+                apilog('end date:' + enddate_stp);
                 await tb_move_credit.find({ agent_code: agent_code, ts: { $gte: startdate_stp, $lte: enddate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
                         apiDebuglog("find movecredit agent code " + agent_code + " successfully", result);
@@ -1024,13 +983,13 @@ module.exports.getMoveCreditByAgent = async (req, res) => {
                 var d = new Date(nDate);
                 var enddate = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-01');
                 //enddate.setDate(enddate.getDate() - 1);
-                console.log('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
+                apilog('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
                 var date = new Date(d.getFullYear() + '-' + d.getMonth() + '-01');
-                console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
                 var enddate_stp = Number(new Date(dateFormat(enddate, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
-                console.log('end date:' + enddate_stp);
+                apilog('start date:' + startdate_stp);
+                apilog('end date:' + enddate_stp);
                 await tb_move_credit.find({ agent_code: agent_code, ts: { $gte: startdate_stp, $lte: enddate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
                         apiDebuglog("find movecredit agent code " + agent_code + " successfully", result);
@@ -1050,9 +1009,9 @@ module.exports.getMoveCreditByAgent = async (req, res) => {
                 });
                 var d = new Date(nDate);
                 var date = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-01');
-                console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 await tb_move_credit.find({ agent_code: agent_code, ts: { $gte: startdate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
                         apiDebuglog("find movecredit agent code " + agent_code + " successfully", result);
@@ -1116,28 +1075,24 @@ module.exports.getUpdateMoveCredit = async (req, res) => {
         await tb_move_credit.find({}).then(
             function (result) {
                 apiDebuglog("find moveCredit result successfully ", result);
-                console.log("find moveCredit result length : " + result.length + " records");
+                apilog("find moveCredit result length : " + result.length + " records");
                 var i, j = 1;
                 var error = 0;
                 for (i = 0; i < result.length; i++) {
-    
-                    //console.log("id ( "+ i +" ) : " + result[i]._id);
                     const tt = result[i].move_date + " " + result[i].move_time;
                     const dt = new Date(tt);
                     //var tz = moment().tz('Asia/Bangkok').format('YYYY-MM-DD HH:mm:ss');
-                    console.log("ts ( " + i + " ) : " + Number(dt));
+                    apilog("ts ( " + i + " ) : " + Number(dt));
                     const a = { ts: Number(dt) };
                     //moveCredit.ts = Number(new Date(tz));
                     tb_move_credit.findByIdAndUpdate(result[i]._id, { $set: a }).then(
                         function (result) {
-                            //console.log("agent user update result : " + result);
                             apiDebuglog("moveCredit update id " + result._id + " successfully", result);
                             j++;
                             //return res.json(ReturnSuccess(2000, { id: result._id }));
                         }
                     ).catch(
                         function (err) {
-                            //console.log("agent user update error 2001 : " + err);
                             apiErrorlog("moveCredit update id " + uId + " error 2001", err);
                             error = err;
                             //return res.json(ReturnErr(err));
@@ -1171,13 +1126,11 @@ module.exports.updateMoveCredit = async (req, res) => {
     
             await tb_move_credit.findByIdAndUpdate(uId, { $set: moveCredit }).then(
                 function (result) {
-                    //console.log("agent user update result : " + result);
                     apiDebuglog("moveCredit update id " + uId + " successfully", result);
                     return res.json(ReturnSuccess(2000, { id: result._id }));
                 }
             ).catch(
                 function (err) {
-                    //console.log("agent user update error 2001 : " + err);
                     apiErrorlog("moveCredit update id " + uId + " error 2001", err);
                     //return res.json(ReturnErr(err));
                     return res.json(ReturnUnSuccess(2001, { message: "Unsuccess for update moveCredit id: " + uId }));
@@ -1200,13 +1153,11 @@ module.exports.deleteMoveCredit = async (req, res) => {
         if (uId) {
             await tb_move_credit.findByIdAndDelete({ _id: uId }).then(
                 function (result) {
-                    //console.log("delete agent user id result : " + result);
                     apiDebuglog("delete moveCredit id " + uId + " successfully", result);
                     return res.json(ReturnSuccess(2000, { id: result._id }));
                 }
             ).catch(
                 function (err) {
-                    //console.log("delete agent user id error 2001 : " + err);
                     apiErrorlog("delete moveCredit id " + uId + " error 2001", err);
                     //return res.json(ReturnErr(err));
                     return res.json(ReturnUnSuccess(2001, { message: "Unsuccess for delete moveCredit id: " + uId }));

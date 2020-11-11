@@ -10,7 +10,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_turnover} = require('../models');
 
 
@@ -19,7 +19,7 @@ module.exports.getAllTurnOver = async (req, res) => {
         apilog('Get turnover all');
         await tb_turnover.find({}).then(
             function (result) {
-                apiDebuglog("find turnover result successfully" + result);
+                apiDebuglog("find turnover result successfully", result);
                 return res.json(ReturnSuccess(2000, result));
             }
         ).catch(
@@ -111,13 +111,12 @@ module.exports.getAgentTurnOver = async (req, res) => {
                 );
             } else if (turnover.selecttime === 'Today') {
                 var tz = moment().tz('Asia/Bangkok').format('YYYY-MM-DD 00:00:00');
-                console.log('tz:' + tz);
+                apilog('tz:' + tz);
                 //var startdate = tz;
                 var startdate_stp = Number(new Date(tz));
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 await tb_turnover.find({ agent_code: agent_code, ts: { $gte: startdate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
-                        //apiDebuglog("find transections agent code " + agent_code + " successfully", result);
                         return res.json(ReturnSuccess(2000, result));
                     }
                 ).catch(
@@ -134,19 +133,18 @@ module.exports.getAgentTurnOver = async (req, res) => {
                 });
     
                 var date = new Date();
-                console.log("date::" + date.getDate());
+                apilog("date::" + date.getDate());
                 var enddate = new Date().toLocaleString('en-US', {
                     timeZone: 'Asia/Bangkok'
                 });
                 var enddate_stp = Number(new Date(dateFormat(enddate, 'yyyy-mm-dd 00:00:00')));
                 date.setDate(dateFormat(nDate, 'dd') - 1);
-                console.log('yesterday date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('yesterday date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 //var startdate = moment().format('YYYY-MM-DD 00:00:00');
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 await tb_turnover.find({ agent_code: agent_code, ts: { $gte: startdate_stp, $lte: enddate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
-                        //apiDebuglog("find transections agent code " + agent_code + " successfully", result);
                         return res.json(ReturnSuccess(2000, result));
                     }
                 ).catch(
@@ -163,12 +161,11 @@ module.exports.getAgentTurnOver = async (req, res) => {
                 });
                 var date = new Date(getMonday(nDate));
                 //var date = new Date(getMonday(new Date()));
-                console.log('get monday:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('get monday:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 await tb_turnover.find({ agent_code: agent_code, ts: { $gte: startdate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
-                        //apiDebuglog("find transections agent code " + agent_code + " successfully", result);
                         return res.json(ReturnSuccess(2000, result));
                     }
                 ).catch(
@@ -185,18 +182,16 @@ module.exports.getAgentTurnOver = async (req, res) => {
                 });
                 var enddate = new Date(getMonday(nDate));
                 var date = new Date();
-                console.log('get monday:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
-                //console.log('start date:' + startdate_stp);
+                apilog('get monday:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
                 date.setDate(enddate.getDate() - 7);
-                console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
-                console.log('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
+                apilog('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
                 var enddate_stp = Number(new Date(dateFormat(enddate, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
-                console.log('end date:' + enddate_stp);
+                apilog('start date:' + startdate_stp);
+                apilog('end date:' + enddate_stp);
                 await tb_turnover.find({ agent_code: agent_code, ts: { $gte: startdate_stp, $lte: enddate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
-                        //apiDebuglog("find transections agent code " + agent_code + " successfully", result);
                         return res.json(ReturnSuccess(2000, result));
                     }
                 ).catch(
@@ -214,16 +209,15 @@ module.exports.getAgentTurnOver = async (req, res) => {
                 var d = new Date(nDate);
                 var enddate = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-01');
                 //enddate.setDate(enddate.getDate() - 1);
-                console.log('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
+                apilog('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
                 var date = new Date(d.getFullYear() + '-' + d.getMonth() + '-01');
-                console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
                 var enddate_stp = Number(new Date(dateFormat(enddate, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
-                console.log('end date:' + enddate_stp);
+                apilog('start date:' + startdate_stp);
+                apilog('end date:' + enddate_stp);
                 await tb_turnover.find({ agent_code: agent_code, ts: { $gte: startdate_stp, $lte: enddate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
-                        //apiDebuglog("find transections agent code " + agent_code + " successfully", result);
                         return res.json(ReturnSuccess(2000, result));
                     }
                 ).catch(
@@ -240,12 +234,11 @@ module.exports.getAgentTurnOver = async (req, res) => {
                 });
                 var d = new Date(nDate);
                 var date = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-01');
-                console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 await tb_turnover.find({ agent_code: agent_code, ts: { $gte: startdate_stp } }).then(
                     function (result) {
-                        //apiDebuglog("find transections agent code " + agent_code + " successfully", result);
                         return res.json(ReturnSuccess(2000, result));
                     }
                 ).catch(
@@ -305,13 +298,11 @@ module.exports.updateTurnOver = async (req, res) => {
     
             await tb_turnover.findByIdAndUpdate(uId, { $set: turnover }).then(
                 function (result) {
-                    //console.log("agent user update result : " + result);
                     apiDebuglog("turnover update id " + uId + " successfully", result);
                     return res.json(ReturnSuccess(2000, { id: result._id }));
                 }
             ).catch(
                 function (err) {
-                    //console.log("agent user update error 2001 : " + err);
                     apiErrorlog("turnover update id " + uId + " error 2001", err);
                     //return res.json(ReturnErr(err));
                     return res.json(ReturnUnSuccess(2001, { message: "Unsuccess for update turnover id: " + uId }));
@@ -333,13 +324,11 @@ module.exports.deleteTurnOver = async (req, res) => {
         if (uId) {
             await tb_turnover.findByIdAndDelete({ _id: uId }).then(
                 function (result) {
-                    //console.log("delete agent user id result : " + result);
                     apiDebuglog("delete turnover id " + uId + " successfully", result);
                     return res.json(ReturnSuccess(2000, { id: result._id }));
                 }
             ).catch(
                 function (err) {
-                    //console.log("delete agent user id error 2001 : " + err);
                     apiErrorlog("delete turnover id " + uId + " error 2001", err);
                     //return res.json(ReturnErr(err));
                     return res.json(ReturnUnSuccess(2001, { message: "Unsuccess for delete turnover id: " + uId }));

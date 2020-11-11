@@ -1,19 +1,7 @@
 const express = require("express");
 const route = express.Router();
 const env = require("../env");
-var mongoose = require("mongoose");
-const {
-  apilog,
-  apiDebuglog,
-  apiErrorlog,
-  ReturnErr,
-  ReturnSuccess,
-  ReturnUnSuccess,
-  ReturnCustom,
-  sha256Encrypt,
-  sha256Verify,
-  getMonday,
-} = require("../functions/utility.function");
+const {apilog} = require("../functions/utility.function");
 
 const agent_bonus = require("./agent_bonus.route");
 const agent_menu = require("./agent_menu.route");
@@ -41,21 +29,6 @@ const tureover = require("./turnover.route");
 const user_level = require("./user_level.route");
 const user = require("./user.route");
 const wallets = require("./wallets.route");
-
-// คำสั่งเชื่อม MongoDB
-var mongo_uri = env.mongo_uri;
-mongoose.Promise = global.Promise;
-mongoose
-  .connect(mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(
-    () => {
-      console.log("[success] task 2 : connected to the database ");
-    },
-    (error) => {
-      console.log("[failed] task 2 " + error);
-      process.exit();
-    }
-  );
 
 route.get("/", (req, res) => {
   apilog("Get welcome");

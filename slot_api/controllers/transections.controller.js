@@ -10,7 +10,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_transections} = require('../models');
 
 module.exports.getAllTransections = async (req, res) => {
@@ -18,7 +18,7 @@ module.exports.getAllTransections = async (req, res) => {
         apilog('Get transections all');
         await tb_transections.find({}).then(
             function (result) {
-                apiDebuglog("find transections result successfully" + result);
+                apiDebuglog("find transections result successfully", result);
                 return res.json(ReturnSuccess(2000, result));
             }
         ).catch(
@@ -111,10 +111,9 @@ module.exports.getAgentTransections = async (req, res) => {
             } else if (transections.selecttime === 'Today') {
                 var startdate = moment().tz('Asia/Bangkok').format('YYYY-MM-DD 00:00:00');
                 var startdate_stp = Number(new Date(startdate));
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 await tb_transections.find({ agent_code: agent_code, ts: { $gte: startdate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
-                        //apiDebuglog("find transections agent code " + agent_code + " successfully", result);
                         return res.json(ReturnSuccess(2000, result));
                     }
                 ).catch(
@@ -133,14 +132,13 @@ module.exports.getAgentTransections = async (req, res) => {
                 var enddate = new Date(nDate);
                 var enddate_stp = Number(new Date(dateFormat(enddate, 'yyyy-mm-dd 00:00:00')));
                 date.setDate(date.getDate() - 1);
-                console.log('yesterday date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('yesterday date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 //var startdate = moment().format('YYYY-MM-DD 00:00:00');
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
     
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 await tb_transections.find({ agent_code: agent_code, ts: { $gte: startdate_stp, $lte: enddate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
-                        //apiDebuglog("find transections agent code " + agent_code + " successfully", result);
                         return res.json(ReturnSuccess(2000, result));
                     }
                 ).catch(
@@ -156,12 +154,11 @@ module.exports.getAgentTransections = async (req, res) => {
                     timeZone: 'Asia/Bangkok'
                 });
                 var date = new Date(getMonday(nDate));
-                console.log('get monday:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('get monday:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 await tb_transections.find({ agent_code: agent_code, ts: { $gte: startdate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
-                        //apiDebuglog("find transections agent code " + agent_code + " successfully", result);
                         return res.json(ReturnSuccess(2000, result));
                     }
                 ).catch(
@@ -178,18 +175,16 @@ module.exports.getAgentTransections = async (req, res) => {
                 });
                 var enddate = new Date(getMonday(nDate));
                 var date = new Date();
-                console.log('get monday:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
-                //console.log('start date:' + startdate_stp);
+                apilog('get monday:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
                 date.setDate(enddate.getDate() - 7);
-                console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
-                console.log('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
+                apilog('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
                 var enddate_stp = Number(new Date(dateFormat(enddate, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
-                console.log('end date:' + enddate_stp);
+                apilog('start date:' + startdate_stp);
+                apilog('end date:' + enddate_stp);
                 await tb_transections.find({ agent_code: agent_code, ts: { $gte: startdate_stp, $lte: enddate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
-                        //apiDebuglog("find transections agent code " + agent_code + " successfully", result);
                         return res.json(ReturnSuccess(2000, result));
                     }
                 ).catch(
@@ -207,16 +202,15 @@ module.exports.getAgentTransections = async (req, res) => {
                 var d = new Date(nDate);
                 var enddate = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-01');
                 //enddate.setDate(enddate.getDate() - 1);
-                console.log('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
+                apilog('end date:' + dateFormat(enddate, 'yyyy-mm-dd 00:00:00'));
                 var date = new Date(d.getFullYear() + '-' + d.getMonth() + '-01');
-                console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
                 var enddate_stp = Number(new Date(dateFormat(enddate, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
-                console.log('end date:' + enddate_stp);
+                apilog('start date:' + startdate_stp);
+                apilog('end date:' + enddate_stp);
                 await tb_transections.find({ agent_code: agent_code, ts: { $gte: startdate_stp, $lte: enddate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
-                        //apiDebuglog("find transections agent code " + agent_code + " successfully", result);
                         return res.json(ReturnSuccess(2000, result));
                     }
                 ).catch(
@@ -233,12 +227,11 @@ module.exports.getAgentTransections = async (req, res) => {
                 });
                 var d = new Date(nDate);
                 var date = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-01');
-                console.log('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
+                apilog('start date:' + dateFormat(date, 'yyyy-mm-dd 00:00:00'));
                 var startdate_stp = Number(new Date(dateFormat(date, 'yyyy-mm-dd 00:00:00')));
-                console.log('start date:' + startdate_stp);
+                apilog('start date:' + startdate_stp);
                 await tb_transections.find({ agent_code: agent_code, ts: { $gte: startdate_stp } }).sort({ _id: -1 }).then(
                     function (result) {
-                        //apiDebuglog("find transections agent code " + agent_code + " successfully", result);
                         return res.json(ReturnSuccess(2000, result));
                     }
                 ).catch(
@@ -298,13 +291,11 @@ module.exports.updateTransections = async (req, res) => {
     
             await tb_transections.findByIdAndUpdate(uId, { $set: transections }).then(
                 function (result) {
-                    //console.log("agent user update result : " + result);
                     apiDebuglog("transections update id " + uId + " successfully", result);
                     return res.json(ReturnSuccess(2000, { id: result._id }));
                 }
             ).catch(
                 function (err) {
-                    //console.log("agent user update error 2001 : " + err);
                     apiErrorlog("transections update id " + uId + " error 2001", err);
                     //return res.json(ReturnErr(err));
                     return res.json(ReturnUnSuccess(2001, { message: "Unsuccess for update transections id: " + uId }));
@@ -326,13 +317,11 @@ module.exports.deleteTransections = async (req, res) => {
         if (uId) {
             await tb_transections.findByIdAndDelete({ _id: uId }).then(
                 function (result) {
-                    //console.log("delete agent user id result : " + result);
                     apiDebuglog("delete transections id " + uId + " successfully", result);
                     return res.json(ReturnSuccess(2000, { id: result._id }));
                 }
             ).catch(
                 function (err) {
-                    //console.log("delete agent user id error 2001 : " + err);
                     apiErrorlog("delete transections id " + uId + " error 2001", err);
                     //return res.json(ReturnErr(err));
                     return res.json(ReturnUnSuccess(2001, { message: "Unsuccess for delete transections id: " + uId }));

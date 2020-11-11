@@ -9,7 +9,7 @@ const {
     sha256Encrypt,
     sha256Verify,
     getMonday
-} = require("../functions/utility.function");
+} = require("../functions");
 const {tb_game_provider} = require('../models');
 
 module.exports.getAllGameProvider = async (req, res) => {
@@ -192,12 +192,11 @@ module.exports.updateGameProvider = async (req, res) => {
         const gId = req.params.id
     
         if (games && gId) {
-    
             await tb_game_provider.findByIdAndUpdate(gId, { $set: games }).then(
                 function (result) {
                     apiDebuglog("game provider update id " + gId + " successfully", result);
-                    apiDebuglog("original_game_img => " + games.original_game_img);
-                    apiDebuglog("game_img => " + games.game_img);
+                    apilog("original_game_img => " + games.original_game_img);
+                    apilog("game_img => " + games.game_img);
                     if (games.original_game_img && games.game_img && games.game_img !== games.original_game_img) {
                         var fs = require('fs');
                         try {
@@ -206,10 +205,10 @@ module.exports.updateGameProvider = async (req, res) => {
                                 //file exists
                                 fs.unlink(__dirname + '/public/' + games.original_game_img, function (err) {
                                     if (err) throw err;
-                                    console.log('Image file deleted!');
+                                    apilog('Image file deleted!');
                                     //return res.json(ReturnSuccess(2000, { id: result._id }));
-                                    apiDebuglog("original_game_img_app => " + games.original_game_img_app);
-                                    apiDebuglog("game_img => " + games.game_img_app);
+                                    apilog("original_game_img_app => " + games.original_game_img_app);
+                                    apilog("game_img => " + games.game_img_app);
                                     if (games.original_game_img_app && games.game_img_app && games.game_img_app !== games.original_game_img_app) {
                                         var fs = require('fs');
                                         try {
@@ -218,16 +217,15 @@ module.exports.updateGameProvider = async (req, res) => {
                                                 //file exists
                                                 fs.unlink(__dirname + '/public/' + games.original_game_img, function (err) {
                                                     if (err) throw err;
-                                                    console.log('Image file deleted!');
+                                                    apilog('Image file deleted!');
                                                     return res.json(ReturnSuccess(2000, { id: result._id }));
                                                 });
                                             } else {
                                                 return res.json(ReturnSuccess(2000, { id: result._id }));
                                             }
                                         } catch (err) {
-                                            console.error(err)
+                                            console.error(err);
                                         }
-    
                                     } else {
                                         return res.json(ReturnSuccess(2000, { id: result._id }));
                                     }
@@ -236,9 +234,8 @@ module.exports.updateGameProvider = async (req, res) => {
                                 return res.json(ReturnSuccess(2000, { id: result._id }));
                             }
                         } catch (err) {
-                            console.error(err)
+                            console.error(err);
                         }
-    
                     } else {
                         return res.json(ReturnSuccess(2000, { id: result._id }));
                     }
@@ -275,7 +272,7 @@ module.exports.deleteGameProvider = async (req, res) => {
                                 //file exists
                                 fs.unlink(__dirname + '/public/' + result.game_img, function (err) {
                                     if (err) throw err;
-                                    console.log('Image file deleted!');
+                                    apilog('Image file deleted!');
                                     //return res.json(ReturnSuccess(2000, { id: result._id }));
                                     if (result.game_img_app && result.game_img_app !== '') {
                                         var fs = require('fs');
@@ -285,7 +282,7 @@ module.exports.deleteGameProvider = async (req, res) => {
                                                 //file exists
                                                 fs.unlink(__dirname + '/public/' + result.game_img_app, function (err) {
                                                     if (err) throw err;
-                                                    console.log('Image app file deleted!');
+                                                    apilog('Image app file deleted!');
                                                     return res.json(ReturnSuccess(2000, { id: result._id }));
                                                 });
                                             } else {
@@ -294,7 +291,6 @@ module.exports.deleteGameProvider = async (req, res) => {
                                         } catch (err) {
                                             console.error(err)
                                         }
-    
                                     } else {
                                         return res.json(ReturnSuccess(2000, { id: result._id }));
                                     }
@@ -305,7 +301,6 @@ module.exports.deleteGameProvider = async (req, res) => {
                         } catch (err) {
                             console.error(err)
                         }
-    
                     } else {
                         return res.json(ReturnSuccess(2000, { id: result._id }));
                     }
@@ -326,10 +321,3 @@ module.exports.deleteGameProvider = async (req, res) => {
     }
 }
 
-// module.exports.a = (req, res) => {
-//     try{
-
-//     }catch(err){
-//         return res.json(ReturnErr(err));
-//     }
-// }
