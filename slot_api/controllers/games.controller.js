@@ -1,7 +1,18 @@
-const utilily_ft = require("../functions/utility.function");
-const tb_games = require('../models/tb_games');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_games} = require('../models');
 
-module.exports.getAllGames = (req, res) => {
+module.exports.getAllGames = async (req, res) => {
     try{
         apilog('Get games all');
         await tb_games.find({}).then(
@@ -20,7 +31,7 @@ module.exports.getAllGames = (req, res) => {
     }
 }
 
-module.exports.getGamesById = (req, res) => {
+module.exports.getGamesById = async (req, res) => {
     try{
         apilog('Get games by id');
         apilog('params::==' + req.params);
@@ -46,7 +57,7 @@ module.exports.getGamesById = (req, res) => {
     }
 }
 
-module.exports.createGame = (req, res) => {
+module.exports.createGame = async (req, res) => {
     try{
         apilog('Post create games');
         apilog('body::==' + req.body);
@@ -75,7 +86,7 @@ module.exports.createGame = (req, res) => {
     }
 }
 
-module.exports.updateGame = (req, res) => {
+module.exports.updateGame = async (req, res) => {
     try{
         apilog('Put Update games');
         apilog('body::==' + req.body);
@@ -104,7 +115,7 @@ module.exports.updateGame = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.deleteGame = (req, res) => {
+module.exports.deleteGame = async (req, res) => {
     try{
         apilog('Delete games by id');
         apilog('params::==' + req.params);

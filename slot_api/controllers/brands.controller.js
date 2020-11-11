@@ -1,9 +1,20 @@
 const multer = require('multer');
-const utilily_ft = require("../functions/utility.function");
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const { tb_brands,
+        tb_game_provider,
+        tb_game_list } = require('../models');
 
-const tb_brands = require('../models/tb_brands');
-const tb_game_provider = require('../models/tb_game_provider');
-const tb_game_list = require('../models/tb_game_list');
 
 const DIR = __dirname + '/public/';
 const storage = multer.diskStorage({
@@ -34,7 +45,7 @@ module.exports.uploadlogo = multer({
     storage: storage2
 });
 
-module.exports.getAllBrands = (req, res) => {
+module.exports.getAllBrands = async (req, res) => {
     try{
         apilog('Get brands all');
         await tb_brands.find({}).sort({ _id: -1 }).then(
@@ -53,7 +64,7 @@ module.exports.getAllBrands = (req, res) => {
     }
 }
 
-module.exports.getBrandById = (req, res) => {
+module.exports.getBrandById = async (req, res) => {
     try{
         apilog('Get brands by id');
         apilog('params::==' + req.params);
@@ -79,7 +90,7 @@ module.exports.getBrandById = (req, res) => {
     }
 }
 
-module.exports.createBrand = (req, res) => {
+module.exports.createBrand = async (req, res) => {
     try{
         apilog('Post create brands');
         apilog('body::==' + req.body);
@@ -106,7 +117,7 @@ module.exports.createBrand = (req, res) => {
     }
 }
 
-module.exports.updateBrand = (req, res) => {
+module.exports.updateBrand = async (req, res) => {
     try{
         apilog('Put Update brands');
         apilog('body::==' + req.body);
@@ -158,7 +169,7 @@ module.exports.updateBrand = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.deleteBrand = (req, res) => {
+module.exports.deleteBrand = async (req, res) => {
     try{
         apilog('Delete brands by id');
         apilog('params::==' + req.params);
@@ -204,7 +215,7 @@ module.exports.deleteBrand = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.getBrandSort = (req, res) => {
+module.exports.getBrandSort = async (req, res) => {
     try{
         apilog('Get brands by id');
         apilog('params::==' + req.params);
@@ -257,7 +268,7 @@ module.exports.getBrandSort = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.getBrandSortUpdate = (req, res) => {
+module.exports.getBrandSortUpdate = async (req, res) => {
     try{
         apilog('Get brands by id');
         apilog('params::==' + req.params);
@@ -304,7 +315,7 @@ module.exports.getBrandSortUpdate = (req, res) => {
     }
 }
 
-module.exports.postBrandSortUpdate = (req, res) => {
+module.exports.postBrandSortUpdate = async (req, res) => {
     try{
         apilog('Get brands by id');
         apilog('params::==' + req.params);

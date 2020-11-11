@@ -1,7 +1,19 @@
-const tb_agent_bonus = require('../models/tb_agent_bonus');
-const utilily_ft = require("../functions/utility.function");
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
 
-module.exports.getAgentAllBonus = (req, res) => {
+const { tb_agent_bonus } = require('../models');
+
+module.exports.getAgentAllBonus = async (req, res) => {
     try{
         apilog('Get agent_bonus all');
         await tb_agent_bonus.find({}).sort({ _id: -1 }).then(
@@ -20,7 +32,7 @@ module.exports.getAgentAllBonus = (req, res) => {
     }
 }
 
-module.exports.getAgentBonusById = (req, res) => {
+module.exports.getAgentBonusById = async (req, res) => {
     try{
         apilog('Get agent_bonus by id');
         apilog('params::==', req.params);
@@ -46,7 +58,7 @@ module.exports.getAgentBonusById = (req, res) => {
     }
 }
 
-module.exports.getAgentBonusByCode = (req, res) => {
+module.exports.getAgentBonusByCode = async (req, res) => {
     try{
         apilog('Get agent_bonus by agent_code');
         apilog('params::==', req.params);
@@ -72,7 +84,7 @@ module.exports.getAgentBonusByCode = (req, res) => {
     }
 }
 
-module.exports.getAgentBonusByType = (req, res) => {
+module.exports.getAgentBonusByType = async (req, res) => {
     try{
         apilog('Get agent_bonus by agent_code');
         apilog('params::==', req.params);
@@ -98,7 +110,7 @@ module.exports.getAgentBonusByType = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.createAgentBonus = (req, res) => {
+module.exports.createAgentBonus = async (req, res) => {
     try{
         apilog('Post create agent_bonus');
         apilog('body::==' + req.body);
@@ -129,7 +141,7 @@ module.exports.createAgentBonus = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.updateAgentBonus = (req, res) => {
+module.exports.updateAgentBonus = async (req, res) => {
     try{
         apilog('Put Update agent_bonus');
         apilog('body::==' + req.body);
@@ -159,7 +171,7 @@ module.exports.updateAgentBonus = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.deleteAgentBonus = (req, res) => {
+module.exports.deleteAgentBonus = async (req, res) => {
     try{
         apilog('Delete agent_bonus by id');
         apilog('params::==' + req.params);

@@ -1,6 +1,5 @@
 const express = require('express');
 const route = express.Router();
-
 const controller = require('../controllers/brands.controller');
 
 //////////////////////// tb_brands ///////////////////////
@@ -20,6 +19,6 @@ route.delete("/brands/:id", controller.deleteBrand);
 route.get("/brands_sort", controller.getBrandSort);
 route.get("/brands_sort_update", controller.getBrandSortUpdate);
 route.post("/brands_sort_update", controller.postBrandSortUpdate);
-
 ///////////////////// end tb_brands ////////////////////////
+
 module.exports = route;

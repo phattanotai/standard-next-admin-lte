@@ -1,7 +1,18 @@
-const utilily_ft = require("../functions/utility.function");
-const tb_game_list = require('../models/tb_game_list');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_game_list} = require('../models');
 
-module.exports.getGameList = (req, res) => {
+module.exports.getGameList = async (req, res) => {
     try{
         apilog('Get game list all');
         await tb_game_list.find({}).sort({ _id: -1 }).then(
@@ -20,7 +31,7 @@ module.exports.getGameList = (req, res) => {
     }
 }
 
-module.exports.getGameListById = (req, res) => {
+module.exports.getGameListById = async (req, res) => {
     try{
         apilog('Get game list by id');
         apilog('params::==' + req.params);
@@ -46,7 +57,7 @@ module.exports.getGameListById = (req, res) => {
     }
 }
 
-module.exports.getGameInfoByCode = (req, res) => {
+module.exports.getGameInfoByCode = async (req, res) => {
     try{
         apilog('Get game list by id');
         apilog('params::==' + req.params);
@@ -72,7 +83,7 @@ module.exports.getGameInfoByCode = (req, res) => {
     }
 }
 
-module.exports.getGameListByBrand = (req, res) => {
+module.exports.getGameListByBrand = async (req, res) => {
     try{
         apilog('Get game list by id');
         apilog('params::==' + JSON.stringify(req.params));
@@ -97,7 +108,7 @@ module.exports.getGameListByBrand = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.createGameList = (req, res) => {
+module.exports.createGameList = async (req, res) => {
     try{
         apilog('Post create game list');
         apilog('body::==' + req.body);
@@ -125,7 +136,7 @@ module.exports.createGameList = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.addGameList = (req, res) => {
+module.exports.addGameList = async (req, res) => {
     try{
         apilog('Post create game list');
         apilog('body::==' + req.body);
@@ -171,7 +182,7 @@ module.exports.addGameList = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.updateGameList = (req, res) => {
+module.exports.updateGameList = async (req, res) => {
     try{
         apilog('Put Update game list');
         apilog('body::==' + JSON.stringify(req.body));
@@ -248,7 +259,7 @@ module.exports.updateGameList = (req, res) => {
     }
 }
 
-module.exports.deleteGameLiat = (req, res) => {
+module.exports.deleteGameLiat = async (req, res) => {
     try{
         apilog('Delete game list by id');
         apilog('params::==' + req.params);
@@ -318,7 +329,7 @@ module.exports.deleteGameLiat = (req, res) => {
 }
 
 
-module.exports.deleteGameLiatById = (req, res) => {
+module.exports.deleteGameLiatById = async (req, res) => {
     try{
         apilog('Delete game list by id');
         apilog('params::==' + req.params);

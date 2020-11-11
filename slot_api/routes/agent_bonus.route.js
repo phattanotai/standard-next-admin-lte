@@ -1,5 +1,6 @@
 
-const tb_agent_bonus = require('../models/tb_agent_bonus');
+const express = require("express");
+const route = express.Router();
 const controller = require("../controllers/agent_bonus.controller");
 
 //////////////////////// tb_agent_bonus ///////////////////

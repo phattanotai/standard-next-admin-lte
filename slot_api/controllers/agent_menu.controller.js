@@ -1,5 +1,17 @@
-const tb_agent_menu = require("../models/tb_agent_menu");
-const utilily_ft = require("../functions/utility.function");
+const {
+  apilog,
+  apiDebuglog,
+  apiErrorlog,
+  ReturnErr,
+  ReturnSuccess,
+  ReturnUnSuccess,
+  ReturnCustom,
+  sha256Encrypt,
+  sha256Verify,
+  getMonday
+} = require("../functions/utility.function");
+
+const { tb_agent_menu } = require("../models");
 
 module.exports.getAgentAllMenu = async (req, res) => {
   try {

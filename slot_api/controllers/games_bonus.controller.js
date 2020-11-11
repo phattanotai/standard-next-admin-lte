@@ -1,7 +1,18 @@
-const utilily_ft = require("../functions/utility.function");
-const tb_games_bonus = require('../models/tb_games_bonus');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_games_bonus} = require('../models');
 
-module.exports.getAllGamesBonus = (req, res) => {
+module.exports.getAllGamesBonus = async (req, res) => {
     try{
         apilog('Get games_bonus all');
         await tb_games_bonus.find({}).sort({ _id: -1 }).then(
@@ -20,7 +31,7 @@ module.exports.getAllGamesBonus = (req, res) => {
     }
 }
 
-module.exports.getGamesBonusById = (req, res) => {
+module.exports.getGamesBonusById = async (req, res) => {
     try{
         apilog('Get games_bonus by id');
         apilog('params::==', req.params);
@@ -46,7 +57,7 @@ module.exports.getGamesBonusById = (req, res) => {
     }
 }
 
-module.exports.getGamesBonusByAgent = (req, res) => {
+module.exports.getGamesBonusByAgent = async (req, res) => {
     try{
         apilog('Get games_bonus by agent_code');
         apilog('params::==', req.params);
@@ -72,7 +83,7 @@ module.exports.getGamesBonusByAgent = (req, res) => {
     }
 }
 
-module.exports.createGamesBonus = (req, res) => {
+module.exports.createGamesBonus = async (req, res) => {
     try{
         apilog('Post create games_bonus');
         apilog('body::==' + req.body);
@@ -103,7 +114,7 @@ module.exports.createGamesBonus = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.updateGamesBonus = (req, res) => {
+module.exports.updateGamesBonus = async (req, res) => {
     try{
         apilog('Put Update games_bonus');
         apilog('body::==' + req.body);
@@ -133,7 +144,7 @@ module.exports.updateGamesBonus = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.deleteGamesBonus= (req, res) => {
+module.exports.deleteGamesBonus = async (req, res) => {
     try{
         apilog('Delete games_bonus by id');
         apilog('params::==' + req.params);

@@ -1,8 +1,18 @@
-const utilily_ft = require("../functions/utility.function");
-const tb_alert = require('../models/tb_alert');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_alert}= require('../models');
 
-
-module.exports.getAllAlert= (req, res) => {
+module.exports.getAllAlert = async (req, res) => {
     try{
         apilog('Get alert all');
         await tb_alert.find({}).then(
@@ -21,7 +31,7 @@ module.exports.getAllAlert= (req, res) => {
     }
 }
 
-module.exports.getAlertById = (req, res) => {
+module.exports.getAlertById = async (req, res) => {
     try{
         apilog('Get alert by id');
         apilog('params::==', req.params);
@@ -47,7 +57,7 @@ module.exports.getAlertById = (req, res) => {
     }
 }
 
-module.exports.createAlert = (req, res) => {
+module.exports.createAlert = async (req, res) => {
     try{
         apilog('Post create alert');
         apilog('body::==' + req.body);
@@ -75,7 +85,7 @@ module.exports.createAlert = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.updateAlert = (req, res) => {
+module.exports.updateAlert = async (req, res) => {
     try{
         apilog('Put Update alert');
         apilog('body::==' + req.body);
@@ -104,7 +114,7 @@ module.exports.updateAlert = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.deleteAlert = (req, res) => {
+module.exports.deleteAlert = async (req, res) => {
     try{
         apilog('Delete alert by id');
         apilog('params::==' + req.params);

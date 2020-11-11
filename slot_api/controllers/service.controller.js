@@ -1,7 +1,18 @@
-const utilily_ft = require("../functions/utility.function");
-const tb_services = require('../models/tb_services');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_services} = require('../models');
 
-module.exports.getAllServices = (req, res) => {
+module.exports.getAllServices = async (req, res) => {
     try{
         apilog('Get services all');
         await tb_services.find({}).sort({ _id: -1 }).then(
@@ -20,7 +31,7 @@ module.exports.getAllServices = (req, res) => {
     }
 }
 
-module.exports.getServicesById = (req, res) => {
+module.exports.getServicesById = async (req, res) => {
     try{
         apilog('Get services by id');
         apilog('params::==' + req.params);
@@ -46,7 +57,7 @@ module.exports.getServicesById = (req, res) => {
     }
 }
 
-module.exports.getServicesByAgent = (req, res) => {
+module.exports.getServicesByAgent = async (req, res) => {
     try{
         apilog('Get services by agent code');
         apilog('params::==' + JSON.stringify(req.params));
@@ -72,7 +83,7 @@ module.exports.getServicesByAgent = (req, res) => {
     }
 }
 
-module.exports.getServices = (req, res) => {
+module.exports.getServices = async (req, res) => {
     try{
         apilog('Get create services');
         apilog('body::==' + JSON.stringify(req.body));
@@ -104,7 +115,7 @@ module.exports.getServices = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.createServices= (req, res) => {
+module.exports.createServices = async (req, res) => {
     try{
         apilog('Post create services');
         apilog('body::==' + JSON.stringify(req.body));
@@ -132,7 +143,7 @@ module.exports.createServices= (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.updateServices = (req, res) => {
+module.exports.updateServices = async (req, res) => {
     try{
         apilog('Put Update services');
         apilog('body::==' + req.body);
@@ -161,7 +172,7 @@ module.exports.updateServices = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.daleteServies = (req, res) => {
+module.exports.daleteServies = async (req, res) => {
     try{
         apilog('Delete services by id');
         apilog('params::==' + req.params);

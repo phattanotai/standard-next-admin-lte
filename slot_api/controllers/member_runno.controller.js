@@ -1,7 +1,18 @@
-const utilily_ft = require("../functions/utility.function");
-const tb_member_runno = require('../models/tb_member_runno');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_member_runno} = require('../models');
 
-module.exports.getAllMemberRunno = (req, res) => {
+module.exports.getAllMemberRunno = async (req, res) => {
     try{
         apilog('Get memberRunno all');
         await tb_member_runno.find({}).then(
@@ -21,7 +32,7 @@ module.exports.getAllMemberRunno = (req, res) => {
     }
 }
 
-module.exports.getMemberRunnoByAgent = (req, res) => {
+module.exports.getMemberRunnoByAgent = async (req, res) => {
     try{
         apilog('Get memberRunno by id');
         apilog('params::==' + req.params);
@@ -48,7 +59,7 @@ module.exports.getMemberRunnoByAgent = (req, res) => {
     }
 }
 
-module.exports.getMemberRunnoById = (req, res) => {
+module.exports.getMemberRunnoById = async (req, res) => {
     try{
         apilog('Get memberRunno by id');
         apilog('params::==' + req.params);
@@ -75,7 +86,7 @@ module.exports.getMemberRunnoById = (req, res) => {
     }
 }
 
-module.exports.createMemberRunno = (req, res) => {
+module.exports.createMemberRunno = async (req, res) => {
     try{
         apilog('Post create memberRunno');
         apilog('body::==' + req.body);
@@ -103,7 +114,7 @@ module.exports.createMemberRunno = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.updateMemberRunno = (req, res) => {
+module.exports.updateMemberRunno = async (req, res) => {
     try{
         apilog('Put Update memberRunno');
         apilog('body::==' + req.body);
@@ -135,7 +146,7 @@ module.exports.updateMemberRunno = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.daleteMemberRunno = (req, res) => {
+module.exports.daleteMemberRunno = async (req, res) => {
     try{
         apilog('Delete memberRunno by id');
         apilog('params::==' + req.params);

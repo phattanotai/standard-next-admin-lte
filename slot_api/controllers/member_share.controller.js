@@ -1,7 +1,18 @@
-const utilily_ft = require("../functions/utility.function");
-const tb_member_share = require('../models/tb_member_share');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_member_share} = require('../models');
 
-module.exports.getAllGamesMemberShare = (req, res) => {
+module.exports.getAllGamesMemberShare = async (req, res) => {
     try{
         apilog('Get games_member_share all');
         await tb_member_share.find({}).sort({ _id: -1 }).then(
@@ -20,7 +31,7 @@ module.exports.getAllGamesMemberShare = (req, res) => {
     }
 }
 
-module.exports.getAllGamesMemberShareById = (req, res) => {
+module.exports.getAllGamesMemberShareById = async (req, res) => {
     try{
         apilog('Get games_member_share by id');
         apilog('params::==', req.params);
@@ -46,7 +57,7 @@ module.exports.getAllGamesMemberShareById = (req, res) => {
     }
 }
 
-module.exports.getAllGamesMemberShareByAgent = (req, res) => {
+module.exports.getAllGamesMemberShareByAgent = async (req, res) => {
     try{
         apilog('Get games_member_share by id');
         apilog('params::==', req.params);
@@ -72,7 +83,7 @@ module.exports.getAllGamesMemberShareByAgent = (req, res) => {
     }
 }
 
-module.exports.createGmaesMemberShare = (req, res) => {
+module.exports.createGmaesMemberShare = async (req, res) => {
     try{
         apilog('Post create games_member_share');
         apilog('body::==' + req.body);
@@ -105,7 +116,7 @@ module.exports.createGmaesMemberShare = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.updateGmaesMemberShare = (req, res) => {
+module.exports.updateGmaesMemberShare = async (req, res) => {
     try{
         apilog('Put Update games_member_share');
         apilog('body::==' + req.body);
@@ -135,7 +146,7 @@ module.exports.updateGmaesMemberShare = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.deleteGamesMemberShare = (req, res) => {
+module.exports.deleteGamesMemberShare = async (req, res) => {
     try{
         apilog('Delete games_member_share by id');
         apilog('params::==' + req.params);

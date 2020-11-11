@@ -1,8 +1,18 @@
-const utilily_ft = require("../functions/utility.function");
-const tb_menu = require('../models/tb_menu');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_menu}= require('../models');
 
-
-module.exports.getMenu = (req, res) => {
+module.exports.getMenu = async (req, res) => {
     try{
         apilog('Get menu all');
         await tb_menu.find({}).then(
@@ -21,7 +31,7 @@ module.exports.getMenu = (req, res) => {
     }
 }
 
-module.exports.getMenuByID = (req, res) => {
+module.exports.getMenuByID = async (req, res) => {
     try{
         apilog('Get menu by id');
         apilog('params::==' + req.params);
@@ -47,7 +57,7 @@ module.exports.getMenuByID = (req, res) => {
     }
 }
 
-module.exports.createMenu = (req, res) => {
+module.exports.createMenu = async (req, res) => {
     try{
         apilog('Post create menu');
         apilog('body::==' + JSON.stringify(req.body));
@@ -110,7 +120,7 @@ module.exports.createMenu = (req, res) => {
     }
 }
 
-module.exports.updateMenu = (req, res) => {
+module.exports.updateMenu = async (req, res) => {
     try{
         apilog('Put Update menu');
         apilog('body::==' + req.body);
@@ -139,7 +149,7 @@ module.exports.updateMenu = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.deleteMenu = (req, res) => {
+module.exports.deleteMenu = async (req, res) => {
     try{
         apilog('Delete menu by id');
         apilog('params::==' + req.params);
@@ -164,11 +174,3 @@ module.exports.deleteMenu = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-
-// module.exports.a = (req, res) => {
-//     try{
-
-//     }catch(err){
-//         return res.json(ReturnErr(err));
-//     }
-// }

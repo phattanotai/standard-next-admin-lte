@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 var port = env.port;
 
-const sl_route = require('./routes/slot_api_route');
+const sl_route = require('./routes/');
 
 app.use('/public', express.static('./routes/public/'));
 app.use('/api', sl_route);

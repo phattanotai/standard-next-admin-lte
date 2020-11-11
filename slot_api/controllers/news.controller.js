@@ -1,7 +1,18 @@
-const utilily_ft = require("../functions/utility.function");
-const tb_news = require('../models/tb_news');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_news} = require('../models');
 
-module.exports.getAllNews = (req, res) => {
+module.exports.getAllNews = async (req, res) => {
     try{
         apilog('Get news all');
         await tb_news.find({}).sort({ _id: -1 }).then(
@@ -20,7 +31,7 @@ module.exports.getAllNews = (req, res) => {
     }
 }
 
-module.exports.getNewsById = (req, res) => {
+module.exports.getNewsById = async (req, res) => {
     try{
         apilog('Get news by id');
         apilog('params::==', req.params);
@@ -46,7 +57,7 @@ module.exports.getNewsById = (req, res) => {
     }
 }
 
-module.exports.getNewsByAgent = (req, res) => {
+module.exports.getNewsByAgent = async  (req, res) => {
     try{
         apilog('Get news by agent_code');
         apilog('params::==', req.params);
@@ -72,7 +83,7 @@ module.exports.getNewsByAgent = (req, res) => {
     }
 }
 
-module.exports.createNews = (req, res) => {
+module.exports.createNews = async (req, res) => {
     try{
         apilog('Post create news');
         apilog('body::==' + req.body);
@@ -103,7 +114,7 @@ module.exports.createNews = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.updateNews = (req, res) => {
+module.exports.updateNews = async (req, res) => {
     try{
         apilog('Put Update news');
         apilog('body::==' + req.body);
@@ -133,7 +144,7 @@ module.exports.updateNews = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.deleteNews = (req, res) => {
+module.exports.deleteNews = async (req, res) => {
     try{
         apilog('Delete news by id');
         apilog('params::==' + req.params);

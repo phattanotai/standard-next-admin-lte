@@ -1,13 +1,19 @@
-const utilily_ft = require("../functions/utility.function");
 const moment = require('moment-timezone');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_member,tb_agent,tb_transections,tb_member_runno} = require('../models');
 
-const tb_member = require('../models/tb_member');
-const tb_agent = require('../models/tb_agent');
-const tb_transections = require('../models/tb_transections');
-const tb_member_runno = require('../models/tb_member_runno');
-
-
-module.exports.getAllMember = (req, res) => {
+module.exports.getAllMember = async (req, res) => {
     try{
         apilog('Get member all');
         await tb_member.find({}).sort({ _id: -1 }).then(
@@ -27,7 +33,7 @@ module.exports.getAllMember = (req, res) => {
     }
 }
 
-module.exports.getMemberByAgent = (req, res) => {
+module.exports.getMemberByAgent = async (req, res) => {
     try{
         apilog('Get member foragent');
         apilog('params::==' + req.params);
@@ -55,7 +61,7 @@ module.exports.getMemberByAgent = (req, res) => {
     }
 }
 
-module.exports.getBalanceByID = (req, res) => {
+module.exports.getBalanceByID = async (req, res) => {
     try{
         apilog('Get Balance by id');
         apilog('params::==' + req.params);
@@ -84,7 +90,7 @@ module.exports.getBalanceByID = (req, res) => {
     }
 }
 
-module.exports.getMemberById = (req, res) => {
+module.exports.getMemberById = async (req, res) => {
     try{
         apilog('Get info by id');
         apilog('params::==' + req.params);
@@ -110,7 +116,7 @@ module.exports.getMemberById = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.getMemberByUsername = (req, res) => {
+module.exports.getMemberByUsername = async (req, res) => {
     try{
         apilog('Get info by id');
         apilog('params::==' + req.params);
@@ -136,7 +142,7 @@ module.exports.getMemberByUsername = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.createMember = (req, res) => {
+module.exports.createMember = async (req, res) => {
     try{
         apilog('Post create member');
         apilog('body::==' + JSON.stringify(req.body));
@@ -289,7 +295,7 @@ module.exports.createMember = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.updateMember = (req, res) => {
+module.exports.updateMember = async (req, res) => {
     try{
         apilog('Put Update member');
         apilog('body::==' + req.body);
@@ -337,7 +343,7 @@ module.exports.updateMember = (req, res) => {
     }
 }
 
-module.exports.updateMemberDeposit = (req, res) => {
+module.exports.updateMemberDeposit = async (req, res) => {
     try{
         apilog('Put Update member');
         apilog('body::==' + req.body);
@@ -435,7 +441,7 @@ module.exports.updateMemberDeposit = (req, res) => {
     }
 }
 
-module.exports.updateMemberTopupByid = (req, res) => {
+module.exports.updateMemberTopupByid = async (req, res) => {
     try{
         apilog('Put Update member');
         apilog('body::==' + req.body);
@@ -523,7 +529,7 @@ module.exports.updateMemberTopupByid = (req, res) => {
     }
 }
 
-module.exports.updateMemberWithdrawById = (req, res) => {
+module.exports.updateMemberWithdrawById = async (req, res) => {
     try{
         apilog('Put Update member');
         apilog('body::==' + req.body);
@@ -611,7 +617,7 @@ module.exports.updateMemberWithdrawById = (req, res) => {
     }
 }
 
-module.exports.updateAllMemberWithdrawById = (req, res) => {
+module.exports.updateAllMemberWithdrawById = async (req, res) => {
     try{
         apilog('Put Update member');
         apilog('body::==' + req.body);
@@ -691,7 +697,7 @@ module.exports.updateAllMemberWithdrawById = (req, res) => {
     }
 }
 
-module.exports.deleteMember = (req, res) => {
+module.exports.deleteMember = async (req, res) => {
     try{
         apilog('Delete member by id');
         apilog('params::==' + req.params);

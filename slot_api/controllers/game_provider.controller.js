@@ -1,7 +1,18 @@
-const utilily_ft = require("../functions/utility.function");
-const tb_game_provider = require('../models/tb_game_provider');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_game_provider} = require('../models');
 
-module.exports.getAllGameProvider = (req, res) => {
+module.exports.getAllGameProvider = async (req, res) => {
     try{
         apilog('Get game provider all');
         await tb_game_provider.find({}).sort({ _id: -1 }).then(
@@ -20,7 +31,7 @@ module.exports.getAllGameProvider = (req, res) => {
     }
 }
 
-module.exports.getGameProviderById = (req, res) => {
+module.exports.getGameProviderById = async (req, res) => {
     try{
         apilog('Get game provider by id');
         apilog('params::==' + req.params);
@@ -46,7 +57,7 @@ module.exports.getGameProviderById = (req, res) => {
     }
 }
 
-module.exports.getGameProviderByCode = (req, res) => {
+module.exports.getGameProviderByCode = async (req, res) => {
     try{
         apilog('Get game provider by id');
         apilog('params::==' + req.params);
@@ -72,7 +83,7 @@ module.exports.getGameProviderByCode = (req, res) => {
     }
 }
 
-module.exports.getGameProviderBybrand = (req, res) => {
+module.exports.getGameProviderBybrand = async (req, res) => {
     try{
         apilog('Get game provider by id');
         apilog('params::==' + JSON.stringify(req.params));
@@ -97,7 +108,7 @@ module.exports.getGameProviderBybrand = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.createGameProvider = (req, res) => {
+module.exports.createGameProvider = async (req, res) => {
     try{
         apilog('Post create game provider');
         apilog('body::==' + req.body);
@@ -125,7 +136,7 @@ module.exports.createGameProvider = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.addGameProvider = (req, res) => {
+module.exports.addGameProvider = async (req, res) => {
     try{
         apilog('Post create game provider');
         apilog('body::==' + req.body);
@@ -172,7 +183,7 @@ module.exports.addGameProvider = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.updateGameProvider = (req, res) => {
+module.exports.updateGameProvider = async (req, res) => {
     try{
         apilog('Put Update game provider');
         apilog('body::==' + JSON.stringify(req.body));
@@ -247,7 +258,7 @@ module.exports.updateGameProvider = (req, res) => {
     }
 }
 
-module.exports.deleteGameProvider = (req, res) => {
+module.exports.deleteGameProvider = async (req, res) => {
     try{
         apilog('Delete game provider by id');
         apilog('params::==' + req.params);

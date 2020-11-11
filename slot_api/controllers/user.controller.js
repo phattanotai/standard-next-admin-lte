@@ -1,8 +1,19 @@
 const moment = require('moment-timezone');
-const utilily_ft = require("../functions/utility.function");
-const tb_user = require('../models/tb_user');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_user} = require('../models');
 
-module.exports.getAlluser = (req, res) => {
+module.exports.getAlluser = async (req, res) => {
     try{
         apilog('Get user all');
         await tb_user.find({}).then(
@@ -21,7 +32,7 @@ module.exports.getAlluser = (req, res) => {
     }
 }
 
-module.exports.getUserById = (req, res) => {
+module.exports.getUserById = async (req, res) => {
     try{
         apilog('Get user by id');
         apilog('params::==' + req.params);
@@ -47,7 +58,7 @@ module.exports.getUserById = (req, res) => {
     }
 }
 
-module.exports.createUser = (req, res) => {
+module.exports.createUser = async (req, res) => {
     try{
         apilog('Post create user');
         apilog('body::==' + JSON.stringify(req.body));
@@ -96,7 +107,7 @@ module.exports.createUser = (req, res) => {
     }
 }
 
-module.exports.updateUser = (req, res) => {
+module.exports.updateUser = async (req, res) => {
     try{
         apilog('Put Update user');
         apilog('body::==' + req.body);
@@ -129,7 +140,7 @@ module.exports.updateUser = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.deleteUser = (req, res) => {
+module.exports.deleteUser = async (req, res) => {
     try{
         apilog('Delete user by id');
         apilog('params::==' + req.params);

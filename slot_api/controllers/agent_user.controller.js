@@ -1,9 +1,19 @@
-const utilily_ft = require("../functions/utility.function");
 const moment = require('moment-timezone');
-const tb_agent_user = require('../models/tb_agent_user');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_agent_user} = require('../models');
 
-
-module.exports.getAgentAllUser = (req, res) => {
+module.exports.getAgentAllUser = async (req, res) => {
     try{
         apilog('Get agent user all');
         await tb_agent_user.find({}).then(
@@ -22,7 +32,7 @@ module.exports.getAgentAllUser = (req, res) => {
     }
 }
 
-module.exports.getAgentUserById = (req, res) => {
+module.exports.getAgentUserById = async (req, res) => {
     try{
         apilog('Get agent user by id');
         apilog('params::==' + req.params);
@@ -48,7 +58,7 @@ module.exports.getAgentUserById = (req, res) => {
     }
 }
 
-module.exports.getAgentUserByCode = (req, res) => {
+module.exports.getAgentUserByCode = async (req, res) => {
     try{
         apilog('Get agent user by agentcode');
         apilog('params::==' + req.params);
@@ -74,7 +84,7 @@ module.exports.getAgentUserByCode = (req, res) => {
     }
 }
 
-module.exports.createAgentUser = (req, res) => {
+module.exports.createAgentUser = async (req, res) => {
     try{
         apilog('Post create agent user');
         apilog('body::==' + req.body);
@@ -121,7 +131,7 @@ module.exports.createAgentUser = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.updateAgentUser = (req, res) => {
+module.exports.updateAgentUser = async (req, res) => {
     try{
         apilog('Put Update agent user');
         apilog('body::==' + JSON.stringify(req.body));
@@ -153,7 +163,7 @@ module.exports.updateAgentUser = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.deleteAgentUser = (req, res) => {
+module.exports.deleteAgentUser = async (req, res) => {
     try{
         apilog('Delete alert by id');
         apilog('params::==' + req.params);

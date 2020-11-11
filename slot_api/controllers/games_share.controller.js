@@ -1,7 +1,18 @@
-const utilily_ft = require("../functions/utility.function");
-const tb_share = require('../models/tb_share');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_share} = require('../models');
 
-module.exports.getAllGamesShare = (req, res) => {
+module.exports.getAllGamesShare = async (req, res) => {
     try{
         apilog('Get games_share all');
         await tb_share.find({}).sort({ _id: -1 }).then(
@@ -20,7 +31,7 @@ module.exports.getAllGamesShare = (req, res) => {
     }
 }
 
-module.exports.getGamesShareById = (req, res) => {
+module.exports.getGamesShareById = async (req, res) => {
     try{
         apilog('Get games_share by id');
         apilog('params::==', req.params);
@@ -47,7 +58,7 @@ module.exports.getGamesShareById = (req, res) => {
     }
 }
 
-module.exports.getGamesShareById = (req, res) => {
+module.exports.getGamesShareById = async (req, res) => {
     try{
         apilog('Get games_share by id');
         apilog('params::==', req.params);
@@ -73,7 +84,7 @@ module.exports.getGamesShareById = (req, res) => {
     }
 }
 
-module.exports.getGamesShareByAgent = (req, res) => {
+module.exports.getGamesShareByAgent = async (req, res) => {
     try{
         apilog('Post create games_share');
         apilog('body::==' + req.body);
@@ -104,7 +115,7 @@ module.exports.getGamesShareByAgent = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.updateGamesShare= (req, res) => {
+module.exports.updateGamesShare = async (req, res) => {
     try{
         apilog('Put Update games_share');
         apilog('body::==' + req.body);
@@ -134,7 +145,7 @@ module.exports.updateGamesShare= (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.daleteGamesShare= (req, res) => {
+module.exports.daleteGamesShare = async (req, res) => {
     try{
         apilog('Delete games_share by id');
         apilog('params::==' + req.params);

@@ -11,5 +11,6 @@ route.post("/gameprovider", controller.createGameProvider);
 route.post("/addgameprovider", controller.addGameProvider);
 route.put("/gameprovider/:id", controller.updateGameProvider);
 route.delete("/gameprovider/:id", controller.deleteGameProvider);
-
 ///////////////////// end tb_game_provider ////////////////////////
+
+module.exports = route;

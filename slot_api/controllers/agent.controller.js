@@ -1,7 +1,18 @@
-const utilily_ft = require("../functions/utility.function");
-const tb_agent = require('../models/tb_agent');
+const {
+    apilog,
+    apiDebuglog,
+    apiErrorlog,
+    ReturnErr,
+    ReturnSuccess,
+    ReturnUnSuccess,
+    ReturnCustom,
+    sha256Encrypt,
+    sha256Verify,
+    getMonday
+} = require("../functions/utility.function");
+const {tb_agent} = require('../models');
 
-module.exports.getAllAgent = (req, res) => {
+module.exports.getAllAgent = async (req, res) => {
     try{
         apilog('Get agent all');
         await tb_agent.find({}).sort({ _id: -1 }).then(
@@ -20,7 +31,7 @@ module.exports.getAllAgent = (req, res) => {
     }
 }
 
-module.exports.getAgentById = (req, res) => {
+module.exports.getAgentById = async (req, res) => {
     try{
         apilog('Get agent by id');
         apilog('params::==' + req.params);
@@ -46,7 +57,7 @@ module.exports.getAgentById = (req, res) => {
     }
 }
 
-module.exports.getAgentByCode = (req, res) => {
+module.exports.getAgentByCode = async (req, res) => {
     try{
         apilog('Get agent by id');
         apilog('params::==' + req.params);
@@ -72,7 +83,7 @@ module.exports.getAgentByCode = (req, res) => {
     }
 }
 
-module.exports.getAgentByLineup = (req, res) => {
+module.exports.getAgentByLineup = async (req, res) => {
     try{
         apilog('Get agent by agent_code');
         apilog('params::==' + req.params);
@@ -97,7 +108,7 @@ module.exports.getAgentByLineup = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.createAgent = (req, res) => {
+module.exports.createAgent = async (req, res) => {
     try{
         apilog('Post create agent');
         apilog('body::==' + req.body);
@@ -125,7 +136,7 @@ module.exports.createAgent = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.updateAgent = (req, res) => {
+module.exports.updateAgent = async (req, res) => {
     try{
         apilog('Put Update agent');
         apilog('body::==' + req.body);
@@ -154,7 +165,7 @@ module.exports.updateAgent = (req, res) => {
         return res.json(ReturnErr(err));
     }
 }
-module.exports.deleteAgent = (req, res) => {
+module.exports.deleteAgent = async (req, res) => {
     try{
         apilog('Delete agent by id');
         apilog('params::==' + req.params);
